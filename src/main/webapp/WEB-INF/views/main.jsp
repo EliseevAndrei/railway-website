@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form class="form-inline" method="get" action="/trains/available/onRoute">
+<form class="form-inline" method="get" action="/trains-on-station/available">
     <div class="form-group">
         <label for="dep_station" class="mr-sm-2">Departure station:</label>
         <input type="text" class="form-control mb-2 mr-sm-2" id="dep_station" name="dep_station"/>
@@ -23,11 +23,11 @@
     <button type="submit" class="btn btn-primary mb-2">Submit</button>
 </form>
 
-<%--jQuery library --%>
+<%--<!--jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<%--Popper JS--%>
+<!--Popper JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<%-- Latest compiled JavaScript --%>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!--Latest compiled JavaScript-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>--%>
 </body>
 </html>
