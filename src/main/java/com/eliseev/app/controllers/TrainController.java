@@ -42,7 +42,7 @@ public class TrainController {
     public String showEditingForm(@PathVariable("id") long id, Model model) {
         logger.info("User send GET /trains/editing-form/{} request", id);
         model.addAttribute("id");
-        return "trains/edit-train.jsp";
+        return "trains/edit-train";
     }
 
     @PostMapping("/update/{id}")

@@ -12,7 +12,7 @@
                 <div th:switch="${trains}" class="container my-5">
                     <p class="my-5">
                         <a action="/trains/adding-form" class="btn brn-primary">
-                            <i class="fas fa-user-plus ml-2">Add Train</i>
+                            <i class="ml-2">Add Train</i>
                         </a>
                     </p>
                     <div class="col-md-10">
@@ -29,18 +29,18 @@
                                 </thead>
                                 <tbody>
                                     <tr th:each="train : ${trains}">
-                                        <td th:text="*{name}"></td>
-                                        <td th:text="*{countKupe}"></td>
-                                        <td th:text="*{countPlaz}"></td>
-                                        <td th:text="*{countGen}"></td>
+                                        <td th:text="${train.name}"></td>
+                                        <td th:text="${train.countKupe}"></td>
+                                        <td th:text="${train.countPlaz}"></td>
+                                        <td th:text="${train.countGen}"></td>
                                         <td>
                                             <a th:href="@{/trains/editing-form/{id}(id=${train.id})}" class="btn btn-primary">
-                                                <i class="fas fa-user-edit ml-2"></i>
+                                                <i class="fas fa-edit ml-2"></i>
                                             </a>
                                         </td>
                                         <td>
                                             <a th:href="@{/trains/delete-form/{id}(id=${train.id})}" class="btn btn-primary">
-                                                <i class="fas fa-user-times ml-2"></i>
+                                                <i class="far fa-trash-alt ml-2"></i>
                                             </a>
                                         </td>
                                     </tr>
