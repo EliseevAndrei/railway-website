@@ -67,10 +67,28 @@
             <version>2.3</version>
             <scope>provided</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-expression -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>5.2.0.RELEASE</version>
+        </dependency>
 
     </dependencies>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
     <build>
+        <resources>
+            <resource>
+                <directory>
+                    src/main/resource
+                </directory>
+            </resource>
+        </resources>
         <finalName>app</finalName>
         <plugins>
             <plugin>

@@ -13,7 +13,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/trains")
 public class TrainController {
-    final Logger logger = LoggerFactory.getLogger(TrainController.class);
+    private final Logger logger = LoggerFactory.getLogger(TrainController.class);
 
     @GetMapping("/list")
     public String showTrains(Model model) {

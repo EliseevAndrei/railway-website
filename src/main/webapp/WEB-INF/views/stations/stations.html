@@ -1,0 +1,112 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+
+    <script src="../../static/js/script.js"></script>
+</head>
+<body>
+<div class="container">
+    <button class="btn btn-primary nBtn">New</button>
+    <table class="table table-hover">
+        <thead class="bg-dark text-white">
+        <tr>
+            <td>Nama</td>
+            <td>Jurusan</td>
+            <td>Action</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="s : ${siswas}">
+            <td th:text="${s.nama}"></td>
+            <td th:text="${s.jurusan}"></td>
+            <td>
+                <a class="btn btn-primary text-white eBtn"
+                   th:href="@{http://localhost:8080/findOne/(id=${s.id})}">Edit</a>
+                <a class="btn btn-danger text-white rBtn" th:href="${'/delete?id='+s.id}">Remove</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!--<ul class="nav nav-pills">
+        <li class="nav-item" th:each="i : ${#numbers.sequence(0, siswas.totalPages-1)}">
+        <li class="nav-item" th:each="i : ${#numbers.sequence(0, 4)}">
+            <a th:href="${'?page='+i}" th:text="${i}" class="nav-link"
+               th:classappend="${buatPage}==${i}?'active':''"></a>
+        </li>
+    </ul>-->
+</div>
+
+<!-- Modal Edit n New-->
+<div class="myForm">
+    <form th:action="@{/save}" method="post" th:object="${buatSiswa}">
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+             id="exampleModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Save or Update</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" id="id" name="id" value="" th:field="*{id}">
+                        <div class="form-group">
+                            <label for="nama" class=" label">Nama</label>
+                            <input type="text" class="form-control" id="nama" name="nama" value="" th:field="*{nama}">
+                        </div>
+                        <div class="form-group">
+                            <label for="jurusan" class=" label">Jurusan</label>
+                            <input type="text" class="form-control" id="jurusan" name="jurusan" value=""
+                                   th:field="*{jurusan}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Edit n Remove-->
+<div class="myRemove">
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         id="exampleModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Save or Update</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert-danger text-dark p-2">Apakah anda yakin ?</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a class="btn btn-danger dBtn" href="">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
