@@ -1,32 +1,37 @@
 package com.eliseev.app.controllers;
 
 import com.eliseev.app.models.Train;
+import com.eliseev.app.services.TrainService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @RequestMapping("/trains")
 public class TrainController {
     private final Logger logger = LoggerFactory.getLogger(TrainController.class);
 
-    @GetMapping("/list")
-    public String showTrains(Model model) {
-        List<Train> trains = Arrays.asList(
-                new Train(0,"1",10 , 10, 10),
-                new Train(1,"2", 20, 20, 20)
-        );
-        logger.info("User send GET /trains/list request");
-        model.addAttribute("trains", trains);
-        return "trains/trains-list";
+    private TrainService service;
+
+    @Autowired
+    public TrainController(TrainService service) {
+        this.service = service;
     }
 
-    @GetMapping("/adding-form")
+    @GetMapping("/list")
+    public String showTrains(Model model) {
+
+        logger.info("User send GET /trains/list request");
+
+        model.addAttribute("trains", service.list());
+        model.addAttribute("train", new Train());
+        return "trains/trains";
+    }
+
+    /*@GetMapping("/adding-form")
     public String showAddingForm() {
         logger.info("User send GET /trains/adding-form request");
         return "trains/add-train";
@@ -56,6 +61,6 @@ public class TrainController {
     public String deleteTrain(@PathVariable("id") long id, Model model) {
         logger.info("User send POST /trains/delete/{} request", id);
         return "redirect:/list";
-    }
+    }*/
 
 }

@@ -1,6 +1,8 @@
 package com.eliseev.app.models;
 
-public abstract class AbstractEntity {
+import java.io.Serializable;
+
+public abstract class AbstractEntity implements Serializable {
 
     protected long id;
 

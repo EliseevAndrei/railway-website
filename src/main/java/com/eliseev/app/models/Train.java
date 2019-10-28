@@ -1,12 +1,17 @@
 package com.eliseev.app.models;
 
-public class Train extends AbstractEntity{
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import java.io.Serializable;
+
+public class Train extends AbstractEntity {
 
 
     private String name;
-    private int countKupe;
-    private int countPlaz;
-    private int countGen;
+    private int countCoupe;
+    private int countLying;
+    private int countCommon;
 
     public Train() {
     }
@@ -14,53 +19,75 @@ public class Train extends AbstractEntity{
     public Train(long id, String name, int countKupe, int countPlaz, int countGen) {
         super.id = id;
         this.name = name;
-        this.countKupe = countKupe;
-        this.countPlaz = countPlaz;
-        this.countGen = countGen;
+
     }
-
-
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCountKupe(int countKupe) {
-        this.countKupe = countKupe;
-    }
-
-    public void setCountPlaz(int countPlaz) {
-        this.countPlaz = countPlaz;
-    }
-
-    public void setCountGen(int countGen) {
-        this.countGen = countGen;
-    }
-
 
     public String getName() {
         return name;
     }
 
-    public int getCountKupe() {
-        return countKupe;
+    public int getCountCoupe() {
+        return countCoupe;
     }
 
-    public int getCountPlaz() {
-        return countPlaz;
+    public int getCountLying() {
+        return countLying;
     }
 
-    public int getCountGen() {
-        return countGen;
+    public int getCountCommon() {
+        return countCommon;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCountCoupe(int countCoupe) {
+        this.countCoupe = countCoupe;
+    }
+
+    public void setCountLying(int countLying) {
+        this.countLying = countLying;
+    }
+
+    public void setCountCommon(int countCommon) {
+        this.countCommon = countCommon;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof Train)) return false;
+
+        Train train = (Train) o;
+
+        return new EqualsBuilder()
+                .append(countCoupe, train.countCoupe)
+                .append(countLying, train.countLying)
+                .append(countCommon, train.countCommon)
+                .append(name, train.name)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(name)
+                .append(countCoupe)
+                .append(countLying)
+                .append(countCommon)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return "Train{" +
                 "name='" + name + '\'' +
-                ", countKupe=" + countKupe +
-                ", countPlaz=" + countPlaz +
-                ", countGen=" + countGen +
+                ", countCoupe=" + countCoupe +
+                ", countLying=" + countLying +
+                ", countCommon=" + countCommon +
+                ", id=" + id +
                 '}';
     }
 }

@@ -1,8 +1,12 @@
 package com.eliseev.app.models;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class TrainStation extends AbstractEntity{
+public class TrainStation extends AbstractEntity implements Serializable {
 
     private String station;
     private Date arriveTime;
@@ -113,5 +117,31 @@ public class TrainStation extends AbstractEntity{
                 ", lying_places_amount=" + lying_places_amount +
                 ", common_places_amount=" + common_places_amount +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof TrainStation)) return false;
+
+        TrainStation that = (TrainStation) o;
+
+        return new EqualsBuilder()
+                .append(stationSerialNumber, that.stationSerialNumber)
+                .append(station, that.station)
+                .append(arriveTime, that.arriveTime)
+                .append(departureTime, that.departureTime)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(station)
+                .append(arriveTime)
+                .append(departureTime)
+                .append(stationSerialNumber)
+                .toHashCode();
     }
 }
