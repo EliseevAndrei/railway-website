@@ -1,8 +1,8 @@
 package com.eliseev.app.models;
 
-public class Train {
+public class Train extends AbstractEntity{
 
-    private long id;
+
     private String name;
     private int countKupe;
     private int countPlaz;
@@ -12,16 +12,14 @@ public class Train {
     }
 
     public Train(long id, String name, int countKupe, int countPlaz, int countGen) {
-        this.id = id;
+        super.id = id;
         this.name = name;
         this.countKupe = countKupe;
         this.countPlaz = countPlaz;
         this.countGen = countGen;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+
 
     public void setName(String name) {
         this.name = name;
@@ -39,9 +37,6 @@ public class Train {
         this.countGen = countGen;
     }
 
-    public long getId() {
-        return id;
-    }
 
     public String getName() {
         return name;

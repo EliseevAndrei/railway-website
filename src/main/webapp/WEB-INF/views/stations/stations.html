@@ -14,7 +14,6 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
 
-    <script src="../../static/js/script.js"></script>
 </head>
 <body>
 <div class="container">
@@ -22,25 +21,34 @@
     <table class="table table-hover">
         <thead class="bg-dark text-white">
         <tr>
-            <td>Nama</td>
-            <td>Jurusan</td>
-            <td>Action</td>
+            <td>serial number</td>
+            <td>Station</td>
+            <td>time arrive</td>
+            <td>time departure</td>
+            <td>coupe</td>
+            <td>lying</td>
+            <td>common</td>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="s : ${siswas}">
-            <td th:text="${s.nama}"></td>
-            <td th:text="${s.jurusan}"></td>
+        <tr th:each="station : ${trainStations}">
+            <td th:text="${station.stationSerialNumber}"></td>
+            <td th:text="${station.station}"></td>
+            <td th:text="${#dates.format(station.arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="${#dates.format(station.departureTime, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="${station.coupe_places_amount}"></td>
+            <td th:text="${station.lying_places_amount}"></td>
+            <td th:text="${station.common_places_amount}"></td>
             <td>
                 <a class="btn btn-primary text-white eBtn"
-                   th:href="@{http://localhost:8080/findOne/(id=${s.id})}">Edit</a>
-                <a class="btn btn-danger text-white rBtn" th:href="${'/delete?id='+s.id}">Remove</a>
+                   th:href="@{http://localhost:8080/trainStations/findOne/(id=${station.id})}">Edit</a>
+                <a class="btn btn-danger text-white rBtn" th:href="${'trainStations/delete?id='+station.id}">Remove</a>
             </td>
         </tr>
         </tbody>
     </table>
     <!--<ul class="nav nav-pills">
-        <li class="nav-item" th:each="i : ${#numbers.sequence(0, siswas.totalPages-1)}">
+        <li class="nav-item" th:each="i : ${#numbers.sequence(0, trainStations.totalPages-1)}">
         <li class="nav-item" th:each="i : ${#numbers.sequence(0, 4)}">
             <a th:href="${'?page='+i}" th:text="${i}" class="nav-link"
                th:classappend="${buatPage}==${i}?'active':''"></a>
@@ -50,7 +58,7 @@
 
 <!-- Modal Edit n New-->
 <div class="myForm">
-    <form th:action="@{/save}" method="post" th:object="${buatSiswa}">
+    <form th:action="@{/save}" method="post" th:object="${station}">
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
              id="exampleModal">
             <div class="modal-dialog" role="document">
@@ -62,15 +70,43 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <input type="text" class="form-control" id="id" name="id" value="" th:field="*{id}">
                         <div class="form-group">
-                            <label for="nama" class=" label">Nama</label>
-                            <input type="text" class="form-control" id="nama" name="nama" value="" th:field="*{nama}">
+                            <label for="id" class="label">id</label>
+                            <input type="text" class="form-control" id="id" name="id" value="" th:field="*{id}" disabled>
                         </div>
                         <div class="form-group">
-                            <label for="jurusan" class=" label">Jurusan</label>
-                            <input type="text" class="form-control" id="jurusan" name="jurusan" value=""
-                                   th:field="*{jurusan}">
+                            <label for="stationSerialNumber" class=" label">stationSerialNumber</label>
+                            <input type="text" class="form-control" id="stationSerialNumber" name="stationSerialNumber" value="" th:field="*{stationSerialNumber}">
+                        </div>
+                        <div class="form-group">
+                            <label for="station" class=" label">station</label>
+                            <input type="text" class="form-control" id="station" name="station" value=""
+                                   th:field="*{station}">
+                        </div>
+                        <div class="form-group">
+                            <label for="arriveTime" class=" label">arriveTime</label>
+                            <input type="text" class="form-control" id="arriveTime" name="arriveTime" value=""
+                                   th:field="*{arriveTime}">
+                        </div>
+                        <div class="form-group">
+                            <label for="departureTime" class=" label">departureTime</label>
+                            <input type="text" class="form-control" id="departureTime" name="departureTime" value=""
+                                   th:field="*{departureTime}">
+                        </div>
+                        <div class="form-group">
+                            <label for="coupe_places_amount" class=" label">coupe_places_amount</label>
+                            <input type="text" class="form-control" id="coupe_places_amount" name="coupe_places_amount" value=""
+                                   th:field="*{coupe_places_amount}">
+                        </div>
+                        <div class="form-group">
+                            <label for="lying_places_amount" class=" label">lying_places_amount</label>
+                            <input type="text" class="form-control" id="lying_places_amount" name="lying_places_amount" value=""
+                                   th:field="*{lying_places_amount}">
+                        </div>
+                        <div class="form-group">
+                            <label for="common_places_amount" class=" label">common_places_amount</label>
+                            <input type="text" class="form-control" id="common_places_amount" name="common_places_amount" value=""
+                                   th:field="*{common_places_amount}">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -96,7 +132,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="alert-danger text-dark p-2">Apakah anda yakin ?</div>
+                    <div class="alert-danger text-dark p-2">Are you sure?</div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -107,6 +143,6 @@
     </div>
 </div>
 
-
+<script src="/resources/js/script.js"></script>
 </body>
 </html>
