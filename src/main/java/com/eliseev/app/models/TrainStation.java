@@ -5,9 +5,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 public class TrainStation extends AbstractEntity implements Serializable {
 
+    private long idTrain;
     private String station;
     private Date arriveTime;
     private Date departureTime;
@@ -16,7 +18,7 @@ public class TrainStation extends AbstractEntity implements Serializable {
     private int lying_places_amount;
     private int common_places_amount;
 
-    public TrainStation(int id, String station,
+    public TrainStation(long id, long idTrain, String station,
                         Date arriveTime, Date departureTime,
                         long stationSerialNumber,
                         int coupe_places_amount,
@@ -35,17 +37,14 @@ public class TrainStation extends AbstractEntity implements Serializable {
     public TrainStation() {
     }
 
-    public TrainStation(String station, Date arriveTime, Date departureTime, long stationSerialNumber, int coupe_places_amount, int lying_places_amount, int common_places_amount) {
-        this.station = station;
-        this.arriveTime = arriveTime;
-        this.departureTime = departureTime;
-        this.stationSerialNumber = stationSerialNumber;
-        this.coupe_places_amount = coupe_places_amount;
-        this.lying_places_amount = lying_places_amount;
-        this.common_places_amount = common_places_amount;
+
+    public long getIdTrain() {
+        return idTrain;
     }
 
-
+    public void setIdTrain(long idTrain) {
+        this.idTrain = idTrain;
+    }
 
     public void setStation(String station) {
         this.station = station;
@@ -106,9 +105,26 @@ public class TrainStation extends AbstractEntity implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TrainStation that = (TrainStation) o;
+        return idTrain == that.idTrain &&
+                stationSerialNumber == that.stationSerialNumber &&
+                Objects.equals(station, that.station) &&
+                Objects.equals(arriveTime, that.arriveTime) &&
+                Objects.equals(departureTime, that.departureTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idTrain, station, arriveTime, departureTime, stationSerialNumber);
+    }
+
+    @Override
     public String toString() {
         return "TrainStation{" +
-                "id=" + id +
+                "idTrain=" + idTrain +
                 ", station='" + station + '\'' +
                 ", arriveTime=" + arriveTime +
                 ", departureTime=" + departureTime +
@@ -116,32 +132,7 @@ public class TrainStation extends AbstractEntity implements Serializable {
                 ", coupe_places_amount=" + coupe_places_amount +
                 ", lying_places_amount=" + lying_places_amount +
                 ", common_places_amount=" + common_places_amount +
+                ", id=" + id +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (!(o instanceof TrainStation)) return false;
-
-        TrainStation that = (TrainStation) o;
-
-        return new EqualsBuilder()
-                .append(stationSerialNumber, that.stationSerialNumber)
-                .append(station, that.station)
-                .append(arriveTime, that.arriveTime)
-                .append(departureTime, that.departureTime)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(station)
-                .append(arriveTime)
-                .append(departureTime)
-                .append(stationSerialNumber)
-                .toHashCode();
     }
 }

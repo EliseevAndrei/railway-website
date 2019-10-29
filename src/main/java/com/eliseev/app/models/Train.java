@@ -4,22 +4,25 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Train extends AbstractEntity {
-
 
     private String name;
     private int countCoupe;
     private int countLying;
     private int countCommon;
 
-    public Train() {
-    }
+    private Map<Long, TrainStation> stations = new TreeMap<>();
+
+    public Train() { }
 
     public Train(long id, String name, int countKupe, int countPlaz, int countGen) {
         super.id = id;
         this.name = name;
-
     }
 
     public String getName() {

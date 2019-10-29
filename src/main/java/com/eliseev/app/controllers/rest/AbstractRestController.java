@@ -15,7 +15,7 @@ public abstract class AbstractRestController<E extends AbstractEntity,
 
     private Logger logger = LoggerFactory.getLogger(AbstractRestController.class);
 
-    private S service;
+    protected S service;
 
     public AbstractRestController(S service) {
         this.service = service;
@@ -23,31 +23,31 @@ public abstract class AbstractRestController<E extends AbstractEntity,
 
     @Override
     public List<E> list() {
-        logger.info("User send GET /trains/list");
+        logger.info("User send GET /<entities>/list");
         return service.list();
     }
 
     @Override
     public E create(@RequestBody  E entity, HttpServletResponse response) {
-        logger.info("User send POST /trains/list with body {}", entity);
+        logger.info("User send POST /<entities>/list with body {}", entity);
         return service.create(entity);
     }
 
     @Override
     public E findById(long id) {
-        logger.info("User send GET /trains/list/{}", id);
+        logger.info("User send GET /<entities>/list/{}", id);
         return service.get(id);
     }
 
     @Override
     public E update(long id, @RequestBody E entity, HttpServletResponse response) {
-        logger.info("User send PUT /trains/list/{} with body {}", id, entity);
+        logger.info("User send PUT /<entities>/list/{} with body {}", id, entity);
         return service.update(id, entity);
     }
 
     @Override
     public E delete(long id, HttpServletResponse response) {
-        logger.info("User send DELETE /trains/list/{}", id);
+        logger.info("User send DELETE /<entities>/list/{}", id);
         return service.delete(id);
     }
 

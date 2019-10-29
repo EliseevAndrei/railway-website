@@ -22,24 +22,27 @@
     <table class="table table-hover">
         <thead class="bg-dark text-white">
         <tr>
-            <th>Название</th>
-            <th>Кол-во мест купе</th>
-            <th>Кол-во мест плацкарт</th>
-            <th>Кол-во мест общих</th>
+            <th>Станция</th>
+            <th>Время прибытия</th>
+            <th>Время отправления</th>
+            <th>Общие</th>
+            <th>Плацкарт</th>
+            <th>Купе</th>
         </tr>
         </thead>
         <tbody>
 
-        <tr th:each="train : ${trains}">
-            <td th:text="${train.id}"></td>
-            <td th:text="${train.name}"></td>
-            <td th:text="${train.countCoupe}"></td>
-            <td th:text="${train.countLying}"></td>
-            <td th:text="${train.countCommon}"></td>
+        <tr th:each="station : ${stations}">
+            <td th:text="${station.station}"></td>
+            <td th:text="${#dates.format(station.arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="${#dates.format(station.departureTime, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="${station.coupe_places_amount}"></td>
+            <td th:text="${station.lying_places_amount}"></td>
+            <td th:text="${station.common_places_amount}"></td>
             <td>
                 <a class="btn btn-primary text-white eBtn"
-                   th:href="${'trains/list/' + train.id}">Edit</a>
-                <a class="btn btn-danger text-white rBtn" th:href="${'trains/list/'+train.id}">Remove</a>
+                   th:href="${'stations/list/' + station.id}">Edit</a>
+                <a class="btn btn-danger text-white rBtn" th:href="${'stations/list/'+station.id}">Remove</a>
             </td>
         </tr>
         </tbody>
@@ -48,7 +51,7 @@
 
 <!-- Modal Edit n New-->
 <div class="myForm">
-    <form th:action="${'trains/list/'}" th:object="${train}" id="form">
+    <form th:action="${'stations/list/'}" th:object="${station}" id="form">
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
              id="exampleModal">
             <div class="modal-dialog" role="document">
@@ -65,20 +68,30 @@
                             <input type="text" class="form-control" id="id" name="id" value="" th:field="*{id}" disabled>
                         </div>
                         <div class="form-group col-md-6">
-                            <lable for="name" class="col-form-label">Название</lable>
-                            <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Название">
+                            <label for="station" class=" label">station</label>
+                            <input type="text" class="form-control" id="station" name="station" value=""
+                                   th:field="*{station}">
                         </div>
                         <div class="form-group col-md-8">
-                            <lable for="name" class="col-form-label">Кол-во мест купе</lable>
-                            <input type="text" th:field="*{countCoupe}" class="form-control" id="countCoupe" placeholder="Купе">
+                            <label for="arriveTime" class=" label">arriveTime</label>
+                            <input type="text" class="form-control" id="arriveTime" name="arriveTime" value=""
+                                   th:field="*{arriveTime}">
                         </div>
                         <div class="form-group col-md-8">
-                            <lable for="name" class="col-form-label">Кол-во мест плацкарт</lable>
-                            <input type="text" th:field="*{countLying}" class="form-control" id="countLying" placeholder="Плацкарт">
+                            <label for="departureTime" class=" label">departureTime</label>
+                            <input type="text" class="form-control" id="departureTime" name="departureTime" value=""
+                                   th:field="*{departureTime}">
                         </div>
                         <div class="form-group col-md-8">
-                            <lable for="name" class="col-form-label">Кол-во мест общих</lable>
-                            <input type="text" th:field="*{countCommon}" class="form-control" id="countCommon" placeholder="Общее">
+                            <label for="lying_places_amount" class=" label">lying_places_amount</label>
+                            <input type="text" class="form-control" id="lying_places_amount" name="lying_places_amount" value=""
+                                   th:field="*{lying_places_amount}">
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label for="common_places_amount" class=" label">common_places_amount</label>
+                            <input type="text" class="form-control" id="common_places_amount" name="common_places_amount" value=""
+                                   th:field="*{common_places_amount}">
                         </div>
 
                         <div class="form-group col-md-8"></div>
