@@ -21,7 +21,7 @@ public class TrainController {
         this.service = service;
     }
 
-    @GetMapping("/list")
+    @GetMapping
     public String showTrains(Model model) {
 
         logger.info("User send GET /trains/list request");

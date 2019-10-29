@@ -10,10 +10,9 @@ import java.text.SimpleDateFormat;
 public class TrainService extends AbstractService<Train> {
 
     {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm");
         Train a = new Train(1L,"1",10 , 10, 10);
         super.entities.put(1L, a);
-        Train b = new Train(1,"2", 20, 20, 20);
+        Train b = new Train(2L,"2", 20, 20, 20);
         super.entities.put(2L, b);
     }
 

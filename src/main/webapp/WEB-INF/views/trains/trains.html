@@ -29,14 +29,15 @@
         <tbody>
 
         <tr th:each="train : ${trains}">
+            <td th:text="${train.id}"></td>
             <td th:text="${train.name}"></td>
             <td th:text="${train.countCoupe}"></td>
             <td th:text="${train.countLying}"></td>
             <td th:text="${train.countCommon}"></td>
             <td>
                 <a class="btn btn-primary text-white eBtn"
-                   th:href="@{http://localhost:8081/trains/list(id=${train.id})}">Edit</a>
-                <a class="btn btn-danger text-white rBtn" th:href="${'trainStations/delete?id='+train.id}">Remove</a>
+                   th:href="${'trains/list/' + train.id}">Edit</a>
+                <a class="btn btn-danger text-white rBtn" th:href="${'trains/list/'+train.id}">Remove</a>
             </td>
         </tr>
         </tbody>
@@ -45,7 +46,7 @@
 
 <!-- Modal Edit n New-->
 <div class="myForm">
-    <form th:action="@{/save}" method="post" th:object="${train}">
+    <form th:action="${'trains/list/'}" th:object="${train}" id="form">
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
              id="exampleModal">
             <div class="modal-dialog" role="document">
@@ -77,15 +78,12 @@
                             <lable for="name" class="col-form-label">Кол-во мест общих</lable>
                             <input type="text" th:field="*{countCommon}" class="form-control" id="countCommon" placeholder="Общее">
                         </div>
-                        <div class="col-md-6">
-                            <input type="submit" class="btn btn-primary" value="update"/>
-                        </div>
 
                         <div class="form-group col-md-8"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary" id="edit-submit">Save</button>
                     </div>
                 </div>
             </div>
@@ -110,7 +108,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a class="btn btn-danger dBtn" href="">Delete</a>
+                    <a class="btn btn-danger dBtn" href="" id="delete-submit">Delete</a>
                 </div>
             </div>
         </div>
