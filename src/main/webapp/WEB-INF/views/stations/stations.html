@@ -31,7 +31,6 @@
         </tr>
         </thead>
         <tbody>
-
         <tr th:each="station : ${stations}">
             <td th:text="${station.station}"></td>
             <td th:text="${#dates.format(station.arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
