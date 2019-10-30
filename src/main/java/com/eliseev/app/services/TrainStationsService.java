@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +21,7 @@ public class TrainStationsService extends AbstractService<TrainStation> {
             TrainStation b = new TrainStation(2L, 1L, "Гродно", simpleDateFormat.parse("10.10.19 18:30"), simpleDateFormat.parse("10.10.19 18:35"),
                     2L, 10, 10, 10);
             super.entities.put(2L, b);
-            TrainStation c = new TrainStation(3L, 1L, "Брест", simpleDateFormat.parse("10.10.19 18:30"), simpleDateFormat.parse("10.10.19 18:35"),
+            TrainStation c = new TrainStation(3L, 2L, "Брест", simpleDateFormat.parse("10.10.19 18:30"), simpleDateFormat.parse("10.10.19 18:35"),
                     3L, 10, 10, 10);
             super.entities.put(3L, c);
         } catch (ParseException e) {
@@ -32,11 +30,9 @@ public class TrainStationsService extends AbstractService<TrainStation> {
     }
 
     public List<TrainStation> list(long trainId) {
-        Map<Long, Long> a = new HashMap<>();
         return super.entities.values().stream()
                 .filter(e -> e.getIdTrain() == trainId)
                 .collect(Collectors.toList());
     }
-
 }
 

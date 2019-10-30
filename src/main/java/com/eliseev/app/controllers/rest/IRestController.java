@@ -13,18 +13,18 @@ import java.util.List;
 public interface IRestController<E extends AbstractEntity> {
 
     @GetMapping
-    List<E> list();
+    List<E> list(@PathVariable(required = false) long ...id);
 
     @PostMapping
-    E create(E entity, HttpServletResponse response);
+    E create(E entity, @PathVariable(required = false) long ...id);
 
     @GetMapping("/{id}")
     E findById(@PathVariable long id);
 
     @PutMapping("/{id}")
-    E update(@PathVariable long id, E entity, HttpServletResponse response);
+    E update(E entity, @PathVariable long id);
 
     @DeleteMapping("/{id}")
-    E delete(@PathVariable long id, HttpServletResponse response);
+    E delete(@PathVariable long id);
 
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/trains/list/{trainId}/stations/list", produces = "application/json")
+@RequestMapping(path = "/trains/list/{id}/stations/list", produces = "application/json")
 public class TrainStationsRestController extends AbstractRestController<TrainStation, TrainStationsService> {
 
     private Logger logger = LoggerFactory.getLogger(AbstractRestController.class);
@@ -20,11 +20,16 @@ public class TrainStationsRestController extends AbstractRestController<TrainSta
         super(service);
     }
 
-    /*@Override
-    public List<TrainStation> list() {
+    @Override
+    public List<TrainStation> list(@PathVariable(required = false) long... id) {
+        logger.info("User send GET /<entities>/list");
+        return service.list(id[0]);
+    }
 
-        logger.info("User send GET /trains/list/{}/stations/list",  trainId);
-        return super.service.list(trainId);
-    }*/
+    @Override
+    public TrainStation create(TrainStation entity, @PathVariable(required = false) long ...id) {
+        entity.setIdTrain(id[0]);
+        return super.create(entity, id);
+    }
 
 }

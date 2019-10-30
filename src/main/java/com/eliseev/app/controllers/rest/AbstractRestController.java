@@ -4,6 +4,7 @@ import com.eliseev.app.models.AbstractEntity;
 import com.eliseev.app.services.IService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,13 +23,13 @@ public abstract class AbstractRestController<E extends AbstractEntity,
     }
 
     @Override
-    public List<E> list() {
+    public List<E> list(@PathVariable(required = false) long... id) {
         logger.info("User send GET /<entities>/list");
         return service.list();
     }
 
     @Override
-    public E create(@RequestBody  E entity, HttpServletResponse response) {
+    public E create(@RequestBody  E entity,@PathVariable(required = false)  long ...id) {
         logger.info("User send POST /<entities>/list with body {}", entity);
         return service.create(entity);
     }
@@ -40,13 +41,13 @@ public abstract class AbstractRestController<E extends AbstractEntity,
     }
 
     @Override
-    public E update(long id, @RequestBody E entity, HttpServletResponse response) {
+    public E update(@RequestBody E entity, long id) {
         logger.info("User send PUT /<entities>/list/{} with body {}", id, entity);
         return service.update(id, entity);
     }
 
     @Override
-    public E delete(long id, HttpServletResponse response) {
+    public E delete(long id) {
         logger.info("User send DELETE /<entities>/list/{}", id);
         return service.delete(id);
     }

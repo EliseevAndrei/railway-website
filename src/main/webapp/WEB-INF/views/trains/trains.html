@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title></title>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -40,6 +40,7 @@
                 <a class="btn btn-primary text-white eBtn"
                    th:href="${'trains/list/' + train.id}">Edit</a>
                 <a class="btn btn-danger text-white rBtn" th:href="${'trains/list/'+train.id}">Remove</a>
+                <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/stations}">Станкции остановки</a>
             </td>
         </tr>
         </tbody>

@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("/trains/list/{trainId}")
+@RequestMapping("/trains/list/{trainId}/stations")
 public class TrainStationsController {
 
     private TrainStationsService service;
@@ -28,7 +28,7 @@ public class TrainStationsController {
     @GetMapping
     public String findAll(@PathVariable("trainId") long trainId, Model model) {
 
-        model.addAttribute("trainStations", service.list(trainId));
+        model.addAttribute("stations", service.list(trainId));
         model.addAttribute("station", new TrainStation());
 
         return "stations/stations";

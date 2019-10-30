@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title></title>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -13,26 +13,26 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
 </head>
 <body>
 <div class="container">
     <button class="btn btn-primary nBtn">New</button>
+    <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>
     <table class="table table-hover">
         <thead class="bg-dark text-white">
         <tr>
-            <td>serial number</td>
-            <td>Station</td>
-            <td>time arrive</td>
-            <td>time departure</td>
-            <td>coupe</td>
-            <td>lying</td>
-            <td>common</td>
+            <th>Станция</th>
+            <th>Время прибытия</th>
+            <th>Время отправления</th>
+            <th>Общие</th>
+            <th>Плацкарт</th>
+            <th>Купе</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="station : ${trainStations}">
-            <td th:text="${station.stationSerialNumber}"></td>
+
+        <tr th:each="station : ${stations}">
             <td th:text="${station.station}"></td>
             <td th:text="${#dates.format(station.arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
             <td th:text="${#dates.format(station.departureTime, 'dd-MM-yyyy HH:mm')}"></td>
@@ -41,8 +41,8 @@
             <td th:text="${station.common_places_amount}"></td>
             <td>
                 <a class="btn btn-primary text-white eBtn"
-                   th:href="@{http://localhost:8080/trainStations/findOne/(id=${station.id})}">Edit</a>
-                <a class="btn btn-danger text-white rBtn" th:href="${'trainStations/delete?id='+station.id}">Remove</a>
+                   th:href="${'stations/list/' + station.id}">Edit</a>
+                <a class="btn btn-danger text-white rBtn" th:href="${'stations/list/'+station.id}">Remove</a>
             </td>
         </tr>
         </tbody>
@@ -51,7 +51,7 @@
 
 <!-- Modal Edit n New-->
 <div class="myForm">
-    <form th:action="@{/save}" method="post" th:object="${station}">
+    <form th:action="${'stations/list/'}" th:object="${station}" id="form">
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
              id="exampleModal">
             <div class="modal-dialog" role="document">
@@ -63,48 +63,42 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
                             <label for="id" class="label">id</label>
                             <input type="text" class="form-control" id="id" name="id" value="" th:field="*{id}" disabled>
                         </div>
-                        <div class="form-group">
-                            <label for="stationSerialNumber" class=" label">stationSerialNumber</label>
-                            <input type="text" class="form-control" id="stationSerialNumber" name="stationSerialNumber" value="" th:field="*{stationSerialNumber}">
-                        </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
                             <label for="station" class=" label">station</label>
                             <input type="text" class="form-control" id="station" name="station" value=""
                                    th:field="*{station}">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-8">
                             <label for="arriveTime" class=" label">arriveTime</label>
                             <input type="text" class="form-control" id="arriveTime" name="arriveTime" value=""
                                    th:field="*{arriveTime}">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-8">
                             <label for="departureTime" class=" label">departureTime</label>
                             <input type="text" class="form-control" id="departureTime" name="departureTime" value=""
                                    th:field="*{departureTime}">
                         </div>
-                        <div class="form-group">
-                            <label for="coupe_places_amount" class=" label">coupe_places_amount</label>
-                            <input type="text" class="form-control" id="coupe_places_amount" name="coupe_places_amount" value=""
-                                   th:field="*{coupe_places_amount}">
-                        </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-8">
                             <label for="lying_places_amount" class=" label">lying_places_amount</label>
                             <input type="text" class="form-control" id="lying_places_amount" name="lying_places_amount" value=""
                                    th:field="*{lying_places_amount}">
                         </div>
-                        <div class="form-group">
+
+                        <div class="form-group col-md-8">
                             <label for="common_places_amount" class=" label">common_places_amount</label>
                             <input type="text" class="form-control" id="common_places_amount" name="common_places_amount" value=""
                                    th:field="*{common_places_amount}">
                         </div>
+
+                        <div class="form-group col-md-8"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary" id="edit-submit">Save</button>
                     </div>
                 </div>
             </div>
@@ -129,7 +123,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a class="btn btn-danger dBtn" href="">Delete</a>
+                    <a class="btn btn-danger dBtn" href="" id="delete-submit">Delete</a>
                 </div>
             </div>
         </div>
@@ -137,5 +131,6 @@
 </div>
 
 <script src="/resources/js/ajax-conversation.js"></script>
+
 </body>
 </html>

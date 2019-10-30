@@ -25,6 +25,7 @@ public class TrainStation extends AbstractEntity implements Serializable {
                         int lying_places_amount,
                         int common_places_amount) {
         super.id = id;
+        this.idTrain = idTrain;
         this.station = station;
         this.arriveTime = arriveTime;
         this.departureTime = departureTime;
