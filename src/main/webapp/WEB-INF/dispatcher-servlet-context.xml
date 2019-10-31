@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven conversion-service="conversionService"/>
     <context:component-scan base-package="com.eliseev.app"/>
     <mvc:resources mapping="/resources/**" location="/resources/" />
     <mvc:view-controller path="/" view-name="main"/>
@@ -58,6 +58,15 @@
     </bean>
 
     <bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+    </bean>
+
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <ref bean="trainByIdConverter"/>
+            </set>
+        </property>
     </bean>
 
 </beans>
