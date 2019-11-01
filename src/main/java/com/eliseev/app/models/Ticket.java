@@ -57,4 +57,16 @@ public class Ticket {
     public String getArrStation() {
         return arrStation;
     }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "train=" + train +
+                ", user=" + user +
+                ", depStation='" + depStation + '\'' +
+                ", arrStation='" + arrStation + '\'' +
+                ", date='" + date + '\'' +
+                ", seatType='" + seatType + '\'' +
+                '}';
+    }
 }

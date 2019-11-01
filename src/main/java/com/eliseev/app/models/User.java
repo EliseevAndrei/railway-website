@@ -29,4 +29,13 @@ public class User {
     public String getPassportNumber() {
         return passportNumber;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "surname='" + surname + '\'' +
+                ", name='" + name + '\'' +
+                ", passportNumber='" + passportNumber + '\'' +
+                '}';
+    }
 }

@@ -7,21 +7,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Date;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/order")
+@SessionAttributes("ticket")
 public class OrderController {
 
     private Logger logger = LoggerFactory.getLogger(OrderController.class);
 
+
     @GetMapping
-    public String order(@RequestParam("trainId") Train train,
+    public String getOrderForm(@RequestParam("trainId") Train train,
                         @RequestParam("dep_station") String dep_station,
                         @RequestParam("arr_station") String arr_station,
                         @RequestParam("dep_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") String dep_date,
@@ -34,6 +31,12 @@ public class OrderController {
         ticket.setDate(dep_date);
         model.addAttribute("ticket", ticket);
         return "order";
+    }
+
+    @PostMapping
+    public String setOrder(@ModelAttribute("ticket") Ticket ticket) {
+        logger.info("user create ticket = {}", ticket);
+        return "redirect:/";
     }
 
 }

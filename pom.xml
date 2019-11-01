@@ -103,7 +103,7 @@
         <resources>
             <resource>
                 <directory>
-                    src/main/resource
+                    src/main/resources
                 </directory>
             </resource>
         </resources>
