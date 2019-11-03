@@ -2,7 +2,6 @@
 <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -24,7 +23,7 @@
 
         <p>Станция отправления: <span th:text="*{depStation}"></span></p>
         <p>Станция прибытия: <span th:text="*{arrStation}"></span></p>
-        <p>Дата: <span th:text="*{date}"></span></p>
+        <p>Дата: <span th:text="*{#dates.format(date, 'dd-MM-yyyy')}"></span></p>
         <p>Номер поезда: <span th:text="*{train.name}"></span></p>
 
         <div class="form-group col-md-4">

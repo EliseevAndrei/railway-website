@@ -17,32 +17,32 @@
 </head>
 <body>
 <div class="container">
-    <p>Станция отправления: <span th:text="${dep_station}"></span></p>
-    <p>Станция прибытия: <span th:text="${arr_station}"></span></p>
-    <p>Дата: <span th:text="${#dates.format(dep_date, 'dd-MM-yyyy')}"></span></p>
 
    <!-- <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>-->
     <table class="table table-hover">
         <thead class="bg-dark text-white">
         <tr>
-            <th>Название</th>
-            <th>Кол-во мест купе</th>
-            <th>Кол-во мест плацкарт</th>
-            <th>Кол-во мест общих</th>
+            <th>Поезд</th>
+            <th>Станция отправления</th>
+            <th>Станция прибытия</th>
+            <th>Дата</th>
+            <th>Тип места</th>
+            <th>Фамилия пассажира</th>
+            <th>Имя</th>
+            <th>Паспорт</th>
         </tr>
         </thead>
         <tbody>
 
-        <tr th:each="train : ${trains}">
-            <td><a th:href="@{/order(trainId=${train.id},dep_station=${dep_station},arr_station=${arr_station},dep_date=${#dates.format(dep_date, 'dd-MM-yyyy')})}">Выбрать:</a></td>
-            <td th:text="${train.id}"></td>
-            <td th:text="${train.name}"></td>
-            <td th:text="${train.countCoupe}"></td>
-            <td th:text="${train.countLying}"></td>
-            <td th:text="${train.countCommon}"></td>
-            <td>
-                <a class="btn btn-info" th:href="@{/trains/list/} + ${train.id} + @{/stations}">Станкции остановки</a>
-            </td>
+        <tr th:each="ticket : ${tickets}">
+            <td th:text="${ticket.train.name}"></td>
+            <td th:text="${ticket.depStation}"></td>
+            <td th:text="${ticket.arrStation}"></td>
+            <td th:text="${#dates.format(ticket.date, 'dd-MM-yyyy')}"></td>
+            <td th:text="${ticket.seatType}"></td>
+            <td th:text="${ticket.user.surname}"></td>
+            <td th:text="${ticket.user.name}"></td>
+            <td th:text="${ticket.user.passportNumber}"></td>
         </tr>
         </tbody>
     </table>

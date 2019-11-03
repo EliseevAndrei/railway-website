@@ -41,9 +41,7 @@ public class TrainController {
         model.addAttribute("dep_station", dep_station);
         model.addAttribute("arr_station", arr_station);
         model.addAttribute("dep_date", date);
-
         model.addAttribute("trains", service.getTrainsOnStations(dep_station, arr_station, date));
-
         return "trains/trains_on_route";
     }
 
