@@ -9,35 +9,19 @@ public class User extends AbstractEntity implements Serializable {
 
     private String surname;
     private String name;
-    private String passportNumber;
+    private String email;
     private String login;
-    private String password;
+    private String pass;
 
-    public User(long id, String surname, String name, String passportNumber, String login, String password) {
+    public User() { }
+
+    public User(long id, String surname, String name, String email, String login, String pass) {
         super.id = id;
         this.surname = surname;
         this.name = name;
-        this.passportNumber = passportNumber;
+        this.email = email;
         this.login = login;
-        this.password = password;
-    }
-
-    public User() {}
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+        this.pass = pass;
     }
 
     public void setSurname(String surname) {
@@ -48,8 +32,16 @@ public class User extends AbstractEntity implements Serializable {
         this.name = name;
     }
 
-    public void setPassportNumber(String passportNumber) {
-        this.passportNumber = passportNumber;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public String getSurname() {
@@ -60,8 +52,16 @@ public class User extends AbstractEntity implements Serializable {
         return name;
     }
 
-    public String getPassportNumber() {
-        return passportNumber;
+    public String getEmail() {
+        return email;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPass() {
+        return pass;
     }
 
     @Override
@@ -69,9 +69,9 @@ public class User extends AbstractEntity implements Serializable {
         return "User{" +
                 "surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
-                ", passportNumber='" + passportNumber + '\'' +
+                ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
+                ", pass='" + pass + '\'' +
                 ", id=" + id +
                 '}';
     }
@@ -80,16 +80,16 @@ public class User extends AbstractEntity implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof User)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         User user = (User) o;
 
         return new EqualsBuilder()
                 .append(surname, user.surname)
                 .append(name, user.name)
-                .append(passportNumber, user.passportNumber)
+                .append(email, user.email)
                 .append(login, user.login)
-                .append(password, user.password)
+                .append(pass, user.pass)
                 .isEquals();
     }
 
@@ -98,9 +98,9 @@ public class User extends AbstractEntity implements Serializable {
         return new HashCodeBuilder(17, 37)
                 .append(surname)
                 .append(name)
-                .append(passportNumber)
+                .append(email)
                 .append(login)
-                .append(password)
+                .append(pass)
                 .toHashCode();
     }
 }

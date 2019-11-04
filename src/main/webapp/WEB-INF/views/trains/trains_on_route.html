@@ -34,7 +34,7 @@
         <tbody>
 
         <tr th:each="train : ${trains}">
-            <td><a th:href="@{/order(trainId=${train.id},dep_station=${dep_station},arr_station=${arr_station},dep_date=${#dates.format(dep_date, 'dd-MM-yyyy')})}">Выбрать:</a></td>
+            <td><a th:href="@{/users/-1/orderTicket(trainId=${train.id},dep_station=${dep_station},arr_station=${arr_station},dep_date=${#dates.format(dep_date, 'dd-MM-yyyy')})}">Выбрать:</a></td>
             <td th:text="${train.id}"></td>
             <td th:text="${train.name}"></td>
             <td th:text="${train.countCoupe}"></td>

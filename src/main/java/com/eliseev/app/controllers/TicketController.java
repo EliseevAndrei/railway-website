@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/tickets")
+@RequestMapping("/users/{id}/tickets")
 public class TicketController {
 
     private Logger logger = LoggerFactory.getLogger(OrderController.class);
@@ -23,11 +24,10 @@ public class TicketController {
     }
 
     @GetMapping
-    public String showTickets(Model model) {
-        logger.info("User send GET /tickets request");
-        model.addAttribute("tickets", service.list());
+    public String showTickets(@PathVariable long id,  Model model) {
+        logger.info("User send GET /users/{}/tickets request", id);
+        model.addAttribute("tickets", service.list(id));
         return "tickets/tickets";
     }
-
 
 }

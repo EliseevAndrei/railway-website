@@ -2,37 +2,98 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--<link rel="stylesheet" type="text/css" href="/resources/css/sign_in_up.css"/>-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<link rel="stylesheet" type="text/css" href="/resources/css/sign_in_up.css"/>-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
 <body>
 
+<script>
+
+    $(document).ready(function () {
+        $('#Section1 #sign-in').click(function (event) {
+            event.preventDefault();
+            var user = {};
+
+            $("#sign-in-form :input[type*='text']").each(function () {
+                user[$(this).attr('id')] = $(this).val();
+            });
+
+            $.ajax({
+                url: "/users/list/registered",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(user),
+                success: function (data, textStatus, xhr) {
+                    $(location).attr('href', data.id +"/orderTicket");
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                   /* alert("Error with status" + textStatus + errorThrown);*/
+                    console.log("error");
+                    $("#Section1 #error").css("display", "block");
+                }
+            });
+        });
+
+        $('#Section2 #sign-up').click(function (event) {
+            event.preventDefault();
+            var user = {};
+
+            $("#sign-up-form :input[type*='text']").each(function () {
+                user[$(this).attr('id')] = $(this).val();
+            });
+
+            $.ajax({
+                url: "/users/list",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(user),
+                success: function (data, textStatus, xhr) {
+                    $(location).attr('href', data.id +"/orderTicket");
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    /* alert("Error with status" + textStatus + errorThrown);*/
+                    console.log("error");
+                    $("#Section2 #error").css("display", "block");
+                }
+            });
+        });
+    });
+</script>
+
 <div class="container">
     <div class="row">
-        <div class="col-md-offset-3 col-md-6">
 
+        <div class="col-md-offset-3 col-md-6">
             <div class="tab" role="tabpanel">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">sign in</a></li>
-                    <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">sign up</a></li>
+                    <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab"
+                                                              data-toggle="tab">sign in</a></li>
+                    <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">sign
+                        up</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content tabs">
                     <div role="tabpanel" class="tab-pane fade in active" id="Section1">
-                        <form class="form-horizontal" th:action="@{users/sign-in}" method="post" th:object="${user}">
+                        <div id="error" style="display: none; color: red">
+                            <h5>Не удалось войти!</h5>
+                        </div>
+                        <form class="form-horizontal" id="sign-in-form" th:action="@{users/sign-in}" method="post"
+                              th:object="${user}">
                             <div class="form-group">
-                                <label for="email">login</label>
-                                <input type="email" class="form-control" id="email" th:field="*{login}">
+                                <label for="login">login</label>
+                                <input type="text" class="form-control" id="login" th:field="*{login}">
                             </div>
                             <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" th:field="*{password}">
+                                <label for="pass">Password</label>
+                                <input type="text" class="form-control" id="pass" th:field="*{pass}">
                             </div>
                             <!--<div class="form-group">
                                 <div class="main-checkbox">
@@ -42,15 +103,18 @@
                                 <span class="text">Keep me Signed in</span>
                             </div>-->
                             <div class="form-group">
-                                <button type="submit" class="btn btn-default">Sign in</button>
+                                <button type="submit" class="btn btn-default" id="sign-in">Sign in</button>
                             </div>
-                           <!-- <div class="form-group forgot-pass">
-                                <button type="submit" class="btn btn-default">forgot password</button>
-                            </div>-->
+                            <!-- <div class="form-group forgot-pass">
+                                 <button type="submit" class="btn btn-default">forgot password</button>
+                             </div>-->
                         </form>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="Section2">
-                        <form class="form-horizontal" th:action="@{users/sign-up}" method="post" th:object="${user}">
+                        <div id="error" style="display: none; color: red">
+                            <h5>Не удалось зарегистрироваться!</h5>
+                        </div>
+                        <form class="form-horizontal" id="sign-up-form" th:action="@{users/sign-up}" method="post" th:object="${user}">
                             <div class="form-group">
                                 <label for="name">First Name</label>
                                 <input type="text" class="form-control" id="name" th:field="*{name}">
@@ -60,15 +124,19 @@
                                 <input type="text" class="form-control" id="surname" th:field="*{surname}">
                             </div>
                             <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" id="email" th:field="*{email}">
+                            </div>
+                            <div class="form-group">
                                 <label for="login">Login</label>
-                                <input type="email" class="form-control" id="login" th:field="*{login}">
+                                <input type="text" class="form-control" id="login" th:field="*{login}">
                             </div>
                             <div class="form-group">
                                 <label for="pass">Password</label>
-                                <input type="password" class="form-control" id="pass" th:field="*{password}">
+                                <input type="text" class="form-control" id="pass" th:field="*{pass}">
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-default">Sign up</button>
+                                <button type="submit" class="btn btn-default" id="sign-up">Sign up</button>
                             </div>
                         </form>
                     </div>

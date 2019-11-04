@@ -2,6 +2,7 @@ package com.eliseev.app.controllers;
 
 import com.eliseev.app.models.Ticket;
 import com.eliseev.app.models.Train;
+import com.eliseev.app.models.User;
 import com.eliseev.app.services.TicketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Controller
-@RequestMapping("/order")
+@RequestMapping("/users/{userId}/orderTicket")
 @SessionAttributes("ticket")
 public class OrderController {
 
@@ -31,8 +32,8 @@ public class OrderController {
         this.service = service;
     }
 
-    @GetMapping
-    public String getOrderForm(@RequestParam("trainId") Train train,
+    @GetMapping(params = {"trainId", "dep_station", "arr_station", "dep_date"})
+    public String getOrderFormNotRegistered(@RequestParam("trainId") Train train,
                         @RequestParam("dep_station") String dep_station,
                         @RequestParam("arr_station") String arr_station,
                         @RequestParam("dep_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "dd-MM-yyyy") Date dep_date,
@@ -44,6 +45,13 @@ public class OrderController {
         ticket.setDepStation(dep_station);
         ticket.setDate(dep_date);
         model.addAttribute("ticket", ticket);
+        return "redirect:/users/authoriseForm";
+    }
+
+    @GetMapping
+    public String getOrderFormRegistered(@PathVariable("userId") long id, @SessionAttribute("ticket") Ticket ticket) {
+        ticket.setUserId(id);
+        logger.info("user send GET /users/{}/orderTicket", id);
         return "order";
     }
 
@@ -53,7 +61,7 @@ public class OrderController {
         logger.info("user create ticket = {}", ticket);
         service.create(ticket);
         sessionStatus.setComplete();
-        return "redirect:/";
+        return "redirect:/users/" + ticket.getUserId() + "/tickets";
     }
 
 }

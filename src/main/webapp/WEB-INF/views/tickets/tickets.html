@@ -40,9 +40,9 @@
             <td th:text="${ticket.arrStation}"></td>
             <td th:text="${#dates.format(ticket.date, 'dd-MM-yyyy')}"></td>
             <td th:text="${ticket.seatType}"></td>
-            <td th:text="${ticket.user.surname}"></td>
-            <td th:text="${ticket.user.name}"></td>
-            <td th:text="${ticket.user.passportNumber}"></td>
+            <td th:text="${ticket.surname}"></td>
+            <td th:text="${ticket.name}"></td>
+            <td th:text="${ticket.passportNumber}"></td>
         </tr>
         </tbody>
     </table>

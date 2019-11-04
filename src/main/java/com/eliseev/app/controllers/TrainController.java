@@ -26,7 +26,7 @@ public class TrainController {
 
     @GetMapping
     public String showTrains(Model model) {
-        logger.info("User send GET /trains/list request");
+        logger.info("User send GET /trains request");
         model.addAttribute("trains", service.list());
         model.addAttribute("train", new Train());
         return "trains/trains";

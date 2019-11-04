@@ -19,7 +19,7 @@
 
 <!-- Modal Edit n New-->
 <div class="container">
-    <form th:action="${'/order'}" th:object="${ticket}" id="form" method="post">
+    <form th:action="@{'orderTicket'}" th:object="${ticket}" id="form" method="post">
 
         <p>Станция отправления: <span th:text="*{depStation}"></span></p>
         <p>Станция прибытия: <span th:text="*{arrStation}"></span></p>
@@ -28,15 +28,15 @@
 
         <div class="form-group col-md-4">
             <lable for="name" class="col-form-label">Фамилия:</lable>
-            <input type="text" th:field="${ticket.user.surname}" class="form-control" id="name" placeholder="Название"/>
+            <input type="text" th:field="${ticket.surname}" class="form-control" id="name" placeholder="Название"/>
         </div>
         <div class="form-group col-md-4">
             <lable for="name" class="col-form-label">Имя</lable>
-            <input type="text" th:field="${ticket.user.name}" class="form-control" id="countCoupe" placeholder="Купе">
+            <input type="text" th:field="${ticket.name}" class="form-control" id="countCoupe" placeholder="Купе">
         </div>
         <div class="form-group col-md-4">
             <lable for="name" class="col-form-label">Номер паспорта</lable>
-            <input type="text" th:field="${ticket.user.passportNumber}" class="form-control" id="countLying" placeholder="Плацкарт">
+            <input type="text" th:field="${ticket.passportNumber}" class="form-control" id="countLying" placeholder="Плацкарт">
         </div>
         <div class="form-group col-md-4">
             <input type="radio" th:field="${ticket.seatType}" value="Купе" name="seatType">

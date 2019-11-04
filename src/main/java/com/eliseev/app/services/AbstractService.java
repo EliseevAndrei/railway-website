@@ -12,7 +12,7 @@ public abstract class AbstractService<E extends AbstractEntity>
 
     Map<Long, E> entities =
             new HashMap<>();
-    private static long idIndex = 3L;
+    protected long idIndex = 3L;
 
     @Override
     public List<E> list() {

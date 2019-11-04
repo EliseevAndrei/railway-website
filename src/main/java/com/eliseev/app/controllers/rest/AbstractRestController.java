@@ -29,7 +29,7 @@ public abstract class AbstractRestController<E extends AbstractEntity,
     }
 
     @Override
-    public E create(@RequestBody  E entity,@PathVariable(required = false)  long ...id) {
+    public E create(@RequestBody  E entity, @PathVariable(required = false)  long ...id) {
         logger.info("User send POST /<entities>/list with body {}", entity);
         return service.create(entity);
     }
