@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Controller
-@RequestMapping("/users/{userId}/orderTicket")
+@RequestMapping("/users")
 @SessionAttributes("ticket")
 public class OrderController {
 
@@ -32,30 +32,36 @@ public class OrderController {
         this.service = service;
     }
 
-    @GetMapping(params = {"trainId", "dep_station", "arr_station", "dep_date"})
+    @GetMapping(path = "/orderTicket", params = {"trainId", "dep_station", "arr_station", "depTime", "arrTime"})
     public String getOrderFormNotRegistered(@RequestParam("trainId") Train train,
-                        @RequestParam("dep_station") String dep_station,
-                        @RequestParam("arr_station") String arr_station,
-                        @RequestParam("dep_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "dd-MM-yyyy") Date dep_date,
-                        Model model) {
-        logger.info("user send request GET /order?idTrain={}&dep_station={}&arr_station={}&dep_date={}", train.getId(), dep_station, arr_station, dep_date);
+                                            @RequestParam("dep_station") String dep_station,
+                                            @RequestParam("arr_station") String arr_station,
+                                            @RequestParam("depTime") /*@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd HH:dd")*/ String depTime,
+                                            @RequestParam("arrTime") /*@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd HH:dd")*/ String arrTime,
+                                            Model model) {
+
+        logger.info("user send request GET /users/orderTicket?idTrain={}&dep_station={}&arr_station={}&depTime={}&arrTime={}", train.getId(), dep_station, arr_station, depTime, arrTime);
         Ticket ticket = new Ticket();
         ticket.setTrain(train);
         ticket.setArrStation(arr_station);
         ticket.setDepStation(dep_station);
-        ticket.setDate(dep_date);
+
+        ticket.setArrTime(new Date());
+        ticket.setDepTime(new Date());
+
+        /*ticket.setDate(dep_date);*/
         model.addAttribute("ticket", ticket);
         return "redirect:/users/authoriseForm";
     }
 
-    @GetMapping
+    @GetMapping(path = "/{userId}/orderTicket")
     public String getOrderFormRegistered(@PathVariable("userId") long id, @SessionAttribute("ticket") Ticket ticket) {
         ticket.setUserId(id);
         logger.info("user send GET /users/{}/orderTicket", id);
         return "order";
     }
 
-    @PostMapping
+    @PostMapping(path = "/{userId}/orderTicket")
     public String setOrder(@ModelAttribute("ticket") Ticket ticket,
                            SessionStatus sessionStatus) {
         logger.info("user create ticket = {}", ticket);

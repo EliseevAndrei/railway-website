@@ -21,9 +21,11 @@
 <div class="container">
     <form th:action="@{'orderTicket'}" th:object="${ticket}" id="form" method="post">
 
-        <p>Станция отправления: <span th:text="*{depStation}"></span></p>
-        <p>Станция прибытия: <span th:text="*{arrStation}"></span></p>
-        <p>Дата: <span th:text="*{#dates.format(date, 'dd-MM-yyyy')}"></span></p>
+        <!--<p>Станция отправления: <span th:text="*{depStation}"></span></p>
+        <p>Станция прибытия: <span th:text="*{arrStation}"></span></p>-->
+        <p>Маршрут: <span th:text="*{depStation} + ' - ' + *{arrStation}"></span></p>
+        <p>Время отправления: <span th:text="*{#dates.format(depTime, 'yyyy-MM-dd HH:mm')}"></span></p>
+        <p>Время прибытия: <span th:text="*{#dates.format(arrTime, 'yyyy-MM-dd HH:mm')}"></span></p>
         <p>Номер поезда: <span th:text="*{train.name}"></span></p>
 
         <div class="form-group col-md-4">

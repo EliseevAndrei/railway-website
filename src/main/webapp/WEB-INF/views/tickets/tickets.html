@@ -24,8 +24,9 @@
         <tr>
             <th>Поезд</th>
             <th>Станция отправления</th>
+            <th>Время отправления</th>
             <th>Станция прибытия</th>
-            <th>Дата</th>
+            <th>Время прибытия</th>
             <th>Тип места</th>
             <th>Фамилия пассажира</th>
             <th>Имя</th>
@@ -37,8 +38,10 @@
         <tr th:each="ticket : ${tickets}">
             <td th:text="${ticket.train.name}"></td>
             <td th:text="${ticket.depStation}"></td>
+            <td th:text="${#dates.format(ticket.depTime, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${ticket.arrStation}"></td>
-            <td th:text="${#dates.format(ticket.date, 'dd-MM-yyyy')}"></td>
+            <td th:text="${#dates.format(ticket.arrTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <!--<td th:text="${#dates.format(ticket.date, 'dd-MM-yyyy')}"></td>-->
             <td th:text="${ticket.seatType}"></td>
             <td th:text="${ticket.surname}"></td>
             <td th:text="${ticket.name}"></td>

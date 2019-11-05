@@ -18,10 +18,15 @@ public class Ticket extends AbstractEntity implements Serializable {
     private String name;
     private String passportNumber;
 
+    private Date arrTime;
+    private Date depTime;
+
+
+
     public Ticket() { }
 
     public Ticket(long id, Train train, long userId,String depStation, String arrStation, Date date, String seatType,
-                  String surname, String name, String passportNumber) {
+                  String surname, String name, String passportNumber, Date depTime, Date arrTime) {
         super.id = id;
         this.userId = userId;
         this.train = train;
@@ -32,6 +37,25 @@ public class Ticket extends AbstractEntity implements Serializable {
         this.surname = surname;
         this.name = name;
         this.passportNumber = passportNumber;
+
+        this.depTime = depTime;
+        this.arrTime = arrTime;
+    }
+
+    public void setArrTime(Date arrTime) {
+        this.arrTime = arrTime;
+    }
+
+    public void setDepTime(Date depTime) {
+        this.depTime = depTime;
+    }
+
+    public Date getArrTime() {
+        return arrTime;
+    }
+
+    public Date getDepTime() {
+        return depTime;
     }
 
     public long getUserId() {

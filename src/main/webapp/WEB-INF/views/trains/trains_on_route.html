@@ -26,23 +26,33 @@
         <thead class="bg-dark text-white">
         <tr>
             <th></th>
-            <th>Название</th>
+            <th></th>
+            <th>Поезд</th>
+            <th>Ст.отправления</th>
+            <th>Время отправления</th>
+            <th>Ст.прибытия</th>
+            <th>Время прибытия</th>
             <th>Кол-во мест купе</th>
             <th>Кол-во мест плацкарт</th>
             <th>Кол-во мест общих</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
 
-        <tr th:each="train : ${trains}">
-            <td><a th:href="@{/users/-1/orderTicket(trainId=${train.id},dep_station=${dep_station},arr_station=${arr_station},dep_date=${#dates.format(dep_date, 'dd-MM-yyyy')})}">Выбрать:</a></td>
-            <td th:text="${train.id}"></td>
-            <td th:text="${train.name}"></td>
-            <td th:text="${train.countCoupe}"></td>
-            <td th:text="${train.countLying}"></td>
-            <td th:text="${train.countCommon}"></td>
+        <tr th:each="route, iStat : ${routes}">
+            <td><a th:href="@{/users/orderTicket(trainId=${route.train.id},dep_station=${route.depStation.station},depTime=${route.depStation.departureTime},arr_station=${route.arrStation.station},arrTime=${route.arrStation.arriveTime})}">Выбрать:</a></td>
+            <td th:text="${iStat.index + 1 + '.'}"></td>
+            <td th:text="${route.train.name}"></td>
+            <td th:text="${route.depStation.station}"></td>
+            <td th:text="${#dates.format(route.depStation.departureTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${route.arrStation.station}"></td>
+            <td th:text="${#dates.format(route.arrStation.arriveTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${route.depStation.coupe_places_amount}"></td>
+            <td th:text="${route.depStation.lying_places_amount}"></td>
+            <td th:text="${route.depStation.common_places_amount}"></td>
             <td>
-                <a class="btn btn-info" th:href="@{/trains/list/} + ${train.id} + @{/stations}">Станкции остановки</a>
+                <a class="btn btn-info" th:href="@{/trains/list/} + ${route.train.id} + @{/stations}">Станкции остановки</a>
             </td>
         </tr>
         </tbody>

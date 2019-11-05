@@ -12,7 +12,7 @@ public class UserService extends AbstractService<User> {
 
     {
         User a = new User(1L, "Андрей", "Елисеев", "eliseev.andrei345@mail.ru",
-                "dron", "dron");
+                "admin", "admin");
         super.entities.put(1L, a);
         User b = new User(2L, "Владимир", "Елисеев", "someemail@gmail.ru",
                 "bunny", "bunny");

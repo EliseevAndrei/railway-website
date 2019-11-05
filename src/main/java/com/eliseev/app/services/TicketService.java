@@ -36,10 +36,10 @@ public class TicketService extends AbstractService<Ticket> {
             e.printStackTrace();
         }
         Ticket a = new Ticket(1L, trainService.get(1), 1L, "Минск",
-                "Гродно", date, "Купе", "Елисеев", "Андрей", "askl32f");
+                "Гродно", date, "Купе", "Елисеев", "Андрей", "askl32f", new Date(), new Date());
         super.entities.put(1L, a);
         Ticket b = new Ticket(2L, trainService.get(2), 1L, "Минск",
-                "Брест", date, "Плацкарт", "Козловская", "Вероника", "sdf23f");
+                "Брест", date, "Плацкарт", "Козловская", "Вероника", "sdf23f", new Date(), new Date());
         super.entities.put(2L, b);
     }
 
