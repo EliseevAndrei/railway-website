@@ -22,12 +22,13 @@ public class TrainStationsRestController extends AbstractRestController<TrainSta
 
     @Override
     public List<TrainStation> list(@PathVariable(required = false) long... id) {
-        logger.info("User send GET /<entities>/list");
+        logger.info("User send GET /trains/list/{}/stations/list", id[0]);
         return service.list(id[0]);
     }
 
     @Override
-    public TrainStation create(TrainStation entity, @PathVariable(required = false) long ...id) {
+    public TrainStation create(@RequestBody TrainStation entity, @PathVariable(required = false) long ...id) {
+        logger.info("User send POST /trains/list/{}/stations/list with body {}", id[0], entity);
         entity.setIdTrain(id[0]);
         return super.create(entity, id);
     }

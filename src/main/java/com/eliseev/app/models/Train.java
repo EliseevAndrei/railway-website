@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Train extends AbstractEntity {
+public class Train extends AbstractEntity implements Serializable {
 
     private String name;
     private int countCoupe;

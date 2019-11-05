@@ -1,6 +1,7 @@
 package com.eliseev.app.controllers;
 
 import com.eliseev.app.models.TrainStation;
+import com.eliseev.app.services.StationService;
 import com.eliseev.app.services.TrainStationsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,20 +19,24 @@ import java.util.List;
 @RequestMapping("/trains/list/{trainId}/stations")
 public class TrainStationsController {
 
+    private Logger logger = LoggerFactory.getLogger(TrainStationsController.class);
     private TrainStationsService service;
+    private StationService stationService;
 
     @Autowired
-    public TrainStationsController(TrainStationsService service) {
+    public TrainStationsController(TrainStationsService service,
+                                   StationService stationService) {
         this.service = service;
+        this.stationService = stationService;
     }
 
     @GetMapping
     public String findAll(@PathVariable("trainId") long trainId, Model model) {
-
+        logger.info("User send /trains/list/{}/stations", trainId);
+        model.addAttribute("allStations", stationService.list());
         model.addAttribute("stations", service.list(trainId));
-        model.addAttribute("station", new TrainStation());
-
-        return "stations/stations";
+        /*model.addAttribute("station", new TrainStation());*/
+        return "stations/trainStations";
 
     }
 

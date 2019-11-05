@@ -1,7 +1,6 @@
 package com.eliseev.app.models;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -51,10 +50,12 @@ public class TrainStation extends AbstractEntity implements Serializable {
         this.station = station;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm", timezone = "Europe/Moscow")
     public void setArriveTime(Date arriveTime) {
         this.arriveTime = arriveTime;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm", timezone = "Europe/Moscow")
     public void setDepartureTime(Date departureTime) {
         this.departureTime = departureTime;
     }
@@ -81,10 +82,12 @@ public class TrainStation extends AbstractEntity implements Serializable {
         return station;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ", timezone = "Europe/Moscow")
     public Date getArriveTime() {
         return arriveTime;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ", timezone = "Europe/Moscow")
     public Date getDepartureTime() {
         return departureTime;
     }

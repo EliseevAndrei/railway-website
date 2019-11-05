@@ -14,6 +14,8 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+    <script src="/resources/js/stations.js"></script>
 </head>
 
 <body>
@@ -23,12 +25,22 @@
     <table class="table table-hover">
         <thead class="bg-dark text-white">
         <tr>
-            <th>Название</th>
+            <th>Станция</th>
+            <th>Время прибытия</th>
+            <th>Время отправления</th>
+            <th>Общие</th>
+            <th>Плацкарт</th>
+            <th>Купе</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="station : ${stations}">
-            <td th:text="${station.name}"></td>
+            <td th:text="${station.station}"></td>
+            <td th:text="${#dates.format(station.arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="${#dates.format(station.departureTime, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="${station.coupe_places_amount}"></td>
+            <td th:text="${station.lying_places_amount}"></td>
+            <td th:text="${station.common_places_amount}"></td>
             <td>
                 <a class="btn btn-primary text-white eBtn"
                    th:href="${'stations/list/' + station.id}">Edit</a>
@@ -54,10 +66,36 @@
                     </div>
                     <div class="modal-body">
                         <input type="text" hidden id="id">
-                        <div class="form-group col-md-8">
-                            <label for="name" class=" label">Название</label>
-                            <input type="text" class="form-control" id="name" name="name" value="">
+                        <input type="text" hidden id="idTrain">
+                        <div class="form-group col-md-6">
+                            <label for="station" class=" label">station</label>
+                            <select id="station" class="form-control">
+                                <option th:each="stat : ${allStations}" th:text="${stat.name}" th:value="${stat.name}"></option>
+                            </select>
                         </div>
+                        <div class="form-group col-md-8">
+                            <label for="arriveTime" class=" label">arriveTime</label>
+                            <input type="text" class="form-control" id="arriveTime" name="arriveTime" value="">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="departureTime" class=" label">departureTime</label>
+                            <input type="text" class="form-control" id="departureTime" name="departureTime" value="">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="lying_places_amount" class=" label">lying_places_amount</label>
+                            <input type="number" class="form-control" id="lying_places_amount" name="lying_places_amount" value="">
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label for="common_places_amount" class=" label">common_places_amount</label>
+                            <input type="number" class="form-control" id="common_places_amount" name="common_places_amount" value="">
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label for="common_places_amount" class=" label">coupe_places_amount</label>
+                            <input type="number" class="form-control" id="coupe_places_amount" name="coupe_places_amount" value="">
+                        </div>
+
                         <div class="form-group col-md-8"></div>
                     </div>
                     <div class="modal-footer">

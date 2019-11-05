@@ -3,9 +3,10 @@ package com.eliseev.app.models;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Ticket extends AbstractEntity {
+public class Ticket extends AbstractEntity implements Serializable {
 
     private Train train;
     private long userId;

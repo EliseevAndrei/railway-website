@@ -31,7 +31,7 @@
         <tbody>
 
         <tr th:each="train : ${trains}">
-            <td th:text="${train.id}"></td>
+            <!--<td th:text="${train.id}"></td>-->
             <td th:text="${train.name}"></td>
             <td th:text="${train.countCoupe}"></td>
             <td th:text="${train.countLying}"></td>
@@ -61,10 +61,11 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group col-md-6">
+                        <input hidden id="id">
+                        <!--<div class="form-group col-md-6">
                             <label for="id" class="label">id</label>
                             <input type="text" class="form-control" id="id" name="id" value="" th:field="*{id}" disabled>
-                        </div>
+                        </div>-->
                         <div class="form-group col-md-6">
                             <lable for="name" class="col-form-label">Название</lable>
                             <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Название">
