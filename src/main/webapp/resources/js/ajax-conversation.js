@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-    let timeZone;
     $('.nBtn, .table .eBtn').click(function (e) {
 
         e.preventDefault();
@@ -78,7 +77,13 @@ $(document).ready(function () {
                 $(location).attr('href', $('.container #reloadBtn').attr('href'));
             },
             error: function (xhr, textStatus, errorThrown) {
-                alert("Error with status" + textStatus + errorThrown);
+                let errorBlock =  $('.myForm #errors');
+                let response = JSON.parse(xhr.responseText);
+                response.errors.forEach(function(error) {
+                    errorBlock.html("<p>"+ error +"</p>")
+                });
+                errorBlock.text();
+                errorBlock.css("display", "block");
             }
         })
     });

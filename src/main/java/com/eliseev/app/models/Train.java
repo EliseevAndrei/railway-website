@@ -3,6 +3,8 @@ package com.eliseev.app.models;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,18 +13,24 @@ import java.util.TreeMap;
 
 public class Train extends AbstractEntity implements Serializable {
 
+    @NotBlank(message = "Название поезда обязательно!")
     private String name;
+    @Digits(integer = 4, fraction = 0, message = "Кол-во купе должно быть целым числом!")
     private int countCoupe;
+    @Digits(integer = 4, fraction = 0, message = "Кол-во плацкарта должно быть целым числом!")
     private int countLying;
+    @Digits(integer = 4, fraction = 0, message = "Кол-во общих должно быть целым числом!")
     private int countCommon;
 
-    private Map<Long, TrainStation> stations = new TreeMap<>();
 
     public Train() { }
 
-    public Train(long id, String name, int countKupe, int countPlaz, int countGen) {
+    public Train(long id, String name, int countCoupe, int countLying, int countCommon) {
         super.id = id;
         this.name = name;
+        this.countCoupe = countCoupe;
+        this.countLying = countLying;
+        this.countCommon = countCommon;
     }
 
     public String getName() {

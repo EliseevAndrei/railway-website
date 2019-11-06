@@ -2,6 +2,7 @@ package com.eliseev.app.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -9,7 +10,9 @@ import java.util.Objects;
 public class TrainStation extends AbstractEntity implements Serializable {
 
     private long idTrain;
+
     private String station;
+    /*@Pattern(regexp = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])\\s(00|0[0-9]|1[0-9]|2[0-3]):(0[0-9]|[0-5][0-9])$")*/
     private Date arriveTime;
     private Date departureTime;
     private long stationSerialNumber;

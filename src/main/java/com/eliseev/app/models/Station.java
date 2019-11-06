@@ -3,8 +3,11 @@ package com.eliseev.app.models;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.validation.constraints.NotBlank;
+
 public class Station extends AbstractEntity {
 
+    @NotBlank(message = "Название станции обязательно")
     private String name;
 
     public Station() {}

@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+    <script src="/resources/js/stations.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <a class="ml-3" id="reloadBtn" href="stations"><i class="fas fa-redo-alt"></i></a>
+    <table class="table table-hover">
+        <thead class="bg-dark text-white">
+        <tr>
+            <th>Станция</th>
+            <th>Время прибытия</th>
+            <th>Время отправления</th>
+            <th>Общие</th>
+            <th>Плацкарт</th>
+            <th>Купе</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="station : ${stations}">
+            <td th:text="${station.station}"></td>
+            <td th:text="${#dates.format(station.arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="${#dates.format(station.departureTime, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="${station.coupe_places_amount}"></td>
+            <td th:text="${station.lying_places_amount}"></td>
+            <td th:text="${station.common_places_amount}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>

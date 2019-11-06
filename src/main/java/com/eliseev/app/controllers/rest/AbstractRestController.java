@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public abstract class AbstractRestController<E extends AbstractEntity,
     }
 
     @Override
-    public E create(@RequestBody E entity, @PathVariable(required = false)  long ...id) {
+    public E create(@Valid @RequestBody E entity, @PathVariable(required = false)  long ...id) {
         logger.info("User send POST /<entities>/list with body {}", entity);
         return service.create(entity);
     }
@@ -41,7 +42,7 @@ public abstract class AbstractRestController<E extends AbstractEntity,
     }
 
     @Override
-    public E update(@RequestBody E entity, long id) {
+    public E update(@Valid @RequestBody E entity, long id) {
         logger.info("User send PUT /<entities>/list/{} with body {}", id, entity);
         return service.update(id, entity);
     }

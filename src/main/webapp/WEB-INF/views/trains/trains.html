@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -62,7 +62,9 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <input hidden id="id">
+                        <div id="errors" style="display: none; color: red;">
+                        </div>
+                        <input type="text" hidden id="id">
                         <!--<div class="form-group col-md-6">
                             <label for="id" class="label">id</label>
                             <input type="text" class="form-control" id="id" name="id" value="" th:field="*{id}" disabled>
@@ -73,15 +75,18 @@
                         </div>
                         <div class="form-group col-md-8">
                             <lable for="name" class="col-form-label">Кол-во мест купе</lable>
-                            <input type="text" th:field="*{countCoupe}" class="form-control" id="countCoupe" placeholder="Купе">
+                            <input type="number" th:field="*{countCoupe}" class="form-control" id="countCoupe"
+                                   placeholder="Купе">
                         </div>
                         <div class="form-group col-md-8">
                             <lable for="name" class="col-form-label">Кол-во мест плацкарт</lable>
-                            <input type="text" th:field="*{countLying}" class="form-control" id="countLying" placeholder="Плацкарт">
+                            <input type="number" th:field="*{countLying}" class="form-control" id="countLying"
+                                   placeholder="Плацкарт">
                         </div>
                         <div class="form-group col-md-8">
                             <lable for="name" class="col-form-label">Кол-во мест общих</lable>
-                            <input type="text" th:field="*{countCommon}" class="form-control" id="countCommon" placeholder="Общее">
+                            <input type="number" th:field="*{countCommon}" class="form-control" id="countCommon"
+                                   placeholder="Общее">
                         </div>
 
                         <div class="form-group col-md-8"></div>

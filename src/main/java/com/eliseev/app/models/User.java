@@ -3,14 +3,23 @@ package com.eliseev.app.models;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 public class User extends AbstractEntity implements Serializable {
 
+    @NotBlank(message = "Surname is required")
     private String surname;
+    @NotBlank(message = "Name is required")
     private String name;
+    @Pattern(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$",
+            message = "Email must be formatted like sometext@mail.ru")
     private String email;
+    @NotBlank(message = "Login is required")
     private String login;
+    @NotBlank(message = "Password is required")
     private String pass;
 
     public User() { }

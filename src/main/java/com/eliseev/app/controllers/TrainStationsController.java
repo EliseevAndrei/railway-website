@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("/trains/list/{trainId}/stations")
+@RequestMapping("/trains/list/{trainId}")
 public class TrainStationsController {
 
     private Logger logger = LoggerFactory.getLogger(TrainStationsController.class);
@@ -30,14 +30,19 @@ public class TrainStationsController {
         this.stationService = stationService;
     }
 
-    @GetMapping
+    @GetMapping("/stations")
     public String findAll(@PathVariable("trainId") long trainId, Model model) {
         logger.info("User send /trains/list/{}/stations", trainId);
         model.addAttribute("allStations", stationService.list());
         model.addAttribute("stations", service.list(trainId));
-        /*model.addAttribute("station", new TrainStation());*/
         return "stations/trainStations";
+    }
 
+    @GetMapping("/stationsForUser")
+    public String findAllForUser(@PathVariable("trainId") long trainId, Model model) {
+        logger.info("User send /trains/list/{}/stationsForUser", trainId);
+        model.addAttribute("stations", service.list(trainId));
+        return "stations/trainStationsForUser";
     }
 
 }

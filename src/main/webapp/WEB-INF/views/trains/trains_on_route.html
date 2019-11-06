@@ -52,7 +52,7 @@
             <td th:text="${route.depStation.lying_places_amount}"></td>
             <td th:text="${route.depStation.common_places_amount}"></td>
             <td>
-                <a class="btn btn-info" th:href="@{/trains/list/} + ${route.train.id} + @{/stations}">Станкции остановки</a>
+                <a class="btn btn-info" th:href="@{/trains/list/} + ${route.train.id} + @{/stationsForUser}">Станкции остановки</a>
             </td>
         </tr>
         </tbody>

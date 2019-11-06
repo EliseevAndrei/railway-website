@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path = "/users/list", produces = "application/json")
 public class UserRestController extends AbstractRestController<User, UserService> {
@@ -21,7 +23,7 @@ public class UserRestController extends AbstractRestController<User, UserService
     }
 
     @PostMapping("/registered")
-    public ResponseEntity<User> signIn(@RequestBody User user) {
+    public ResponseEntity<User> signIn(@Valid @RequestBody User user) {
         logger.info("User send POST /users/list/registered with body {}", user);
         User registeredUser = super.service.signIn(user);
         if (registeredUser == null) {
