@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,7 @@ public class TrainStationsRestController extends AbstractRestController<TrainSta
     }
 
     @Override
-    public TrainStation create(@RequestBody TrainStation entity, @PathVariable(required = false) long ...id) {
+    public TrainStation create(@RequestBody @Valid TrainStation entity, @PathVariable(required = false) long ...id) {
         logger.info("User send POST /trains/list/{}/stations/list with body {}", id[0], entity);
         entity.setIdTrain(id[0]);
         return super.create(entity, id);

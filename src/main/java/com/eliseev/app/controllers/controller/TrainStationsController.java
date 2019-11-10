@@ -1,6 +1,5 @@
-package com.eliseev.app.controllers;
+package com.eliseev.app.controllers.controller;
 
-import com.eliseev.app.models.TrainStation;
 import com.eliseev.app.services.StationService;
 import com.eliseev.app.services.TrainStationsService;
 import org.slf4j.Logger;
@@ -10,10 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @RequestMapping("/trains/list/{trainId}")

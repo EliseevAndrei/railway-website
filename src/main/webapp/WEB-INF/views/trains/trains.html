@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -17,15 +17,25 @@
 </head>
 <body>
 <div class="container">
-    <button class="btn btn-primary nBtn">New</button>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" th:text="#{button.select_lang}">
+            Dropdown button
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" th:href="@{/trains(lang=ru_RU)}" th:text="#{lang.ru}">Russian</a>
+            <a class="dropdown-item" th:href="@{/trains(lang=en_US)}" th:text="#{lang.en_US}">ENGLISH</a>
+        </div>
+    </div>
+    <button class="btn btn-primary nBtn" th:text="#{button.new}">Create</button>
     <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>
     <table class="table table-hover">
         <thead class="bg-dark text-white">
         <tr>
-            <th>Название</th>
-            <th>Кол-во мест купе</th>
-            <th>Кол-во мест плацкарт</th>
-            <th>Кол-во мест общих</th>
+            <th th:text="#{label.name}">Name</th>
+            <th th:text="#{label.amount_coupe_places}">Amount coupe</th>
+            <th th:text="#{label.amount_lying_places}">Amount lying places</th>
+            <th th:text="#{label.amount_common_places}">Amount common places</th>
             <th></th>
         </tr>
         </thead>
@@ -39,9 +49,9 @@
             <td th:text="${train.countCommon}"></td>
             <td>
                 <a class="btn btn-primary text-white eBtn"
-                   th:href="${'trains/list/' + train.id}">Edit</a>
-                <a class="btn btn-danger text-white rBtn" th:href="${'trains/list/'+train.id}">Remove</a>
-                <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/stations}">Станкции остановки</a>
+                   th:href="${'trains/list/' + train.id}" th:text="#{button.edit}">Edit</a>
+                <a class="btn btn-danger text-white rBtn" th:href="${'trains/list/'+train.id}" th:text="#{button.remove}">Remove</a>
+                <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/stations}" th:text="#{button.train_stop_stations}">Train stop stations</a>
             </td>
         </tr>
         </tbody>
@@ -56,44 +66,40 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Save or Update</h5>
+                        <h5 class="modal-title" id="exampleModalLabel" th:text="#{header.new_edit}">Save and Update</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span id="x-btn" aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div id="errors" style="display: none; color: red;">
                         </div>
                         <input type="text" hidden id="id">
-                        <!--<div class="form-group col-md-6">
-                            <label for="id" class="label">id</label>
-                            <input type="text" class="form-control" id="id" name="id" value="" th:field="*{id}" disabled>
-                        </div>-->
                         <div class="form-group col-md-6">
-                            <lable for="name" class="col-form-label">Название</lable>
+                            <lable for="name" class="col-form-label" th:text="#{label.name}">Name</lable>
                             <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Название">
                         </div>
                         <div class="form-group col-md-8">
-                            <lable for="name" class="col-form-label">Кол-во мест купе</lable>
-                            <input type="number" th:field="*{countCoupe}" class="form-control" id="countCoupe"
+                            <lable for="name" class="col-form-label" th:text="#{label.amount_coupe_places}">amount coupe places</lable>
+                            <input type="text" th:field="*{countCoupe}" class="form-control" id="countCoupe"
                                    placeholder="Купе">
                         </div>
                         <div class="form-group col-md-8">
-                            <lable for="name" class="col-form-label">Кол-во мест плацкарт</lable>
-                            <input type="number" th:field="*{countLying}" class="form-control" id="countLying"
+                            <lable for="name" class="col-form-label" th:text="#{label.amount_lying_places}">Amount of lying places</lable>
+                            <input type="text" th:field="*{countLying}" class="form-control" id="countLying"
                                    placeholder="Плацкарт">
                         </div>
                         <div class="form-group col-md-8">
-                            <lable for="name" class="col-form-label">Кол-во мест общих</lable>
-                            <input type="number" th:field="*{countCommon}" class="form-control" id="countCommon"
+                            <lable for="name" class="col-form-label" th:text="#{label.amount_common_places}">Amount of common places</lable>
+                            <input type="text" th:field="*{countCommon}" class="form-control" id="countCommon"
                                    placeholder="Общее">
                         </div>
 
                         <div class="form-group col-md-8"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="edit-submit">Save</button>
+                        <button type="button" class="btn btn-secondary" id="close-btn" data-dismiss="modal" th:text="#{button.close}">Close</button>
+                        <button type="submit" class="btn btn-primary" id="edit-submit" th:text="#{button.save}">Сохранить</button>
                     </div>
                 </div>
             </div>
@@ -108,17 +114,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Save or Update</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{header.remove}">Delete</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="alert-danger text-dark p-2">Are you sure?</div>
+                    <div class="alert-danger text-dark p-2" th:text="#{text.sure}">Are you sure?</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a class="btn btn-danger dBtn" href="" id="delete-submit">Delete</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{button.close}">Close</button>
+                    <a class="btn btn-danger dBtn" href="" id="delete-submit" th:text="#{button.remove}">Delete</a>
                 </div>
             </div>
         </div>

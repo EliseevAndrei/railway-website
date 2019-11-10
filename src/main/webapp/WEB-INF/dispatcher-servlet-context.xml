@@ -10,6 +10,12 @@
     <context:component-scan base-package="com.eliseev.app"/>
     <mvc:resources mapping="/resources/**" location="/resources/" />
     <mvc:view-controller path="/" view-name="main"/>
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang"/>
+        </bean>
+    </mvc:interceptors>
+
 
     <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
@@ -33,6 +39,7 @@
     <bean id="templateEngine"
           class="org.thymeleaf.spring5.SpringTemplateEngine">
         <property name="templateResolver" ref="templateResolver" />
+        <property name="messageSource" ref="messageSource"/>
         <!-- Enabling the SpringEL compiler with Spring 4.2.4 or newer can speed up  -->
         <!-- execution in most scenarios, but might be incompatible with specific    -->
         <!-- cases when expressions in one template are reused across different data -->
@@ -69,11 +76,30 @@
         </property>
     </bean>
 
-    <bean id="globalValidator"
-          class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+    <bean id="globalValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="validationMessageSource" ref="messageSource"/>
     </bean>
 
     <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>/resources/i18n/messages</value>
+                <value>/resources/i18n/application</value>
+            </list>
+        </property>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="fallbackToSystemLocale" value="false"/>
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="RUSSIAN"/>
+        <property name="cookieMaxAge" value="3600"/>
+        <property name="cookieName" value="lang"/>
+    </bean>
+
 
 </beans>
 

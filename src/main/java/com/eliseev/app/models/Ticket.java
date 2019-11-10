@@ -3,6 +3,8 @@ package com.eliseev.app.models;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,15 +12,21 @@ public class Ticket extends AbstractEntity implements Serializable {
 
     private Train train;
     private long userId;
+    @NotBlank(message = "depStation is required")
     private String depStation;
+    @NotBlank(message = "arrStation is required")
     private String arrStation;
-    private Date date;
+    @NotBlank(message = "seatType is required")
     private String seatType;
+    @NotBlank(message = "surname is required")
     private String surname;
+    @NotBlank(message = "name is required")
     private String name;
+    @NotBlank(message = "passportNumber is required")
     private String passportNumber;
-
+    @NotNull(message = "arrTime is required")
     private Date arrTime;
+    @NotNull(message = "depTime is required")
     private Date depTime;
 
 
@@ -32,7 +40,6 @@ public class Ticket extends AbstractEntity implements Serializable {
         this.train = train;
         this.depStation = depStation;
         this.arrStation = arrStation;
-        this.date = date;
         this.seatType = seatType;
         this.surname = surname;
         this.name = name;
@@ -78,10 +85,6 @@ public class Ticket extends AbstractEntity implements Serializable {
         this.arrStation = arrStation;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public void setSeatType(String seatType) {
         this.seatType = seatType;
     }
@@ -110,10 +113,6 @@ public class Ticket extends AbstractEntity implements Serializable {
         return arrStation;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
     public String getSeatType() {
         return seatType;
     }
@@ -136,7 +135,6 @@ public class Ticket extends AbstractEntity implements Serializable {
                 "train=" + train +
                 ", depStation='" + depStation + '\'' +
                 ", arrStation='" + arrStation + '\'' +
-                ", date=" + date +
                 ", seatType='" + seatType + '\'' +
                 ", surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
@@ -157,7 +155,6 @@ public class Ticket extends AbstractEntity implements Serializable {
                 .append(train, ticket.train)
                 .append(depStation, ticket.depStation)
                 .append(arrStation, ticket.arrStation)
-                .append(date, ticket.date)
                 .append(seatType, ticket.seatType)
                 .append(surname, ticket.surname)
                 .append(name, ticket.name)
@@ -171,7 +168,6 @@ public class Ticket extends AbstractEntity implements Serializable {
                 .append(train)
                 .append(depStation)
                 .append(arrStation)
-                .append(date)
                 .append(seatType)
                 .append(surname)
                 .append(name)

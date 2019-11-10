@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -21,7 +21,7 @@
     <p>Станция прибытия: <span th:text="${arr_station}"></span></p>
     <p>Дата: <span th:text="${#dates.format(dep_date, 'dd-MM-yyyy')}"></span></p>
 
-   <!-- <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>-->
+    <!-- <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>-->
     <table class="table table-hover">
         <thead class="bg-dark text-white">
         <tr>
@@ -41,18 +41,24 @@
         <tbody>
 
         <tr th:each="route, iStat : ${routes}">
-            <td><a th:href="@{/users/orderTicket(trainId=${route.train.id},dep_station=${route.depStation.station},depTime=${route.depStation.departureTime},arr_station=${route.arrStation.station},arrTime=${route.arrStation.arriveTime})}">Выбрать:</a></td>
+            <td><a th:href="@{/users/orderTicket(trainId=${route.trainId},dep_station=${route.depStation},
+                    depTime=${#dates.format(route.depTime, 'yyyy-MM-dd HH:mm')},
+                    arr_station=${route.arrStation},
+                    arrTime=${#dates.format(route.arrTime, 'yyyy-MM-dd HH:mm')})}">
+                Выбрать:
+            </a></td>
             <td th:text="${iStat.index + 1 + '.'}"></td>
-            <td th:text="${route.train.name}"></td>
-            <td th:text="${route.depStation.station}"></td>
-            <td th:text="${#dates.format(route.depStation.departureTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${route.arrStation.station}"></td>
-            <td th:text="${#dates.format(route.arrStation.arriveTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${route.depStation.coupe_places_amount}"></td>
-            <td th:text="${route.depStation.lying_places_amount}"></td>
-            <td th:text="${route.depStation.common_places_amount}"></td>
+            <td th:text="${route.trainName}"></td>
+            <td th:text="${route.depStation}"></td>
+            <td th:text="${#dates.format(route.depTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${route.arrStation}"></td>
+            <td th:text="${#dates.format(route.arrTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${route.coupe_places_amount}"></td>
+            <td th:text="${route.lying_places_amount}"></td>
+            <td th:text="${route.common_places_amount}"></td>
             <td>
-                <a class="btn btn-info" th:href="@{/trains/list/} + ${route.train.id} + @{/stationsForUser}">Станкции остановки</a>
+                <a class="btn btn-info" th:href="@{/trains/list/} + ${route.trainId} + @{/stationsForUser}">Станкции
+                    остановки</a>
             </td>
         </tr>
         </tbody>

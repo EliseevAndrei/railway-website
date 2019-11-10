@@ -1,11 +1,7 @@
 package com.eliseev.app.services;
 
 import com.eliseev.app.models.Ticket;
-import com.eliseev.app.models.Train;
-import com.eliseev.app.models.TrainStation;
-import com.eliseev.app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -48,6 +44,7 @@ public class TicketService extends AbstractService<Ticket> {
                 .filter(e -> e.getUserId() == userId)
                 .collect(Collectors.toList());
     }
+
 
 
 }

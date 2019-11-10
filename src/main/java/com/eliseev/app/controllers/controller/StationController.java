@@ -1,7 +1,6 @@
-package com.eliseev.app.controllers;
+package com.eliseev.app.controllers.controller;
 
 import com.eliseev.app.services.StationService;
-import com.eliseev.app.services.TrainService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

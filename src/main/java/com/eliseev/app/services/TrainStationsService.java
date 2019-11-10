@@ -21,11 +21,9 @@ public class TrainStationsService extends AbstractService<TrainStation> {
         try {
             TrainStation a = new TrainStation(1L,1L, "Минск", simpleDateFormat.parse("2019-09-10@10:10"), simpleDateFormat.parse("2019-09-10@10:10"),
                     1L, 10, 11, 12);
-            logger.info("{}", a.getArriveTime());
             super.entities.put(1L, a);
             TrainStation b = new TrainStation(2L, 1L, "Гродно", simpleDateFormat.parse("2019-19-10@19:10"), simpleDateFormat.parse("2019-19-10@19:10"),
                     2L, 10, 10, 10);
-            logger.info("{}", b.getArriveTime());
             super.entities.put(2L, b);
             TrainStation c = new TrainStation(3L, 2L, "Брест", simpleDateFormat.parse("2019-09-10@16:10"), simpleDateFormat.parse("2019-19-10@19:10"),
                     3L, 10, 10, 10);

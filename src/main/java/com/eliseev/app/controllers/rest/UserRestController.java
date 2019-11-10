@@ -7,9 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/users/list", produces = "application/json")
@@ -23,7 +24,7 @@ public class UserRestController extends AbstractRestController<User, UserService
     }
 
     @PostMapping("/registered")
-    public ResponseEntity<User> signIn(@Valid @RequestBody User user) {
+    public ResponseEntity<User> signIn(@RequestBody User user) {
         logger.info("User send POST /users/list/registered with body {}", user);
         User registeredUser = super.service.signIn(user);
         if (registeredUser == null) {

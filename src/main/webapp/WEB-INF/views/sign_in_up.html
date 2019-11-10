@@ -36,7 +36,10 @@
                    /* alert("Error with status" + textStatus + errorThrown);*/
 
                     console.log("error");
-                    $("#Section1 #error").css("display", "block");
+                    let error = $("#Section1 #error");
+                    error.empty();
+                    error.html("<p>Не удалось войти!</p>");
+                    error.css("display", "block");
                 }
             });
         });
@@ -45,7 +48,7 @@
             event.preventDefault();
             var user = {};
 
-            $("#sign-up-form :input[type*='text']").each(function () {
+            $("#sign-up-form :input[type='text']").each(function () {
                 user[$(this).attr('id')] = $(this).val();
             });
 

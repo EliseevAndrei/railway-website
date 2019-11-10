@@ -1,22 +1,22 @@
 $(document).ready(function () {
 
+
     $('.nBtn, .table .eBtn').click(function (e) {
 
         e.preventDefault();
         var href = $(this).attr('href');
         var text = $(this).text();
-        console.log(href);
+
 
         if (text === 'Edit') {
             $.getJSON(href, function (response) {
                 $(".myForm :input[type='text'], .myForm :input[type='number'], .myForm select").each(function () {
-                    console.log($(this).attr('id'));
                     $(this).val(response[$(this).attr('id')]);
                 });
                 $(".myForm #arriveTime, .myForm #departureTime").each(function () {
                     let str = response[$(this).attr('id')].replace("@", " ");
                     str = str.slice(0, 16);
-                    console.log(str);
+
                     $(this).val(str);
                 });
             });
@@ -24,13 +24,16 @@ $(document).ready(function () {
         } else {
 
             $(".myForm :input[type='text']").each(function () {
-                console.log($(this).attr('id'));
                 $(this).val('');
             });
             $('.myForm #id').val('-1').hide();
 
             $('.myForm #exampleModal').modal();
         }
+    });
+
+    $('.myForm #edit-submit, .myForm #close-btn, .myForm #x-btn').click(function() {
+        $('.myForm #errors').empty();
     });
 
     $('.myForm #edit-submit').click(function (event) {
@@ -41,22 +44,16 @@ $(document).ready(function () {
         var object = {};
 
         $(".myForm :input[type='text'], .myForm :input[type='number'], .myForm select").each(function () {
-            console.log($(this).val());
             object[$(this).attr('id')] = $(this).val();
         });
 
         $(".myForm #arriveTime, .myForm #departureTime").each(function () {
-            console.log($(this).val());
             let str = $(this).val().replace(/\s+/g, '');
-            console.log(str);
             let date = str.substring(0, 10);
-            console.log(date);
             let time = str.substring(10, 16);
-            console.log(time);
-            str = date + "@" + time;
+            str = date + " " + time;
             object[$(this).attr('id')] = str;
         });
-        console.log(JSON.stringify(object));
         var putMethod = 'PUT';
         var postMethod = 'POST';
         var method;
@@ -66,7 +63,6 @@ $(document).ready(function () {
             href = href + "/" +object.id;
             method = putMethod;
         }
-        console.log(href);
         $.ajax({
             url: href,
             type: method,
@@ -80,9 +76,9 @@ $(document).ready(function () {
                 let errorBlock =  $('.myForm #errors');
                 let response = JSON.parse(xhr.responseText);
                 response.errors.forEach(function(error) {
-                    errorBlock.html("<p>"+ error +"</p>")
+                    errorBlock.append("<p>"+ error +"</p>");
+                    /*console.log(error);*/
                 });
-                errorBlock.text();
                 errorBlock.css("display", "block");
             }
         })
@@ -94,7 +90,6 @@ $(document).ready(function () {
         event.preventDefault();
         var href = $(this).attr('href');
         deleteHref = href;
-        console.log(href);
         $(".myRemove .dBtn").attr('href', href);
         $('.myRemove #exampleModal').modal();
     });

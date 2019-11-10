@@ -1,4 +1,4 @@
-package com.eliseev.app.controllers;
+package com.eliseev.app.utils;
 
 import com.eliseev.app.models.Train;
 

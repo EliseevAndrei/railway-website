@@ -1,4 +1,4 @@
-package com.eliseev.app.controllers;
+package com.eliseev.app.controllers.controller;
 
 import com.eliseev.app.services.TicketService;
 import org.slf4j.Logger;

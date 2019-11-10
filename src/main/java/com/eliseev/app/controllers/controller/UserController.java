@@ -1,4 +1,4 @@
-package com.eliseev.app.controllers;
+package com.eliseev.app.controllers.controller;
 
 
 import com.eliseev.app.models.User;

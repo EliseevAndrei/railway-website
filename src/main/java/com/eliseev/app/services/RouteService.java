@@ -25,10 +25,24 @@ public class RouteService {
         List<Route> routes = new ArrayList<>();
         List<Train> trains = trainService.list();
         Route route;
+        TrainStation depSt;
+        TrainStation arrSt;
+
         for(Train train : trains) {
-            route = new Route(train,
-                    trainStationsService.list(train.getId()).get(0),
-                    trainStationsService.list(train.getId()).get(1));
+
+            route = new Route();
+            route.setTrainId(train.getId());
+            route.setTrainName(train.getName());
+            depSt = trainStationsService.list(train.getId()).get(0);
+            route.setDepStation(depSt.getStation());
+            route.setDepTime(depSt.getDepartureTime());
+            route.setCoupe_places_amount(depSt.getCoupe_places_amount());
+            route.setLying_places_amount(depSt.getLying_places_amount());
+            route.setCommon_places_amount(depSt.getCommon_places_amount());
+            arrSt = trainStationsService.list(train.getId()).get(1);
+            route.setArrStation(arrSt.getStation());
+            route.setArrTime(arrSt.getArriveTime());
+
             routes.add(route);
         }
 

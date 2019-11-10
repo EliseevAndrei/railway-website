@@ -5,21 +5,19 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class Train extends AbstractEntity implements Serializable {
 
-    @NotBlank(message = "Название поезда обязательно!")
+    @NotBlank(message = "{train.name.notBlank}")
+    @Size(min=1, max = 5, message = "{train.name.size}")
     private String name;
-    @Digits(integer = 4, fraction = 0, message = "Кол-во купе должно быть целым числом!")
+    @Digits(integer = 4, fraction = 0, message = "{train.countCoupe.digits}")
     private int countCoupe;
-    @Digits(integer = 4, fraction = 0, message = "Кол-во плацкарта должно быть целым числом!")
+    @Digits(integer = 4, fraction = 0, message = "{train.countLying.digits}")
     private int countLying;
-    @Digits(integer = 4, fraction = 0, message = "Кол-во общих должно быть целым числом!")
+    @Digits(integer = 4, fraction = 0, message = "{train.countCommon.digits}")
     private int countCommon;
 
 

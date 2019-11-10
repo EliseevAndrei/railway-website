@@ -1,4 +1,4 @@
-package com.eliseev.app.controllers;
+package com.eliseev.app.controllers.controller;
 
 import com.eliseev.app.models.Train;
 import com.eliseev.app.services.RouteService;
@@ -11,18 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Pattern;
+import javax.validation.Valid;
 import java.util.Date;
 
 
 @Controller
-@Validated
 @RequestMapping("/trains")
+@Validated
 public class TrainController {
     private final Logger logger = LoggerFactory.getLogger(TrainController.class);
 
@@ -45,9 +43,9 @@ public class TrainController {
     }
 
     @GetMapping("/onRoute")
-    public String showTrainsOnStations(@ModelAttribute("dep_station") String dep_station,
-                                       @ModelAttribute("arr_station") @Max(2) String arr_station,
-                                       @ModelAttribute("dep_date") @Pattern(regexp = "askdfj") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd")  Date date,
+    public String showTrainsOnStations(@RequestParam("dep_station") String dep_station,
+                                       @RequestParam("arr_station") String arr_station,
+                                       @RequestParam("dep_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") @Valid Date date,
                                        Model model) {
         logger.info("user send GET /trains/onRoute with model attributes {}, {}, {}", dep_station, arr_station, date);
         model.addAttribute("dep_station", dep_station);

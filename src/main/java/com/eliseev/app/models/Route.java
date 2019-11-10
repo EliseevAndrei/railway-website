@@ -1,49 +1,119 @@
 package com.eliseev.app.models;
 
+import java.util.Date;
+
 public class Route {
 
-    private Train train;
-    private TrainStation depStation;
-    private TrainStation arrStation;
+    private long trainId;
+    private String trainName;
+    private String depStation;
+    private Date depTime;
+    private String arrStation;
+    private Date arrTime;
+    private int coupe_places_amount;
+    private int lying_places_amount;
+    private int common_places_amount;
 
-    public Route(Train train, TrainStation depStation, TrainStation arrStation) {
-        this.train = train;
+    public Route(long trainId,String trainName, String depStation,
+                 Date depTime, String arrStation,
+                 Date arrTime, int coupe_places_amount,
+                 int lying_places_amount, int common_places_amount) {
+        this.trainName = trainName;
         this.depStation = depStation;
+        this.depTime = depTime;
+        this.arrStation = arrStation;
+        this.arrTime = arrTime;
+        this.coupe_places_amount = coupe_places_amount;
+        this.lying_places_amount = lying_places_amount;
+        this.common_places_amount = common_places_amount;
+    }
+
+    public Route() { }
+
+    public long getTrainId() {
+        return trainId;
+    }
+
+    public void setTrainId(long trainId) {
+        this.trainId = trainId;
+    }
+
+    public void setTrainName(String trainName) {
+        this.trainName = trainName;
+    }
+
+    public void setDepStation(String depStation) {
+        this.depStation = depStation;
+    }
+
+    public void setDepTime(Date depTime) {
+        this.depTime = depTime;
+    }
+
+    public void setArrStation(String arrStation) {
         this.arrStation = arrStation;
     }
 
-    public Route() {}
-
-    public void setTrain(Train train) {
-        this.train = train;
+    public void setArrTime(Date arrTime) {
+        this.arrTime = arrTime;
     }
 
-    public void setDepStation(TrainStation depStation) {
-        this.depStation = depStation;
+    public void setCoupe_places_amount(int coupe_places_amount) {
+        this.coupe_places_amount = coupe_places_amount;
     }
 
-    public void setArrStation(TrainStation arrStation) {
-        this.arrStation = arrStation;
+    public void setLying_places_amount(int lying_places_amount) {
+        this.lying_places_amount = lying_places_amount;
     }
 
-    public Train getTrain() {
-        return train;
+    public void setCommon_places_amount(int common_places_amount) {
+        this.common_places_amount = common_places_amount;
     }
 
-    public TrainStation getDepStation() {
+    public String getTrainName() {
+        return trainName;
+    }
+
+    public String getDepStation() {
         return depStation;
     }
 
-    public TrainStation getArrStation() {
+    public Date getDepTime() {
+        return depTime;
+    }
+
+    public String getArrStation() {
         return arrStation;
+    }
+
+    public Date getArrTime() {
+        return arrTime;
+    }
+
+    public int getCoupe_places_amount() {
+        return coupe_places_amount;
+    }
+
+    public int getLying_places_amount() {
+        return lying_places_amount;
+    }
+
+    public int getCommon_places_amount() {
+        return common_places_amount;
     }
 
     @Override
     public String toString() {
         return "Route{" +
-                "train=" + train +
-                ", depStation=" + depStation +
-                ", arrStation=" + arrStation +
+                "trainId=" + trainId +
+                ", trainName='" + trainName + '\'' +
+                ", depStation='" + depStation + '\'' +
+                ", depTime=" + depTime +
+                ", arrStation='" + arrStation + '\'' +
+                ", arrTime=" + arrTime +
+                ", coupe_places_amount=" + coupe_places_amount +
+                ", lying_places_amount=" + lying_places_amount +
+                ", common_places_amount=" + common_places_amount +
                 '}';
     }
 }
