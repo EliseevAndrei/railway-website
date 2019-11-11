@@ -1,5 +1,9 @@
 package com.eliseev.app.models;
 
+import com.eliseev.app.utils.CustomRestDateDeserializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.util.Date;
 
 public class Route {
@@ -7,8 +11,10 @@ public class Route {
     private long trainId;
     private String trainName;
     private String depStation;
+    @JsonDeserialize(using = CustomRestDateDeserializer.class)
     private Date depTime;
     private String arrStation;
+    @JsonDeserialize(using = CustomRestDateDeserializer.class)
     private Date arrTime;
     private int coupe_places_amount;
     private int lying_places_amount;
@@ -18,6 +24,7 @@ public class Route {
                  Date depTime, String arrStation,
                  Date arrTime, int coupe_places_amount,
                  int lying_places_amount, int common_places_amount) {
+        this.trainId = trainId;
         this.trainName = trainName;
         this.depStation = depStation;
         this.depTime = depTime;
@@ -29,6 +36,8 @@ public class Route {
     }
 
     public Route() { }
+
+
 
     public long getTrainId() {
         return trainId;
@@ -78,6 +87,7 @@ public class Route {
         return depStation;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ", timezone = "Europe/Moscow")
     public Date getDepTime() {
         return depTime;
     }
@@ -86,6 +96,7 @@ public class Route {
         return arrStation;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ", timezone = "Europe/Moscow")
     public Date getArrTime() {
         return arrTime;
     }

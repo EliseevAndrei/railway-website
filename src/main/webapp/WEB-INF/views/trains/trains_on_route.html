@@ -14,15 +14,60 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
+
 </head>
 <body>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#route-table .a-radio ').click(function (event) {
+            event.preventDefault();
+
+            let route = {};
+            let href = $(this).attr('href');
+
+            $(this).parent().siblings('.text').each(function() {
+                console.log($(this).attr('name') + " = " + $(this).text());
+                route[$(this).attr('name')] = $(this).text();
+            });
+            console.log(route);
+
+            $.ajax({
+                url: href,
+                type: 'POST',
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(route),
+                success: function (data, textStatus, xhr) {
+                    $(location).attr('href', '/users/authoriseForm');
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert("error");
+                    let errorBlock =  $('.myForm #errors');
+                    let response = JSON.parse(xhr.responseText);
+                    response.errors.forEach(function(error) {
+                        errorBlock.append("<p>"+ error +"</p>");
+                        /*console.log(error);*/
+                    });
+                    errorBlock.css("display", "block");
+                }
+            })
+
+        })
+
+
+    })
+
+</script>
 <div class="container">
     <p>Станция отправления: <span th:text="${dep_station}"></span></p>
     <p>Станция прибытия: <span th:text="${arr_station}"></span></p>
     <p>Дата: <span th:text="${#dates.format(dep_date, 'dd-MM-yyyy')}"></span></p>
 
     <!-- <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>-->
-    <table class="table table-hover">
+    <table id="route-table" class="table table-hover">
         <thead class="bg-dark text-white">
         <tr>
             <th></th>
@@ -41,21 +86,19 @@
         <tbody>
 
         <tr th:each="route, iStat : ${routes}">
-            <td><a th:href="@{/users/orderTicket(trainId=${route.trainId},dep_station=${route.depStation},
-                    depTime=${#dates.format(route.depTime, 'yyyy-MM-dd HH:mm')},
-                    arr_station=${route.arrStation},
-                    arrTime=${#dates.format(route.arrTime, 'yyyy-MM-dd HH:mm')})}">
+            <td><a class="a-radio" th:href="@{/users/orderTicket}">
                 Выбрать:
             </a></td>
             <td th:text="${iStat.index + 1 + '.'}"></td>
-            <td th:text="${route.trainName}"></td>
-            <td th:text="${route.depStation}"></td>
-            <td th:text="${#dates.format(route.depTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${route.arrStation}"></td>
-            <td th:text="${#dates.format(route.arrTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${route.coupe_places_amount}"></td>
-            <td th:text="${route.lying_places_amount}"></td>
-            <td th:text="${route.common_places_amount}"></td>
+            <td hidden class="text" name="trainId" th:text="${route.trainId}"></td>
+            <td class="text" name="trainName" th:text="${route.trainName}"></td>
+            <td class="text" name="depStation" th:text="${route.depStation}"></td>
+            <td class="text" name="depTime" th:text="${#dates.format(route.depTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td class="text" name="arrStation" th:text="${route.arrStation}"></td>
+            <td class="text" name="arrTime" th:text="${#dates.format(route.arrTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td class="text" name="coupe_places_amount" th:text="${route.coupe_places_amount}"></td>
+            <td class="text" name="lying_places_amount" th:text="${route.lying_places_amount}"></td>
+            <td class="text" name="common_places_amount" th:text="${route.common_places_amount}"></td>
             <td>
                 <a class="btn btn-info" th:href="@{/trains/list/} + ${route.trainId} + @{/stationsForUser}">Станкции
                     остановки</a>

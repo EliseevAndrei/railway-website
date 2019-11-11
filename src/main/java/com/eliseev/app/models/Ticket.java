@@ -10,7 +10,8 @@ import java.util.Date;
 
 public class Ticket extends AbstractEntity implements Serializable {
 
-    private Train train;
+
+    private String train;
     private long userId;
     @NotBlank(message = "depStation is required")
     private String depStation;
@@ -33,7 +34,7 @@ public class Ticket extends AbstractEntity implements Serializable {
 
     public Ticket() { }
 
-    public Ticket(long id, Train train, long userId,String depStation, String arrStation, Date date, String seatType,
+    public Ticket(long id, String train, long userId,String depStation, String arrStation, String seatType,
                   String surname, String name, String passportNumber, Date depTime, Date arrTime) {
         super.id = id;
         this.userId = userId;
@@ -73,7 +74,7 @@ public class Ticket extends AbstractEntity implements Serializable {
         this.userId = userId;
     }
 
-    public void setTrain(Train train) {
+    public void setTrain(String train) {
         this.train = train;
     }
 
@@ -101,7 +102,7 @@ public class Ticket extends AbstractEntity implements Serializable {
         this.passportNumber = passportNumber;
     }
 
-    public Train getTrain() {
+    public String getTrain() {
         return train;
     }
 

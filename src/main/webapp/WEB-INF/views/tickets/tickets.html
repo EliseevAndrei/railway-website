@@ -36,7 +36,7 @@
         <tbody>
 
         <tr th:each="ticket : ${tickets}">
-            <td th:text="${ticket.train.name}"></td>
+            <td th:text="${ticket.train}"></td>
             <td th:text="${ticket.depStation}"></td>
             <td th:text="${#dates.format(ticket.depTime, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${ticket.arrStation}"></td>

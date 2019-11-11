@@ -20,49 +20,52 @@
 
 <!-- Modal Edit n New-->
 <div class="container">
-    <form th:action="@{'orderTicket'}" th:object="${ticket}" id="form" method="post">
+    <form th:action="@{'orderTicket'}" th:object="${session.ticket}" id="form" method="post">
 
         <!--<p>Станция отправления: <span th:text="*{depStation}"></span></p>
         <p>Станция прибытия: <span th:text="*{arrStation}"></span></p>-->
-        <p>Маршрут: <span th:text="*{depStation} + ' - ' + *{arrStation}"></span></p>
-        <p>Время отправления: <span th:text="*{#dates.format(depTime, 'yyyy-MM-dd HH:mm')}"></span></p>
-        <p>Время прибытия: <span th:text="*{#dates.format(arrTime, 'yyyy-MM-dd HH:mm')}"></span></p>
-        <p>Номер поезда: <span th:text="*{train.name}"></span></p>
+        <p>Маршрут: <span th:text="${session.route.depStation} + ' - ' + ${session.route.arrStation}"></span></p>
+        <p>Время отправления: <span th:text="${#dates.format(session.route.depTime, 'yyyy-MM-dd HH:mm')}"></span></p>
+        <p>Время прибытия: <span th:text="${#dates.format(session.route.arrTime, 'yyyy-MM-dd HH:mm')}"></span></p>
+        <p>Номер поезда: <span th:text="${session.route.trainName}"></span></p>
 
-        <div th:if="${#fields.hasErrors()}">
+        <!--<div th:if="${#fields.hasErrors()}">
             <span class="validationError">
                 Please correct the problems below and resubmit.
             </span>
-        </div>
+        </div>-->
         <div class="form-group col-md-4">
             <lable for="name" class="col-form-label">Фамилия:</lable>
-            <span class="validationError"
+            <!--<span class="validationError"
                   th:if="${#fields.hasErrors('surname')}"
-                  th:errors="*{surname}">Surname error</span>
+                  th:errors="*{surname}">Surname error</span>-->
             <input type="text" th:field="${ticket.surname}" class="form-control" id="name" placeholder="Название"/>
         </div>
         <div class="form-group col-md-4">
             <lable for="name" class="col-form-label">Имя</lable>
-            <span class="validationError"
+            <!--<span class="validationError"
                   th:if="${#fields.hasErrors('name')}"
-                  th:errors="*{name}">Name error</span>
+                  th:errors="*{name}">Name error</span>-->
             <input type="text" th:field="${ticket.name}" class="form-control" id="countCoupe" placeholder="Купе">
         </div>
         <div class="form-group col-md-4">
             <lable for="name" class="col-form-label">Номер паспорта</lable>
-            <span class="validationError"
+           <!-- <span class="validationError"
                   th:if="${#fields.hasErrors('passportNumber')}"
-                  th:errors="*{passportNumber}">Name error</span>
+                  th:errors="*{passportNumber}">Name error</span>-->
             <input type="text" th:field="${ticket.passportNumber}" class="form-control" id="countLying" placeholder="Плацкарт">
         </div>
         <div class="form-group col-md-4">
-            <span class="validationError"
+            <!--<span class="validationError"
                   th:if="${#fields.hasErrors('seatType')}"
-                  th:errors="*{seatType}">SeatType error</span></br>
+                  th:errors="*{seatType}">SeatType error</span></br>-->
+            <span th:text="${session.route.coupe_places_amount}"></span>
             <input type="radio" th:field="${ticket.seatType}" value="Купе" name="seatType">
             <span>Купе</span><br/>
+            <span th:text="${session.route.lying_places_amount}"></span>
             <input type="radio" th:field="${ticket.seatType}" value="Плацкарт" name="seatType">
             <span>Плацкарт</span><br/>
+            <span th:text="${session.route.common_places_amount}"></span>
             <input type="radio" th:field="${ticket.seatType}" value="Общее" name="seatType">
             <span>Общее</span><br/>
         </div>

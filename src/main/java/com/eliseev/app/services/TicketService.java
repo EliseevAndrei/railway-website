@@ -24,18 +24,11 @@ public class TicketService extends AbstractService<Ticket> {
 
     @PostConstruct
     public void initialise() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Date date = null;
-        try {
-            date = dateFormat.parse("10-10-2018");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Ticket a = new Ticket(1L, trainService.get(1), 1L, "Минск",
-                "Гродно", date, "Купе", "Елисеев", "Андрей", "askl32f", new Date(), new Date());
+        Ticket a = new Ticket(1L, trainService.get(1).getName(), 1L, "Минск",
+                "Гродно", "Купе", "Елисеев", "Андрей", "askl32f", new Date(), new Date());
         super.entities.put(1L, a);
-        Ticket b = new Ticket(2L, trainService.get(2), 1L, "Минск",
-                "Брест", date, "Плацкарт", "Козловская", "Вероника", "sdf23f", new Date(), new Date());
+        Ticket b = new Ticket(2L, trainService.get(2).getName(), 1L, "Минск",
+                "Брест", "Плацкарт", "Козловская", "Вероника", "sdf23f", new Date(), new Date());
         super.entities.put(2L, b);
     }
 
