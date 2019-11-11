@@ -36,11 +36,11 @@
         <tbody>
 
         <tr th:each="ticket : ${tickets}">
-            <td th:text="${ticket.train}"></td>
-            <td th:text="${ticket.depStation}"></td>
-            <td th:text="${#dates.format(ticket.depTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${ticket.arrStation}"></td>
-            <td th:text="${#dates.format(ticket.arrTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${ticket.route.trainName}"></td>
+            <td th:text="${ticket.route.depStation}"></td>
+            <td th:text="${#dates.format(ticket.route.depTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${ticket.route.arrStation}"></td>
+            <td th:text="${#dates.format(ticket.route.arrTime, 'yyyy-MM-dd HH:mm')}"></td>
             <!--<td th:text="${#dates.format(ticket.date, 'dd-MM-yyyy')}"></td>-->
             <td th:text="${ticket.seatType}"></td>
             <td th:text="${ticket.surname}"></td>

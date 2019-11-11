@@ -1,12 +1,12 @@
 package com.eliseev.app.services;
 
+import com.eliseev.app.models.Route;
 import com.eliseev.app.models.Ticket;
+import com.eliseev.app.models.Train;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,11 +24,15 @@ public class TicketService extends AbstractService<Ticket> {
 
     @PostConstruct
     public void initialise() {
-        Ticket a = new Ticket(1L, trainService.get(1).getName(), 1L, "Минск",
-                "Гродно", "Купе", "Елисеев", "Андрей", "askl32f", new Date(), new Date());
+        Train train1 = trainService.get(1);
+        Train train2 = trainService.get(2);
+        Route route = new Route(train1.getId(), train1.getName(), "Минск", new Date(),
+                "Гродно", new Date(), 10, 10, 10);
+        Ticket a = new Ticket(1L, 1L, "Елисеев", "Андрей",
+                "askl32f", "Купе", route);
         super.entities.put(1L, a);
-        Ticket b = new Ticket(2L, trainService.get(2).getName(), 1L, "Минск",
-                "Брест", "Плацкарт", "Козловская", "Вероника", "sdf23f", new Date(), new Date());
+        Ticket b = new Ticket(1L, 1L, "Елисеев", "Андрей",
+                "askl32f", "Плацкарт", route);
         super.entities.put(2L, b);
     }
 
