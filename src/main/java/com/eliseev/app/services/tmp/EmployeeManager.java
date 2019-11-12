@@ -1,0 +1,13 @@
+package com.eliseev.app.services.tmp;
+
+import com.eliseev.app.models.tmp.Department;
+import com.eliseev.app.models.tmp.Employee;
+
+import java.util.List;
+
+public interface EmployeeManager
+{
+    List<Employee> getAllEmployees();
+    List<Department> getAllDepartments();
+    void addEmployee(Employee employee);
+}
