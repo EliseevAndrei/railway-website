@@ -4,6 +4,11 @@ import com.eliseev.app.utils.CustomRestDateDeserializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -11,8 +16,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
 public class TrainStation extends AbstractEntity implements Serializable {
 
+    @Transient
     private long idTrain;
 
     @NotBlank(message = "station is required")
@@ -20,16 +27,24 @@ public class TrainStation extends AbstractEntity implements Serializable {
     /*@Pattern(regexp = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])\\s(00|0[0-9]|1[0-9]|2[0-3]):(0[0-9]|[0-5][0-9])$")*/
     @JsonDeserialize(using = CustomRestDateDeserializer.class)
     @NotNull(message = "arrive date  is wrong")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="arr_time")
     private Date arriveTime;
     @JsonDeserialize(using = CustomRestDateDeserializer.class)
     @NotNull(message = "departure date  is wrong")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="dep_time")
     private Date departureTime;
+    @Column(name="station_serial_number")
     private long stationSerialNumber;
     @Digits(integer = 4, fraction = 0, message = "Кол-во купе должно быть целым числом!")
+    @Column(name="coupe_places_amount")
     private int coupe_places_amount;
     @Digits(integer = 4, fraction = 0, message = "Кол-во плацкарта должно быть целым числом!")
+    @Column(name="lying_places_amount")
     private int lying_places_amount;
     @Digits(integer = 4, fraction = 0, message = "Кол-во общих должно быть целым числом!")
+    @Column(name="common_places_amount")
     private int common_places_amount;
 
     public TrainStation(long id, long idTrain, String station,

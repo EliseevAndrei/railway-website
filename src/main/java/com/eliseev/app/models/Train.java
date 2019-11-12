@@ -3,21 +3,27 @@ package com.eliseev.app.models;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+@Entity
 public class Train extends AbstractEntity implements Serializable {
 
     @NotBlank(message = "{train.name.notBlank}")
     @Size(min=1, max = 5, message = "{train.name.size}")
     private String name;
     @Digits(integer = 4, fraction = 0, message = "{train.countCoupe.digits}")
+    @Column(name="coupe_places_amount")
     private int countCoupe;
     @Digits(integer = 4, fraction = 0, message = "{train.countLying.digits}")
+    @Column(name="lying_places_amount")
     private int countLying;
     @Digits(integer = 4, fraction = 0, message = "{train.countCommon.digits}")
+    @Column(name="common_places_amount")
     private int countCommon;
 
 

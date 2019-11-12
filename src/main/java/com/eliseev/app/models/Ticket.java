@@ -3,19 +3,27 @@ package com.eliseev.app.models;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
+@Entity
 public class Ticket extends AbstractEntity implements Serializable {
 
+    @Transient
     private long userId;
+
     @NotBlank(message = "surname is required")
     private String surname;
     @NotBlank(message = "name is required")
     private String name;
     @NotBlank(message = "passportNumber is required")
+    @Column(name="passport_number")
     private String passportNumber;
     @NotBlank(message = "seatType is required")
+    @Column(name="seat_type")
     private String seatType;
 
     private Route route;

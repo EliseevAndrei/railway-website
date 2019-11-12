@@ -4,20 +4,38 @@ import com.eliseev.app.utils.CustomRestDateDeserializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import java.util.Date;
 
+@Embeddable
 public class Route {
 
+    @Transient
     private long trainId;
+
+    @Column(name="train")
     private String trainName;
+    @Column(name="dep_station")
     private String depStation;
     @JsonDeserialize(using = CustomRestDateDeserializer.class)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="dep_time")
     private Date depTime;
+    @Column(name="arr_station")
     private String arrStation;
     @JsonDeserialize(using = CustomRestDateDeserializer.class)
+    @Column(name="arr_time")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date arrTime;
+    @Column(name="coupe_places_amount")
     private int coupe_places_amount;
+    @Column(name="lying_places_amount")
     private int lying_places_amount;
+    @Column(name="common_places_amount")
     private int common_places_amount;
 
     public Route(long trainId,String trainName, String depStation,
