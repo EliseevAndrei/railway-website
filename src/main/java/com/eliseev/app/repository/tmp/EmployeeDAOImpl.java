@@ -1,41 +1,55 @@
 package com.eliseev.app.repository.tmp;
 
-import com.eliseev.app.models.tmp.Department;
 import com.eliseev.app.models.tmp.Employee;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional
 public class EmployeeDAOImpl implements EmployeeDAO{
+
+    private Logger logger = LoggerFactory.getLogger(EmployeeDAOImpl.class);
 
     @PersistenceContext
     private EntityManager manager;
 
     @Override
-    public List<Employee> getAllEmployees() {
-        List<Employee> employees = manager.createQuery("select a from Employee a", Employee.class).getResultList();
-        return employees;
+    public long count() {
+        logger.info("some info");
+        return findAll().size();
     }
 
     @Override
-    public List<Department> getAllDepartments() {
-        List<Department> depts = manager.createQuery("Select a From Department a", Department.class).getResultList();
-        return depts;
-    }
-
-    public Department getDepartmentById(Integer id)
-    {
-        return manager.find(Department.class, id);
+    public Employee findOne(long id) {
+        return manager.find(Employee.class, id);
     }
 
     @Override
-    public void addEmployee(Employee employee) {
-        employee.setDepartment(getDepartmentById(employee.getDepartment().getId()));
+    public Employee save(Employee employee) {
         manager.persist(employee);
+        return employee;
+    }
+
+    @Override
+    public List<Employee> findById(long id) {
+        return manager.createQuery("select s from Employee s where s.id=?", Employee.class)
+        .setParameter(1, id).getResultList();
+    }
+
+    @Override
+    public void delete(long id) {
+        manager.remove(findOne(id));
+    }
+
+    @Override
+    public List<Employee> findAll() {
+        return manager.createQuery("select s from Employee s", Employee.class)
+                .getResultList();
     }
 }
+
+

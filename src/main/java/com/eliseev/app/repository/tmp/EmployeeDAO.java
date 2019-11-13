@@ -1,6 +1,5 @@
 package com.eliseev.app.repository.tmp;
 
-import com.eliseev.app.models.tmp.Department;
 import com.eliseev.app.models.tmp.Employee;
 
 import java.util.List;
@@ -8,8 +7,16 @@ import java.util.List;
 
 public interface EmployeeDAO {
 
-    List<Employee> getAllEmployees();
-    List<Department> getAllDepartments();
-    void addEmployee(Employee employee);
+    long count();
+
+    Employee findOne(long id);
+
+    Employee save(Employee employee);
+
+    List<Employee> findById(long id);
+
+    void delete(long id);
+
+    List<Employee> findAll();
 
 }

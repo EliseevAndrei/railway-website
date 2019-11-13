@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,11 @@ public class Department {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)
+    /*@OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)*/
+    @Transient
     private List<Employee> employees = new ArrayList<>();
 
 
@@ -37,7 +39,7 @@ public class Department {
         return employees;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -49,7 +51,7 @@ public class Department {
         return serialVersionUID;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
