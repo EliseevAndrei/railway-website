@@ -2,6 +2,7 @@ package com.eliseev.app.db;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -13,12 +14,12 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan("com.eliseev.app")
+@ComponentScans(value = { @ComponentScan("com.eliseev.app.repository.tmp"),
+        @ComponentScan("com.eliseev.app.services.tmp") })
 @EnableTransactionManagement
 public class TestConfig {
 
@@ -45,15 +46,14 @@ public class TestConfig {
         properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         properties.setProperty("hibernate.dialect","org.hibernate.dialect.H2Dialect");
         properties.setProperty("hibernate.show_sql", "true");
-        properties.setProperty("hibernate.hbm2ddl.import_files", "classpath:db/sql/data.sql");
+        properties.setProperty("hibernate.hbm2ddl.import_files", "db/sql/data.sql");
         return properties;
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(
-            EntityManagerFactory emf) {
+    public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(emf);
+        transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
         return transactionManager;
     }
 
@@ -61,6 +61,7 @@ public class TestConfig {
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
         return new PersistenceExceptionTranslationPostProcessor();
     }
+
 
 
 }

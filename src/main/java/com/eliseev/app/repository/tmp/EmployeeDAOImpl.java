@@ -4,6 +4,8 @@ import com.eliseev.app.models.tmp.Employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,11 +36,6 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         return employee;
     }
 
-    @Override
-    public List<Employee> findById(long id) {
-        return manager.createQuery("select s from Employee s where s.id=?", Employee.class)
-        .setParameter(1, id).getResultList();
-    }
 
     @Override
     public void delete(long id) {

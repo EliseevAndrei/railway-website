@@ -1,10 +1,14 @@
 package com.eliseev.app.models.tmp;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,7 +19,7 @@ public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
@@ -25,13 +29,13 @@ public class Employee implements Serializable {
     @NotBlank
     private String email;
 
-    /*@NotNull
-    @ManyToOne*/
-    @Transient
+    @NotNull
+    @ManyToOne(cascade = CascadeType.ALL)
     private Department department;
 
     public Employee() {
     }
+
 
     public Employee(@NotBlank String firstName, @NotBlank String lastName, @NotBlank String email, @NotNull Department department) {
         this.firstName = firstName;
@@ -39,6 +43,17 @@ public class Employee implements Serializable {
         this.email = email;
         this.department = department;
     }
+
+    public Employee(Long id, @NotBlank String firstName, @NotBlank String lastName, @NotBlank String email, @NotNull Department department) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.department = department;
+    }
+
+
+
 
     public void setId(Long id) {
         this.id = id;
@@ -93,5 +108,33 @@ public class Employee implements Serializable {
                 ", email='" + email + '\'' +
                 ", department=" + department +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Employee employee = (Employee) o;
+
+        return new EqualsBuilder()
+                .append(id, employee.id)
+                .append(firstName, employee.firstName)
+                .append(lastName, employee.lastName)
+                .append(email, employee.email)
+                .append(department, employee.department)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(firstName)
+                .append(lastName)
+                .append(email)
+                .append(department)
+                .toHashCode();
     }
 }

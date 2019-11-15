@@ -13,8 +13,6 @@ public interface EmployeeDAO {
 
     Employee save(Employee employee);
 
-    List<Employee> findById(long id);
-
     void delete(long id);
 
     List<Employee> findAll();
