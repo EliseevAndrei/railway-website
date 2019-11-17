@@ -5,10 +5,13 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Train extends AbstractEntity implements Serializable {
@@ -26,6 +29,9 @@ public class Train extends AbstractEntity implements Serializable {
     @Column(name="common_places_amount")
     private int countCommon;
 
+    @OneToMany(mappedBy = "train")
+    private List<TrainStation> trainStationList = new ArrayList<>();
+
 
     public Train() { }
 
@@ -35,6 +41,14 @@ public class Train extends AbstractEntity implements Serializable {
         this.countCoupe = countCoupe;
         this.countLying = countLying;
         this.countCommon = countCommon;
+    }
+
+    public List<TrainStation> getTrainStationList() {
+        return trainStationList;
+    }
+
+    public void setTrainStationList(List<TrainStation> trainStationList) {
+        this.trainStationList = trainStationList;
     }
 
     public String getName() {

@@ -2,6 +2,7 @@ package com.eliseev.app.db;
 
 import com.eliseev.app.models.tmp.Department;
 import com.eliseev.app.models.tmp.Employee;
+import com.eliseev.app.repository.tmp.DepartmentDAO;
 import com.eliseev.app.services.tmp.EmployeeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -24,14 +26,17 @@ public class DaoEmployeeTest {
 
     @Autowired
     private EmployeeService service;
-
+    @Autowired
+    private DepartmentDAO departmentDAO;
 
     @Test
+    @Transactional
     public void count() {
         assertEquals(3, service.count());
     }
 
     @Test
+    @Transactional
     public void findOne() {
         Employee employee = service.findOne(1);
         assertEquals(employee.getLastName(), "eliseev");
@@ -41,25 +46,47 @@ public class DaoEmployeeTest {
     }
 
     @Test
+    @Transactional
     public void save() {
         assertEquals(3, service.count());
-        Department department = new Department("new dep");
+        Department department = new Department("dep");
         Employee employee = new Employee("vera", "kozlova", "verko@mail.ru", department);
         Employee saved = service.save(employee);
         Employee found = service.findOne(4);
         assertEquals(found, saved);
-        assertEquals(4, saved.getDepartment().getId().longValue());
-
     }
 
     @Test
+    @Transactional
     public void delete() {
         assertNotNull(service.findOne(1));
         service.delete(1);
         assertNull(service.findOne(1));
     }
 
+    @Test
+    @Transactional
+    public void update() {
+        assertEquals(3, service.count());
+        Department department = new Department("new dep");
+        Employee employee = new Employee(1L,"vera", "kozlova", "verko@mail.ru", department);
+        Employee saved = service.update(employee);
+        Employee found = service.findOne(1L);
+        assertEquals(saved, found);
+        assertEquals(3, service.count());
+    }
 
+
+    @Test
+    @Transactional
+    public void departmentRepositoryTest() {
+
+        Department department = new Department("arr");
+        Employee employee = new Employee(1L,"vera", "kozlova", "verko@mail.ru", department);
+
+        service.save(employee);
+
+    }
 
 
 }

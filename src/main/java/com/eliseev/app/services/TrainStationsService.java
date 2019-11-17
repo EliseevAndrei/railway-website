@@ -38,7 +38,7 @@ public class TrainStationsService extends AbstractService<TrainStation> {
 
     public List<TrainStation> list(long trainId) {
         return super.entities.values().stream()
-                .filter(e -> e.getIdTrain() == trainId)
+                .filter(e -> e.getTrain().getId() == trainId)
                 .collect(Collectors.toList());
     }
 }

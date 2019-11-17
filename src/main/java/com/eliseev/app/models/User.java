@@ -4,12 +4,16 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User extends AbstractEntity implements Serializable {
+
 
     @NotBlank(message = "Surname is required")
     private String surname;
@@ -24,6 +28,9 @@ public class User extends AbstractEntity implements Serializable {
     @NotBlank(message = "Password is required")
     private String pass;
 
+    @OneToMany(mappedBy = "user")
+    private List<Ticket> trainStationList = new ArrayList<>();
+
     public User() { }
 
     public User(long id, String surname, String name, String email, String login, String pass) {
@@ -33,6 +40,14 @@ public class User extends AbstractEntity implements Serializable {
         this.email = email;
         this.login = login;
         this.pass = pass;
+    }
+
+    public void setTrainStationList(List<Ticket> trainStationList) {
+        this.trainStationList = trainStationList;
+    }
+
+    public List<Ticket> getTrainStationList() {
+        return trainStationList;
     }
 
     public void setSurname(String surname) {

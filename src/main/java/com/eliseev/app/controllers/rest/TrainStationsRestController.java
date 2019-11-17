@@ -30,7 +30,7 @@ public class TrainStationsRestController extends AbstractRestController<TrainSta
     @Override
     public TrainStation create(@RequestBody @Valid TrainStation entity, @PathVariable(required = false) long ...id) {
         logger.info("User send POST /trains/list/{}/stations/list with body {}", id[0], entity);
-        entity.setIdTrain(id[0]);
+        entity.getTrain().setId(id[0]);
         return super.create(entity, id);
     }
 

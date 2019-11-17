@@ -46,7 +46,7 @@ public class TestConfig {
         properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         properties.setProperty("hibernate.dialect","org.hibernate.dialect.H2Dialect");
         properties.setProperty("hibernate.show_sql", "true");
-        properties.setProperty("hibernate.hbm2ddl.import_files", "db/sql/data.sql");
+        /*properties.setProperty("hibernate.hbm2ddl.import_files", "db/sql/data.sql");*/
         return properties;
     }
 

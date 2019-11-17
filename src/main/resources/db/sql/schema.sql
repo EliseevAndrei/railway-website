@@ -1,3 +1,4 @@
+/*
 create table if not exists Employee (
                                           id identity,
                                           firstName varchar(45) not null,
@@ -11,4 +12,4 @@ create table if not exists Department (
 );
 
 alter table Employee
-    add foreign key (department) references Department(id);
+    add foreign key (department) references Department(id);*/

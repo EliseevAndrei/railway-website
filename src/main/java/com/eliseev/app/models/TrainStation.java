@@ -6,11 +6,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
@@ -19,11 +19,20 @@ import java.util.Objects;
 @Entity
 public class TrainStation extends AbstractEntity implements Serializable {
 
-    @Transient
-    private long idTrain;
+    /*@Transient
+    private long idTrain;*/
 
-    @NotBlank(message = "station is required")
-    private String station;
+    @ManyToOne
+    @JoinColumn(name="train_id")
+    private Train train;
+
+    @ManyToOne
+    @JoinColumn(name="station_id")
+    private Station station;
+
+
+    /*@NotBlank(message = "station is required")
+    private String station;*/
     /*@Pattern(regexp = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])\\s(00|0[0-9]|1[0-9]|2[0-3]):(0[0-9]|[0-5][0-9])$")*/
     @JsonDeserialize(using = CustomRestDateDeserializer.class)
     @NotNull(message = "arrive date  is wrong")
@@ -54,8 +63,8 @@ public class TrainStation extends AbstractEntity implements Serializable {
                         int lying_places_amount,
                         int common_places_amount) {
         super.id = id;
-        this.idTrain = idTrain;
-        this.station = station;
+       /* this.idTrain = idTrain;*/
+/*        this.station = station;*/
         this.arriveTime = arriveTime;
         this.departureTime = departureTime;
         this.stationSerialNumber = stationSerialNumber;
@@ -67,18 +76,34 @@ public class TrainStation extends AbstractEntity implements Serializable {
     public TrainStation() {
     }
 
+    public void setStation(Station station) {
+        this.station = station;
+    }
 
+    public Station getStation() {
+        return station;
+    }
+
+    public void setTrain(Train train) {
+        this.train = train;
+    }
+
+    public Train getTrain() {
+        return train;
+    }
+
+    /*
     public long getIdTrain() {
         return idTrain;
     }
 
     public void setIdTrain(long idTrain) {
         this.idTrain = idTrain;
-    }
+    }*/
 
-    public void setStation(String station) {
+  /*  public void setStation(String station) {
         this.station = station;
-    }
+    }*/
 
     /*@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Europe/Moscow")*/
     public void setArriveTime(Date arriveTime) {
@@ -108,9 +133,9 @@ public class TrainStation extends AbstractEntity implements Serializable {
 
 
 
-    public String getStation() {
+   /* public String getStation() {
         return station;
-    }
+    }*/
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ", timezone = "Europe/Moscow")
     public Date getArriveTime() {
@@ -143,7 +168,7 @@ public class TrainStation extends AbstractEntity implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TrainStation that = (TrainStation) o;
-        return idTrain == that.idTrain &&
+        return /*idTrain == that.idTrain &&*/
                 stationSerialNumber == that.stationSerialNumber &&
                 Objects.equals(station, that.station) &&
                 Objects.equals(arriveTime, that.arriveTime) &&
@@ -152,13 +177,13 @@ public class TrainStation extends AbstractEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idTrain, station, arriveTime, departureTime, stationSerialNumber);
+        return Objects.hash(/*idTrain,*/ station, arriveTime, departureTime, stationSerialNumber);
     }
 
     @Override
     public String toString() {
         return "TrainStation{" +
-                "idTrain=" + idTrain +
+                /*"idTrain=" + idTrain +*/
                 ", station='" + station + '\'' +
                 ", arriveTime=" + arriveTime +
                 ", departureTime=" + departureTime +

@@ -34,13 +34,13 @@ public class RouteService {
             route.setTrainId(train.getId());
             route.setTrainName(train.getName());
             depSt = trainStationsService.list(train.getId()).get(0);
-            route.setDepStation(depSt.getStation());
+            route.setDepStation(depSt.getStation().getName());
             route.setDepTime(depSt.getDepartureTime());
             route.setCoupe_places_amount(depSt.getCoupe_places_amount());
             route.setLying_places_amount(depSt.getLying_places_amount());
             route.setCommon_places_amount(depSt.getCommon_places_amount());
             arrSt = trainStationsService.list(train.getId()).get(1);
-            route.setArrStation(arrSt.getStation());
+            route.setArrStation(arrSt.getStation().getName());
             route.setArrTime(arrSt.getArriveTime());
 
             routes.add(route);

@@ -4,8 +4,6 @@ import com.eliseev.app.models.tmp.Employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,7 +30,12 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
     @Override
     public Employee save(Employee employee) {
-        manager.persist(employee);
+
+        if (employee.getId() == null)
+            manager.persist(employee);
+        else
+            return manager.merge(employee);
+
         return employee;
     }
 
@@ -47,6 +50,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         return manager.createQuery("select s from Employee s", Employee.class)
                 .getResultList();
     }
+
 }
 
 

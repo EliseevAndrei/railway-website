@@ -4,7 +4,10 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Station extends AbstractEntity {
@@ -12,11 +15,22 @@ public class Station extends AbstractEntity {
     @NotBlank(message = "Название станции обязательно")
     private String name;
 
+    @OneToMany(mappedBy = "station")
+    private List<TrainStation> trainStations = new ArrayList<>();
+
     public Station() {}
 
     public Station(long id, String name) {
         super.id=id;
         this.name = name;
+    }
+
+    public void setTrainStations(List<TrainStation> trainStations) {
+        this.trainStations = trainStations;
+    }
+
+    public List<TrainStation> getTrainStations() {
+        return trainStations;
     }
 
     public String getName() {
