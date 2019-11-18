@@ -3,6 +3,8 @@ package com.eliseev.app.services;
 import com.eliseev.app.models.Route;
 import com.eliseev.app.models.Ticket;
 import com.eliseev.app.models.Train;
+
+import com.eliseev.app.repository.custom.TicketDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +14,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TicketService extends AbstractService<Ticket> {
+public class TicketService extends AbstractService<Ticket, TicketDAO> {
 
 
     private TrainService trainService;
 
     @Autowired
-    public TicketService(TrainService trainService) {
+    public TicketService(TrainService trainService,
+                         TicketDAO ticketDAO) {
+        super(ticketDAO);
         this.trainService = trainService;
     }
 

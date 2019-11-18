@@ -48,9 +48,9 @@ public abstract class AbstractRestController<E extends AbstractEntity,
     }
 
     @Override
-    public E delete(long id) {
+    public void delete(long id) {
         logger.info("User send DELETE /<entities>/list/{}", id);
-        return service.delete(id);
+        service.delete(id);
     }
 
 }

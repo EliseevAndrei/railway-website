@@ -1,6 +1,8 @@
 package com.eliseev.app.repository.tmp;
 
 import com.eliseev.app.models.tmp.Department;
+import com.eliseev.app.models.tmp.Employee;
+import com.eliseev.app.repository.AbstractDAO;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -8,39 +10,11 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class DepartmentDAOImpl implements DepartmentDAO {
+public class DepartmentDAOImpl extends AbstractDAO<Department>
+        implements DepartmentDAO {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    @Override
-    public long count() {
-        return findAll().size();
+    public DepartmentDAOImpl() {
+        super(Department.class);
     }
 
-    @Override
-    public Department findOne(long id) {
-        return entityManager.find(Department.class, id);
-    }
-
-    @Override
-    public Department save(Department department) {
-        if (department.getId() == null) {
-            entityManager.persist(department);
-        } else {
-            return entityManager.merge(department);
-        }
-        return department;
-    }
-
-    @Override
-    public void delete(long id) {
-        entityManager.remove(findOne(id));
-    }
-
-    @Override
-    public List<Department> findAll() {
-        return entityManager.createQuery("select d from Department d", Department.class)
-                .getResultList();
-    }
 }

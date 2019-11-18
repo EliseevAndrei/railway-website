@@ -24,6 +24,6 @@ public interface IRestController<E extends AbstractEntity> {
     E update(@Valid @RequestBody E entity, @PathVariable long id);
 
     @DeleteMapping("/{id}")
-    E delete(@PathVariable long id);
+    void delete(@PathVariable long id);
 
 }

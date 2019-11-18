@@ -1,20 +1,8 @@
 package com.eliseev.app.repository.tmp;
 
 import com.eliseev.app.models.tmp.Employee;
+import com.eliseev.app.repository.IDAO;
 
-import java.util.List;
-
-
-public interface EmployeeDAO {
-
-    long count();
-
-    Employee findOne(long id);
-
-    Employee save(Employee employee);
-
-    void delete(long id);
-
-    List<Employee> findAll();
+public interface EmployeeDAO extends IDAO<Employee> {
 
 }

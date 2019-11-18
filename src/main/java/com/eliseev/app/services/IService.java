@@ -14,6 +14,6 @@ public interface IService<E extends AbstractEntity> {
 
     E update(long id, E entity);
 
-    E delete(long id);
+    void delete(long id);
 
 }

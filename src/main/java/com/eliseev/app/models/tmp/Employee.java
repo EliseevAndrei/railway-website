@@ -1,5 +1,7 @@
 package com.eliseev.app.models.tmp;
 
+import com.eliseev.app.models.AbstractEntity;
+import com.eliseev.app.repository.AbstractDAO;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -14,13 +16,13 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-public class Employee implements Serializable {
+public class Employee extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;*/
 
     @NotBlank
     private String firstName;

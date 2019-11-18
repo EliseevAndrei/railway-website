@@ -1,5 +1,6 @@
 package com.eliseev.app.models.tmp;
 
+import com.eliseev.app.models.AbstractEntity;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -9,13 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Department {
+public class Department extends AbstractEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;*/
     private String name;
 
     public Department() {

@@ -1,18 +1,26 @@
 package com.eliseev.app.services;
 
 import com.eliseev.app.models.AbstractEntity;
+import com.eliseev.app.repository.IDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractService<E extends AbstractEntity>
-        implements IService<E> {
+public abstract class AbstractService<E extends AbstractEntity,
+        R extends IDAO<E>> implements IService<E> {
 
-    Map<Long, E> entities =
+    protected Map<Long, E> entities =
             new HashMap<>();
     protected long idIndex = 3L;
+
+    protected R dao;
+
+    public AbstractService(R dao) {
+        this.dao = dao;
+    }
 
     @Override
     public List<E> list() {
@@ -39,8 +47,8 @@ public abstract class AbstractService<E extends AbstractEntity>
     }
 
     @Override
-    public E delete(long id) {
-        return entities.remove(id);
+    public void delete(long id) {
+         entities.remove(id);
     }
 
 

@@ -2,8 +2,10 @@ package com.eliseev.app.services;
 
 
 import com.eliseev.app.models.TrainStation;
+import com.eliseev.app.repository.custom.TrainStationsDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -12,7 +14,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TrainStationsService extends AbstractService<TrainStation> {
+public class TrainStationsService extends AbstractService<TrainStation, TrainStationsDAO> {
+
+    @Autowired
+    public TrainStationsService(TrainStationsDAO dao) {
+        super(dao);
+    }
 
     private Logger logger = LoggerFactory.getLogger(TrainStationsService.class);
 

@@ -3,6 +3,7 @@ package com.eliseev.app.services;
 import com.eliseev.app.models.Route;
 import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainStation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class RouteService {
     private TrainService trainService;
     private TrainStationsService trainStationsService;
 
+    @Autowired
     public RouteService(TrainService trainService,
                         TrainStationsService trainStationsService) {
         this.trainService = trainService;

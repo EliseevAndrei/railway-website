@@ -2,8 +2,7 @@ package com.eliseev.app.db;
 
 import com.eliseev.app.models.tmp.Department;
 import com.eliseev.app.models.tmp.Employee;
-import com.eliseev.app.repository.tmp.DepartmentDAO;
-import com.eliseev.app.services.tmp.EmployeeService;
+import com.eliseev.app.repository.tmp.EmployeeDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -25,20 +24,22 @@ public class DaoEmployeeTest {
     private Logger logger = LoggerFactory.getLogger(DaoEmployeeTest.class);
 
     @Autowired
-    private EmployeeService service;
-    @Autowired
-    private DepartmentDAO departmentDAO;
+    private EmployeeDAO employeeDAO;
+
+
+
+
 
     @Test
     @Transactional
     public void count() {
-        assertEquals(3, service.count());
+        assertEquals(3, employeeDAO.count());
     }
 
     @Test
     @Transactional
     public void findOne() {
-        Employee employee = service.findOne(1);
+        Employee employee = employeeDAO.findOne(1);
         assertEquals(employee.getLastName(), "eliseev");
         assertEquals(employee.getFirstName(), "andrei");
         assertEquals(employee.getEmail(), "eliseev.andrei345@mail.ru");
@@ -48,34 +49,34 @@ public class DaoEmployeeTest {
     @Test
     @Transactional
     public void save() {
-        assertEquals(3, service.count());
+        assertEquals(3, employeeDAO.count());
         Department department = new Department("dep");
         Employee employee = new Employee("vera", "kozlova", "verko@mail.ru", department);
-        Employee saved = service.save(employee);
-        Employee found = service.findOne(4);
+        Employee saved = employeeDAO.save(employee);
+        Employee found = employeeDAO.findOne(4);
         assertEquals(found, saved);
     }
 
     @Test
     @Transactional
     public void delete() {
-        assertNotNull(service.findOne(1));
-        service.delete(1);
-        assertNull(service.findOne(1));
+        assertNotNull(employeeDAO.findOne(1));
+        employeeDAO.delete(1);
+        assertNull(employeeDAO.findOne(1));
     }
 
-    @Test
+   /* @Test
     @Transactional
     public void update() {
-        assertEquals(3, service.count());
+        assertEquals(3, employeeDAO.count());
         Department department = new Department("new dep");
         Employee employee = new Employee(1L,"vera", "kozlova", "verko@mail.ru", department);
-        Employee saved = service.update(employee);
-        Employee found = service.findOne(1L);
+        Employee saved = employeeDAO.save(employee);
+        Employee found = employeeDAO.findOne(1L);
         assertEquals(saved, found);
-        assertEquals(3, service.count());
+        assertEquals(3, employeeDAO.count());
     }
-
+*/
 
     @Test
     @Transactional
@@ -84,9 +85,8 @@ public class DaoEmployeeTest {
         Department department = new Department("arr");
         Employee employee = new Employee(1L,"vera", "kozlova", "verko@mail.ru", department);
 
-        service.save(employee);
+        employeeDAO.save(employee);
 
     }
-
 
 }
