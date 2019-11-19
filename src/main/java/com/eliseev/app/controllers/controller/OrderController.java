@@ -70,7 +70,7 @@ public class OrderController {
 
         service.create(ticket);
 
-        return "redirect:/users/" + ticket.getUserId() + "/tickets";
+        return "redirect:/users/" + ticket.getUser().getId() + "/tickets";
     }
 
 }

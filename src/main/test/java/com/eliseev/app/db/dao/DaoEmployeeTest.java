@@ -1,5 +1,6 @@
-package com.eliseev.app.db;
+package com.eliseev.app.db.dao;
 
+import com.eliseev.app.db.TestConfig;
 import com.eliseev.app.models.tmp.Department;
 import com.eliseev.app.models.tmp.Employee;
 import com.eliseev.app.repository.tmp.EmployeeDAO;
@@ -25,10 +26,6 @@ public class DaoEmployeeTest {
 
     @Autowired
     private EmployeeDAO employeeDAO;
-
-
-
-
 
     @Test
     @Transactional
@@ -65,7 +62,7 @@ public class DaoEmployeeTest {
         assertNull(employeeDAO.findOne(1));
     }
 
-   /* @Test
+    @Test
     @Transactional
     public void update() {
         assertEquals(3, employeeDAO.count());
@@ -74,9 +71,7 @@ public class DaoEmployeeTest {
         Employee saved = employeeDAO.save(employee);
         Employee found = employeeDAO.findOne(1L);
         assertEquals(saved, found);
-        assertEquals(3, employeeDAO.count());
     }
-*/
 
     @Test
     @Transactional

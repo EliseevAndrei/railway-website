@@ -52,7 +52,7 @@
         <property name="entityManagerFactory" ref="entityManagerFactoryBean"/>
     </bean>
 
-    <tx:annotation-driven/>
+    <tx:annotation-driven proxy-target-class="true"/>
 
 
     <bean id="persistenceExceptionTranslationPostProcessor" class=

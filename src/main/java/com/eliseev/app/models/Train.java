@@ -43,6 +43,13 @@ public class Train extends AbstractEntity implements Serializable {
         this.countCommon = countCommon;
     }
 
+    public Train(String name, int countCoupe, int countLying, int countCommon) {
+        this.name = name;
+        this.countCoupe = countCoupe;
+        this.countLying = countLying;
+        this.countCommon = countCommon;
+    }
+
     public List<TrainStation> getTrainStationList() {
         return trainStationList;
     }

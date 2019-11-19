@@ -56,15 +56,33 @@ public class TrainStation extends AbstractEntity implements Serializable {
     @Column(name="common_places_amount")
     private int common_places_amount;
 
-    public TrainStation(long id, long idTrain, String station,
+    public TrainStation(long id, Train train, Station station,
                         Date arriveTime, Date departureTime,
                         long stationSerialNumber,
                         int coupe_places_amount,
                         int lying_places_amount,
                         int common_places_amount) {
         super.id = id;
+        this.train = train;
+        this.station = station;
        /* this.idTrain = idTrain;*/
 /*        this.station = station;*/
+        this.arriveTime = arriveTime;
+        this.departureTime = departureTime;
+        this.stationSerialNumber = stationSerialNumber;
+        this.coupe_places_amount = coupe_places_amount;
+        this.lying_places_amount = lying_places_amount;
+        this.common_places_amount = common_places_amount;
+    }
+
+    public TrainStation(Train train, Station station,
+                        Date arriveTime, Date departureTime,
+                        long stationSerialNumber,
+                        int coupe_places_amount,
+                        int lying_places_amount,
+                        int common_places_amount) {
+        this.train = train;
+        this.station = station;
         this.arriveTime = arriveTime;
         this.departureTime = departureTime;
         this.stationSerialNumber = stationSerialNumber;
@@ -92,18 +110,6 @@ public class TrainStation extends AbstractEntity implements Serializable {
         return train;
     }
 
-    /*
-    public long getIdTrain() {
-        return idTrain;
-    }
-
-    public void setIdTrain(long idTrain) {
-        this.idTrain = idTrain;
-    }*/
-
-  /*  public void setStation(String station) {
-        this.station = station;
-    }*/
 
     /*@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Europe/Moscow")*/
     public void setArriveTime(Date arriveTime) {

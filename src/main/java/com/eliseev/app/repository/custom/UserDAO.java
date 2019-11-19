@@ -6,4 +6,6 @@ import com.eliseev.app.repository.IDAO;
 
 public interface UserDAO extends IDAO<User> {
 
+    User findByLoginAndPass(String login, String pass);
+
 }

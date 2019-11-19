@@ -14,8 +14,6 @@ import java.io.Serializable;
 @Entity
 public class Ticket extends AbstractEntity implements Serializable {
 
-    @Transient
-    private long userId;
 
     @NotBlank(message = "surname is required")
     private String surname;
@@ -37,14 +35,14 @@ public class Ticket extends AbstractEntity implements Serializable {
     public Ticket() { }
 
     public Ticket(long id,
-                  long userId,
+                  User user,
                   String surname,
                   String name,
                   String passportNumber,
                   String seatType,
                   Route route) {
         super.id = id;
-        this.userId = userId;
+        this.user = user;
         this.surname = surname;
         this.name = name;
         this.passportNumber = passportNumber;
@@ -76,13 +74,6 @@ public class Ticket extends AbstractEntity implements Serializable {
         this.seatType = seatType;
     }
 
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
 
     public void setSurname(String surname) {
         this.surname = surname;
@@ -113,7 +104,6 @@ public class Ticket extends AbstractEntity implements Serializable {
     @Override
     public String toString() {
         return "Ticket{" +
-                ", userId=" + userId +
                 ", surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
                 ", passportNumber='" + passportNumber + '\'' +
@@ -131,7 +121,6 @@ public class Ticket extends AbstractEntity implements Serializable {
         Ticket ticket = (Ticket) o;
 
         return new EqualsBuilder()
-                .append(userId, ticket.userId)
                 .append(surname, ticket.surname)
                 .append(name, ticket.name)
                 .append(passportNumber, ticket.passportNumber)
@@ -142,7 +131,6 @@ public class Ticket extends AbstractEntity implements Serializable {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(userId)
                 .append(surname)
                 .append(name)
                 .append(passportNumber)

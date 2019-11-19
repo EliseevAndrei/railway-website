@@ -20,7 +20,7 @@ import java.util.Properties;
 @Configuration
 @ComponentScans(value = { @ComponentScan("com.eliseev.app.repository"),
         @ComponentScan("com.eliseev.app.services") })
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 public class TestConfig {
 
     @Bean
