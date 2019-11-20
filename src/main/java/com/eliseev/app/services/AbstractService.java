@@ -2,7 +2,6 @@ package com.eliseev.app.services;
 
 import com.eliseev.app.models.AbstractEntity;
 import com.eliseev.app.repository.IDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,31 +23,29 @@ public abstract class AbstractService<E extends AbstractEntity,
 
     @Override
     public List<E> list() {
-        return new ArrayList<>(entities.values());
+        return new ArrayList<>(dao.findAll());
     }
 
     @Override
     public E create(E entity) {
-        idIndex += 1;
-        entity.setId(idIndex);
-        entities.put(idIndex, entity);
-        return entity;
+        return dao.save(entity);
     }
 
     @Override
     public E get(long id) {
-        return entities.get(id);
+        return dao.findOne(id);
     }
 
     @Override
     public E update(long id, E entity) {
-        entities.put(id, entity);
+        entity.setId(id);
+        dao.save(entity);
         return entity;
     }
 
     @Override
     public void delete(long id) {
-         entities.remove(id);
+         dao.delete(id);
     }
 
 

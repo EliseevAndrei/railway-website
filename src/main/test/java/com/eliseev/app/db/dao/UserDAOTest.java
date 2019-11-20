@@ -1,8 +1,6 @@
 package com.eliseev.app.db.dao;
 
-import com.eliseev.app.db.TestConfig;
 import com.eliseev.app.repository.custom.UserDAO;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -17,57 +17,51 @@
 </head>
 <body>
 <div class="container">
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" th:text="#{button.select_lang}">
-            Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" th:href="@{/trains(lang=ru_RU)}" th:text="#{lang.ru}">Russian</a>
-            <a class="dropdown-item" th:href="@{/trains(lang=en_US)}" th:text="#{lang.en_US}">ENGLISH</a>
-        </div>
-    </div>
-    <button class="btn btn-primary nBtn" th:text="#{button.new}">Create</button>
+    <form action="dates/form" method="get">
+        <button class="btn btn-primary nBtn" th:text="#{button.new}">Create</button>
+    </form>
     <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>
     <table class="table table-hover">
         <thead class="bg-dark text-white">
         <tr>
-            <th th:text="#{label.name}">Name</th>
-            <th th:text="#{label.amount_coupe_places}">Amount coupe</th>
-            <th th:text="#{label.amount_lying_places}">Amount lying places</th>
-            <th th:text="#{label.amount_common_places}">Amount common places</th>
+            <th></th>
+            <th>Начальная станция</th>
+            <th>Время отправления</th>
+            <th>Конечная стацния</th>
+            <th>Время прибытия</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
 
-        <tr th:each="train : ${trains}">
+        <tr th:each="date, iStat : ${dates}">
             <!--<td th:text="${train.id}"></td>-->
-            <td th:text="${train.name}"></td>
-            <td th:text="${train.countCoupe}"></td>
-            <td th:text="${train.countLying}"></td>
-            <td th:text="${train.countCommon}"></td>
+            <td th:text="${iStat.index} + 1 + '.'"></td>
+            <td th:text="${date.firstStation.trainStation.station.name}"></td>
+            <td th:text="${#dates.format(date.firstStation.departureTime, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="${date.lastStation.trainStation.station.name}"></td>
+            <td th:text="${#dates.format(date.lastStation.arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
             <td>
-                <a class="btn btn-primary text-white eBtn"
+                <!--<a class="btn btn-primary text-white eBtn"
                    th:href="${'trains/list/' + train.id}" th:text="#{button.edit}">Edit</a>
                 <a class="btn btn-danger text-white rBtn" th:href="${'trains/list/'+train.id}" th:text="#{button.remove}">Remove</a>
                 <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/stations}" th:text="#{button.train_stop_stations}">Train stop stations</a>
-                <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/dates}" th:text="#{button.dates}">Dates</a>
+                <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/dates}" th:text="#{button.dates}">Dates</a>-->
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-
-<!-- Modal Edit n New-->
+<!--
+ Modal Edit n New
 <div class="myForm">
-    <form th:action="${'trains/list/'}" th:object="${train}" id="form">
+    <form th:action="${'dates/list/'}" id="form">
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
              id="exampleModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel" th:text="#{header.new_edit}">Save and Update</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Save and Update</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span id="x-btn" aria-hidden="true">&times;</span>
                         </button>
@@ -78,7 +72,7 @@
                         <input type="text" hidden id="id">
                         <div class="form-group col-md-6">
                             <lable for="name" class="col-form-label" th:text="#{label.name}">Name</lable>
-                            <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Название">
+                            <input type="text" class="form-control" id="name" placeholder="Название">
                         </div>
                         <div class="form-group col-md-8">
                             <lable for="name" class="col-form-label" th:text="#{label.amount_coupe_places}">amount coupe places</lable>
@@ -108,7 +102,7 @@
     </form>
 </div>
 
-<!-- Modal Edit n Remove-->
+&lt;!&ndash; Modal Edit n Remove&ndash;&gt;
 <div class="myRemove">
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
          id="exampleModal">
@@ -132,7 +126,7 @@
     </div>
 </div>
 
-<script src="/resources/js/ajax-conversation.js"></script>
+<script src="/resources/js/ajax-conversation.js"></script>-->
 
 </body>
 </html>

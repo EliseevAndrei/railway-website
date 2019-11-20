@@ -1,8 +1,7 @@
 package com.eliseev.app.services;
 
-
-import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainStation;
+import com.eliseev.app.repository.custom.StationStopTimeDAO;
 import com.eliseev.app.repository.custom.TrainStationsDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,24 +9,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TrainStationsService extends AbstractService<TrainStation, TrainStationsDAO> {
 
     private TrainService trainService;
     private StationService stationService;
+    private StationStopTimeDAO stationStopTimeDAO;
 
     @Autowired
     public TrainStationsService(TrainStationsDAO dao,
                                 TrainService trainService,
-                                StationService stationService) {
+                                StationService stationService,
+                                StationStopTimeDAO stationStopTimeDAO) {
         super(dao);
         this.trainService = trainService;
         this.stationService = stationService;
+        this.stationStopTimeDAO = stationStopTimeDAO;
     }
 
     private Logger logger = LoggerFactory.getLogger(TrainStationsService.class);
@@ -35,7 +35,7 @@ public class TrainStationsService extends AbstractService<TrainStation, TrainSta
     @PostConstruct
     public void initialise() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd@hh:mm");
-        try {
+        /*try {
             TrainStation a = new TrainStation(1L,trainService.get(1L), stationService.get(1), simpleDateFormat.parse("2019-09-10@10:10"), simpleDateFormat.parse("2019-09-10@10:10"),
                     1L, 10, 11, 12);
             super.entities.put(1L, a);
@@ -50,13 +50,11 @@ public class TrainStationsService extends AbstractService<TrainStation, TrainSta
             super.entities.put(4L, c);
         } catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public List<TrainStation> list(long trainId) {
-        return super.entities.values().stream()
-                .filter(e -> e.getTrain().getId() == trainId)
-                .collect(Collectors.toList());
+        return super.dao.findByTrainId(trainId);
     }
 }
 

@@ -1,9 +1,6 @@
 package com.eliseev.app.db.dao;
 
-import com.eliseev.app.db.TestConfig;
 import com.eliseev.app.models.Train;
-import com.eliseev.app.models.tmp.Department;
-import com.eliseev.app.models.tmp.Employee;
 import com.eliseev.app.repository.custom.TrainDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;

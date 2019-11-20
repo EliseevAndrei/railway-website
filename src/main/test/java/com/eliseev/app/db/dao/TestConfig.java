@@ -1,4 +1,4 @@
-package com.eliseev.app.db;
+package com.eliseev.app.db.dao;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

@@ -3,6 +3,7 @@ package com.eliseev.app.models;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -29,8 +30,11 @@ public class Train extends AbstractEntity implements Serializable {
     @Column(name="common_places_amount")
     private int countCommon;
 
-    @OneToMany(mappedBy = "train")
+    @OneToMany(mappedBy = "train",cascade = CascadeType.ALL)
     private List<TrainStation> trainStationList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "train")
+    private List<TrainDate> trainDates = new ArrayList<>();
 
 
     public Train() { }
@@ -48,6 +52,14 @@ public class Train extends AbstractEntity implements Serializable {
         this.countCoupe = countCoupe;
         this.countLying = countLying;
         this.countCommon = countCommon;
+    }
+
+    public List<TrainDate> getTrainDates() {
+        return trainDates;
+    }
+
+    public void setTrainDates(List<TrainDate> trainDates) {
+        this.trainDates = trainDates;
     }
 
     public List<TrainStation> getTrainStationList() {
