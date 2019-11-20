@@ -1,5 +1,6 @@
 package com.eliseev.app.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -30,10 +31,12 @@ public class Train extends AbstractEntity implements Serializable {
     @Column(name="common_places_amount")
     private int countCommon;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "train",cascade = CascadeType.ALL)
     private List<TrainStation> trainStationList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "train")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
     private List<TrainDate> trainDates = new ArrayList<>();
 
 

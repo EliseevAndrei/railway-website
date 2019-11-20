@@ -1,8 +1,10 @@
 package com.eliseev.app.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -26,7 +28,8 @@ public class TrainStation extends AbstractEntity implements Serializable {
     @Column(name="station_serial_number")
     private int stationSerialNumber;
 
-    @OneToMany(mappedBy = "trainStation")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "trainStation", cascade = CascadeType.ALL)
     private List<StationStopTime> stationStopTimes = new ArrayList<>();
 
 

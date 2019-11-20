@@ -38,7 +38,9 @@ public abstract class AbstractRestController<E extends AbstractEntity,
     @Override
     public E findById(long id) {
         logger.info("User send GET /<entities>/list/{}", id);
-        return service.get(id);
+        E entity =  service.get(id);
+        logger.info("return entity {} with id {}", entity, id);
+        return entity;
     }
 
     @Override

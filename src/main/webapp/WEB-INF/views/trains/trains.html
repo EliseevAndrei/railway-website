@@ -14,13 +14,14 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
+    <script src="/resources/js/ajax-conversation.js"></script>
 </head>
 <body>
 <div class="container">
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false" th:text="#{button.select_lang}">
-            Dropdown button
+            Dropdown buttonf
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" th:href="@{/trains(lang=ru_RU)}" th:text="#{lang.ru}">Russian</a>
@@ -48,7 +49,7 @@
             <td th:text="${train.countLying}"></td>
             <td th:text="${train.countCommon}"></td>
             <td>
-                <a class="btn btn-primary text-white eBtn"
+                <a class="btn btn-primary text-white eBtn" id="eBtn"
                    th:href="${'trains/list/' + train.id}" th:text="#{button.edit}">Edit</a>
                 <a class="btn btn-danger text-white rBtn" th:href="${'trains/list/'+train.id}" th:text="#{button.remove}">Remove</a>
                 <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/stations}" th:text="#{button.train_stop_stations}">Train stop stations</a>
@@ -132,7 +133,6 @@
     </div>
 </div>
 
-<script src="/resources/js/ajax-conversation.js"></script>
 
 </body>
 </html>

@@ -41,7 +41,7 @@
             <td th:text="${station.lying_places_amount}"></td>
             <td th:text="${station.common_places_amount}"></td>-->
             <td>
-                <a class="btn btn-primary text-white eBtn"
+                <a class="btn btn-primary text-white eBtn" id="eBtn"
                    th:href="${'stations/list/' + station.station.id}">Edit</a>
                 <a class="btn btn-danger text-white rBtn" th:href="${'stations/list/'+station.station.id}">Remove</a>
             </td>
@@ -133,7 +133,7 @@
     </div>
 </div>
 
-<script src="/resources/js/ajax-conversation.js"></script>
+<script src="/resources/js/trainStations-ajax-conv.js"></script>
 
 </body>
 </html>

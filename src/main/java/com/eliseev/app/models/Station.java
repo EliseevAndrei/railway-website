@@ -1,5 +1,6 @@
 package com.eliseev.app.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -15,6 +16,7 @@ public class Station extends AbstractEntity {
     @NotBlank(message = "Название станции обязательно")
     private String name;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "station")
     private List<TrainStation> trainStations = new ArrayList<>();
 

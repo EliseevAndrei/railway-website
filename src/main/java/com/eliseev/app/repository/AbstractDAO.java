@@ -1,6 +1,8 @@
 package com.eliseev.app.repository;
 
 import com.eliseev.app.models.AbstractEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -9,6 +11,8 @@ import java.util.List;
 
 public abstract class AbstractDAO<E extends AbstractEntity>
         implements IDAO<E> {
+
+    private Logger logger = LoggerFactory.getLogger(AbstractDAO.class);
 
     @PersistenceContext
     protected EntityManager entityManager;
@@ -21,6 +25,7 @@ public abstract class AbstractDAO<E extends AbstractEntity>
         this.clazz = clazz;
     }
 
+
     @Override
     public long count() {
         return findAll().size();
@@ -28,11 +33,16 @@ public abstract class AbstractDAO<E extends AbstractEntity>
 
     @Override
     public E findOne(long id) {
-        return entityManager.find(clazz, id);
+        E entity =  entityManager.find(clazz, id);
+        logger.info("found entity {}", entity);
+        return entity;
     }
 
     @Override
     public E save(E entity) {
+        if (entity.getId() == -1) {
+            entity.setId(null);
+        }
         if (entity.getId() == null)
             entityManager.persist(entity);
         else
@@ -51,4 +61,5 @@ public abstract class AbstractDAO<E extends AbstractEntity>
         return entityManager.createQuery("select s from " + clazz.getName() + " s", clazz)
                 .getResultList();
     }
+
 }

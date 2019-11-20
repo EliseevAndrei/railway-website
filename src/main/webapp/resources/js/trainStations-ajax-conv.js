@@ -1,29 +1,16 @@
 $(document).ready(function () {
 
-
     $('.nBtn, .table .eBtn').click(function (e) {
 
         e.preventDefault();
         var href = $(this).attr('href');
         var id = $(this).attr('id');
 
-
         if (id === 'eBtn') {
 
             $.getJSON(href, function (response) {
-
-                $(".myForm :input[type='text'], .myForm :input[type='number'], .myForm select").each(function () {
-
-                    $(this).val(response[$(this).attr('id')]);
-
-
-                });
-                $(".myForm #arriveTime, .myForm #departureTime").each(function () {
-                    let str = response[$(this).attr('id')].replace("@", " ");
-                    str = str.slice(0, 16);
-
-                    $(this).val(str);
-                });
+                $(".myForm #idTrain").val(response.train.id);
+                $(".myForm #station").val(response.station.name);
             });
             $('.myForm #exampleModal').modal();
         } else {
@@ -46,9 +33,16 @@ $(document).ready(function () {
         event.preventDefault();
 
         var href = $('.myForm #form').attr('action');
-        var object = {};
+        let object = {
+            station: {
+                name: $(".myForm #station").val()
+            }
+        };
 
-        $(".myForm :input[type='text'], .myForm :input[type='number'], .myForm select").each(function () {
+
+        console.log(object);
+
+        /*$(".myForm :input[type='text'], .myForm :input[type='number'], .myForm select").each(function () {
             object[$(this).attr('id')] = $(this).val();
         });
 
@@ -58,14 +52,14 @@ $(document).ready(function () {
             let time = str.substring(10, 16);
             str = date + " " + time;
             object[$(this).attr('id')] = str;
-        });
+        });*/
         var putMethod = 'PUT';
         var postMethod = 'POST';
         var method;
-        if (object.id == -1) {
+        if ($(".myForm #idTrain") == -1) {
             method = postMethod;
         } else {
-            href = href + "/" +object.id;
+            href = href + "/" + $(".myForm #idTrain").val();
             method = putMethod;
         }
         $.ajax({

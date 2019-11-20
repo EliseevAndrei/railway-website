@@ -31,11 +31,12 @@ public class Route {
     @Column(name="arr_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date arrTime;
-    @Column(name="coupe_places_amount")
+
+    @Transient
     private int coupe_places_amount;
-    @Column(name="lying_places_amount")
+    @Transient
     private int lying_places_amount;
-    @Column(name="common_places_amount")
+    @Transient
     private int common_places_amount;
 
     public Route(long trainId,String trainName, String depStation,
