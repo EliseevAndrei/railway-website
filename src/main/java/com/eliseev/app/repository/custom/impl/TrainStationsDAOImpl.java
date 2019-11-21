@@ -5,7 +5,6 @@ import com.eliseev.app.repository.AbstractDAO;
 import com.eliseev.app.repository.custom.TrainStationsDAO;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -17,17 +16,52 @@ public class TrainStationsDAOImpl extends AbstractDAO<TrainStation>
     }
 
     @Override
+    public void delete(long id) {
+
+        TrainStation trainStation = super.findOne(id);
+
+        super.delete(id);
+
+        //todo check it later
+        super.entityManager.flush();
+        super.entityManager.clear();
+
+        super.entityManager.createQuery("update TrainStation s set s.stationSerialNumber = s.stationSerialNumber - 1 where  s.stationSerialNumber >= :number and s.train.id = :idTrain")
+                .setParameter("number", 2)
+                .setParameter("idTrain", trainStation.getTrain().getId())
+                .executeUpdate();
+
+        List<TrainStation> trainStations = super.findAll();
+        System.out.println(trainStations);
+    }
+
+    @Override
     public TrainStation save(TrainStation trainStation) {
 
-
-        //todo 1.if adding number more than that in db
         //todo 2.if there is already exists same station(unique pair train-station)
-        /*int number = super.entityManager.createQuery("select max(s.stationSerialNumber) from TrainStation s", TrainStation.class).getSingleResult();*/
 
-        Query query =  super.entityManager.createQuery("update TrainStation s set s.stationSerialNumber = s.stationSerialNumber + 1 where s.stationSerialNumber >= :number");
-        query.setParameter("number", trainStation.getStationSerialNumber());
-        query.executeUpdate();
-        return super.save(trainStation);
+        if (trainStation.getId() == null) {
+
+            int count = super.entityManager.createQuery("select max(s.stationSerialNumber) from TrainStation s", Integer.class).getSingleResult();
+
+            if (trainStation.getStationSerialNumber() > count) {
+                trainStation.setStationSerialNumber(count + 1);
+            } else {
+                super.entityManager.createQuery("update TrainStation s set s.stationSerialNumber = s.stationSerialNumber + 1 where s.stationSerialNumber >= :number and s.train.id = :idTrain")
+                        .setParameter("number", trainStation.getStationSerialNumber())
+                        .setParameter("idTrain", trainStation.getTrain().getId())
+                        .executeUpdate();
+            }
+            entityManager.persist(trainStation);
+        } else {
+
+            if (trainStation.getId() == -1) {
+                trainStation.setId(null);
+            }
+            return entityManager.merge(trainStation);
+
+        }
+        return trainStation;
 
     }
 

@@ -40,13 +40,14 @@ public abstract class AbstractDAO<E extends AbstractEntity>
 
     @Override
     public E save(E entity) {
-        if (entity.getId() == -1) {
-            entity.setId(null);
-        }
         if (entity.getId() == null)
             entityManager.persist(entity);
-        else
+        else {
+            if (entity.getId() == -1) {
+                entity.setId(null);
+            }
             return entityManager.merge(entity);
+        }
 
         return entity;
     }

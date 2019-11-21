@@ -146,4 +146,6 @@ public class Route {
                 ", common_places_amount=" + common_places_amount +
                 '}';
     }
+
+
 }

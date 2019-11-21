@@ -34,7 +34,7 @@ public class TrainStationsController {
     @GetMapping("/stations")
     public String findAll(@PathVariable("trainId") long trainId, Model model) {
         logger.info("User send /trains/list/{}/stations", trainId);
-        model.addAttribute("allStations", stationService.list());
+        model.addAttribute("allStations", stationService.getUnusedStations(trainId));
         model.addAttribute("stations", trainStationsService.list(trainId));
         return "stations/trainStations";
     }

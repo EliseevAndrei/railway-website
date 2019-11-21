@@ -86,7 +86,7 @@ public class TrainStation extends AbstractEntity implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof TrainStation)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         TrainStation that = (TrainStation) o;
 
@@ -94,6 +94,7 @@ public class TrainStation extends AbstractEntity implements Serializable {
                 .append(stationSerialNumber, that.stationSerialNumber)
                 .append(train, that.train)
                 .append(station, that.station)
+                .append(stationStopTimes, that.stationStopTimes)
                 .isEquals();
     }
 
@@ -103,6 +104,7 @@ public class TrainStation extends AbstractEntity implements Serializable {
                 .append(train)
                 .append(station)
                 .append(stationSerialNumber)
+                .append(stationStopTimes)
                 .toHashCode();
     }
 

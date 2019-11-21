@@ -9,8 +9,10 @@ $(document).ready(function () {
         if (id === 'eBtn') {
 
             $.getJSON(href, function (response) {
+
                 $(".myForm #idTrain").val(response.train.id);
-                $(".myForm #station").val(response.station.name);
+                $(".myForm #stationSerialNumber").val(response.stationSerialNumber);
+                $(".myForm #station").append(`<option value="${response.station.id}">${response.station.name}</option>`)
             });
             $('.myForm #exampleModal').modal();
         } else {
@@ -18,6 +20,7 @@ $(document).ready(function () {
             $(".myForm :input[type='text']").each(function () {
                 $(this).val('');
             });
+            $('.myForm #stationSerialNumber').prop("disabled", false);
             $('.myForm #id').val('-1').hide();
 
             $('.myForm #exampleModal').modal();
@@ -34,32 +37,25 @@ $(document).ready(function () {
 
         var href = $('.myForm #form').attr('action');
         let object = {
+            id: $(".myForm #id").val(),
+            train: {
+                id: $(".myForm #idTrain").val()
+            },
             station: {
-                name: $(".myForm #station").val()
-            }
+                id: $(".myForm #station").val(),
+            },
+            stationSerialNumber: $(".myForm #stationSerialNumber").val()
         };
 
 
-        console.log(object);
-
-        /*$(".myForm :input[type='text'], .myForm :input[type='number'], .myForm select").each(function () {
-            object[$(this).attr('id')] = $(this).val();
-        });
-
-        $(".myForm #arriveTime, .myForm #departureTime").each(function () {
-            let str = $(this).val().replace(/\s+/g, '');
-            let date = str.substring(0, 10);
-            let time = str.substring(10, 16);
-            str = date + " " + time;
-            object[$(this).attr('id')] = str;
-        });*/
         var putMethod = 'PUT';
         var postMethod = 'POST';
         var method;
-        if ($(".myForm #idTrain") == -1) {
+        if ($(".myForm #id").val() == -1) {
             method = postMethod;
         } else {
-            href = href + "/" + $(".myForm #idTrain").val();
+            href = href + "/" + $(".myForm #id").val();
+            console.log(href);
             method = putMethod;
         }
         $.ajax({

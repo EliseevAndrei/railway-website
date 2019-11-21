@@ -18,28 +18,18 @@
 
 <body>
 <div class="container">
+
     <button class="btn btn-primary nBtn">New</button>
     <a class="ml-3" id="reloadBtn" href="stations"><i class="fas fa-redo-alt"></i></a>
     <table class="table table-hover">
         <thead class="bg-dark text-white">
         <tr>
             <th>Станция</th>
-            <!--<th>Время прибытия</th>
-            <th>Время отправления</th>
-            <th>Общие</th>
-            <th>Плацкарт</th>
-            <th>Купе</th>
-            <th></th>-->
         </tr>
         </thead>
         <tbody>
         <tr th:each="station : ${stations}">
             <td th:text="${station.station.name}"></td>
-            <!--<td th:text="${#dates.format(station.arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
-            <td th:text="${#dates.format(station.departureTime, 'dd-MM-yyyy HH:mm')}"></td>
-            <td th:text="${station.coupe_places_amount}"></td>
-            <td th:text="${station.lying_places_amount}"></td>
-            <td th:text="${station.common_places_amount}"></td>-->
             <td>
                 <a class="btn btn-primary text-white eBtn" id="eBtn"
                    th:href="${'stations/list/' + station.station.id}">Edit</a>
@@ -69,34 +59,15 @@
                         <input type="text" hidden id="id">
                         <input type="text" hidden id="idTrain">
                         <div class="form-group col-md-6">
+                            <lable for="stationSerialNumber" class="col-form-label">Номер станции</lable>
+                            <input type="text"  class="form-control" id="stationSerialNumber" placeholder="Номер" disabled>
+                        </div>
+                        <div class="form-group col-md-6">
                             <label for="station" class=" label">station</label>
                             <select id="station" class="form-control">
-                                <option th:each="stat : ${allStations}" th:text="${stat.name}" th:value="${stat.name}"></option>
+                                <option th:each="stat : ${allStations}" th:text="${stat.name}" th:value="${stat.id}"></option>
                             </select>
                         </div>
-                       <!-- <div class="form-group col-md-8">
-                            <label for="arriveTime" class=" label">arriveTime</label>
-                            <input type="text" class="form-control" id="arriveTime" name="arriveTime" value="">
-                        </div>
-                        <div class="form-group col-md-8">
-                            <label for="departureTime" class=" label">departureTime</label>
-                            <input type="text" class="form-control" id="departureTime" name="departureTime" value="">
-                        </div>
-                        <div class="form-group col-md-8">
-                            <label for="lying_places_amount" class=" label">lying_places_amount</label>
-                            <input type="number" class="form-control" id="lying_places_amount" name="lying_places_amount" value="">
-                        </div>
-
-                        <div class="form-group col-md-8">
-                            <label for="common_places_amount" class=" label">common_places_amount</label>
-                            <input type="number" class="form-control" id="common_places_amount" name="common_places_amount" value="">
-                        </div>
-
-                        <div class="form-group col-md-8">
-                            <label for="common_places_amount" class=" label">coupe_places_amount</label>
-                            <input type="number" class="form-control" id="coupe_places_amount" name="coupe_places_amount" value="">
-                        </div>-->
-
                         <div class="form-group col-md-8"></div>
                     </div>
                     <div class="modal-footer">

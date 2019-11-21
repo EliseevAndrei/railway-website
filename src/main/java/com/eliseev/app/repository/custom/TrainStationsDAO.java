@@ -8,5 +8,4 @@ import java.util.List;
 public interface TrainStationsDAO extends IDAO<TrainStation> {
 
     List<TrainStation> findByTrainId(Long trainId);
-
 }

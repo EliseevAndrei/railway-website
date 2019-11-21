@@ -1,5 +1,7 @@
 package com.eliseev.app.db.dao;
 
+import com.eliseev.app.models.Station;
+import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainStation;
 import com.eliseev.app.repository.custom.StationDAO;
 import com.eliseev.app.repository.custom.TrainDAO;
@@ -49,16 +51,68 @@ public class TrainStationDAOTest {
         assertEquals(2, saved.getStationSerialNumber());
 
         List<TrainStation> trainStations = trainStationsDAO.findByTrainId(1L);
-        int[] arr = new int[trainStations.size()];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = trainStations.get(i).getStationSerialNumber();
-        }
+        int[] arr = getSequenceOfStation(trainStations);
 
         logger.info("{}", trainStations);
         logger.info("{}", arr);
 
         assertArrayEquals(new int[] {1, 2, 3, 4}, arr);
 
+    }
+
+
+    @Test
+    @Transactional
+    public void correctSequenceOfStationsWhenDeleting() {
+
+        List<TrainStation> stations =  trainStationsDAO.findByTrainId(1L);
+        logger.info("{}", stations);
+        assertArrayEquals(new int[] {1, 2, 3}, getSequenceOfStation(stations));
+
+        TrainStation station = stations.get(1);
+        trainStationsDAO.delete(station.getId());
+
+        stations = trainStationsDAO.findByTrainId(1L);
+        logger.info("{}", stations);
+        assertArrayEquals(new int[] {1, 2}, getSequenceOfStation(stations));
+
+    }
+
+    @Test
+    @Transactional
+    public void correctSequenceOfStationsWhenAdding() {
+        List<TrainStation> stations =  trainStationsDAO.findByTrainId(1L);
+        assertArrayEquals(new int[] {1, 2, 3}, getSequenceOfStation(stations));
+
+        logger.info("{}", stations);
+
+        TrainStation newStation1 = new TrainStation(trainDAO.findOne(1L), stationDAO.findOne(3L), 10);
+        TrainStation saved = trainStationsDAO.save(newStation1);
+
+        stations = trainStationsDAO.findByTrainId(1L);
+        logger.info("{}", stations);
+        assertArrayEquals(new int[]{1, 2, 3, 4}, getSequenceOfStation(stations));
+
+        assertEquals(saved, stations.get(3));
+
+    }
+
+    private int[] getSequenceOfStation(List<TrainStation> stations) {
+        int[] arr = new int[stations.size()];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = stations.get(i).getStationSerialNumber();
+        }
+        return arr;
+    }
+
+
+    @Test
+    @Transactional
+    public void update() {
+        TrainStation trainStation = new TrainStation(1,new Train(1, null, 0, 0, 0), new Station(3, null), 1);
+        trainStationsDAO.save(trainStation);
+        TrainStation dbValue =  trainStationsDAO.findOne(1);
+        logger.info("{}", dbValue);
     }
 
 }
