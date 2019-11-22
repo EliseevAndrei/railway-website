@@ -1,6 +1,7 @@
 package com.eliseev.app.models;
 
 import com.eliseev.app.utils.CustomRestDateDeserializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -118,6 +119,7 @@ public class StationStopTime extends AbstractEntity {
         this.arriveTime = arriveTime;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ", timezone = "Europe/Moscow")
     public Date getDepartureTime() {
         return departureTime;
     }

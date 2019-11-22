@@ -4,7 +4,7 @@ import com.eliseev.app.models.StationStopTime;
 import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.repository.custom.TrainDateDAO;
-import com.eliseev.app.services.dto.StationsStopTimeDTO;
+import com.eliseev.app.services.dto.StationStopTimeDTO;
 import com.eliseev.app.services.dto.TrainDateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,14 +18,17 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
 
     private StationStopTimeService stationStopTimeService;
     private TrainService trainService;
+    private TrainStationsService trainStationsService;
 
     @Autowired
     public TrainDateService(TrainDateDAO dao,
                             StationStopTimeService stationStopTimeService,
-                            TrainService trainService) {
+                            TrainService trainService,
+                            TrainStationsService trainStationsService) {
         super(dao);
         this.stationStopTimeService = stationStopTimeService;
         this.trainService = trainService;
+        this.trainStationsService = trainStationsService;
     }
 
     @Transactional
@@ -51,14 +54,27 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
     }
 
     @Transactional
-    public TrainDate create(StationsStopTimeDTO stationsStopTimeDTO, long trainId) {
+    public TrainDate create(List<StationStopTimeDTO> stationStopTimeDTOs, long trainId) {
+
         Train train = trainService.get(trainId);
+
+        StationStopTime stationStopTime;
+        List<StationStopTime> stationStopTimes = new ArrayList<>();
+        for (StationStopTimeDTO stationStopTimeDTO : stationStopTimeDTOs) {
+            stationStopTime = new StationStopTime(stationStopTimeDTO.getArriveTime(), stationStopTimeDTO.getDepartureTime(),
+                    train.getCountCoupe(), train.getCountLying(), train.getCountCommon(), trainStationsService.get(stationStopTimeDTO.getTrainStationId()));
+            stationStopTimes.add(stationStopTime);
+        }
+
         TrainDate trainDate = new TrainDate(train);
-        trainDate.getStationStopTimes().addAll(stationsStopTimeDTO.getStationStopTimes());
+        trainDate.getStationStopTimes().addAll(stationStopTimes);
         return dao.save(trainDate);
     }
 
 
+    public List<TrainDate> list(long trainId) {
+        return dao.findDatesByTrainId(trainId);
+    }
 
 
 }

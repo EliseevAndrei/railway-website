@@ -15,11 +15,12 @@ public class StationDAOImpl extends AbstractDAO<Station>
         super(Station.class);
     }
 
-/*    select s.id, s.name from STATION s left join TRAINSTATION ts on ts.station_id = s.id where ts.station_id is null*/
-
     @Override
     public List<Station> getUnusedStations(long trainId) {
-        return super.entityManager.createQuery("select s from Station s left join TrainStation ts on ts.station.id = s.id where ts.station.id is null", Station.class).getResultList();
+        return super.entityManager.createQuery("select s from Station s " +
+                "left join TrainStation ts on ts.station.id = s.id and ts.train.id = :idTrain where ts.station.id is null", Station.class)
+                .setParameter("idTrain", trainId)
+                .getResultList();
     }
 
 }

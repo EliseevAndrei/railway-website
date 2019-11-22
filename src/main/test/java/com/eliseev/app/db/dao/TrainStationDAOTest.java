@@ -44,17 +44,21 @@ public class TrainStationDAOTest {
 
     @Test
     @Transactional
-    public void create() {
+    public void addStationInMiddleOfRoute() {
+
         TrainStation trainStation = new TrainStation(trainDAO.findOne(1L), stationDAO.findOne(5L), 2);
 
         TrainStation saved = trainStationsDAO.save(trainStation);
         assertEquals(2, saved.getStationSerialNumber());
 
+
+
         List<TrainStation> trainStations = trainStationsDAO.findByTrainId(1L);
+        assertEquals(trainStationsDAO.findOne(saved.getId()), trainStations.get(1));
+
         int[] arr = getSequenceOfStation(trainStations);
 
         logger.info("{}", trainStations);
-        logger.info("{}", arr);
 
         assertArrayEquals(new int[] {1, 2, 3, 4}, arr);
 
@@ -80,7 +84,7 @@ public class TrainStationDAOTest {
 
     @Test
     @Transactional
-    public void correctSequenceOfStationsWhenAdding() {
+    public void addStationToEndOfRoute() {
         List<TrainStation> stations =  trainStationsDAO.findByTrainId(1L);
         assertArrayEquals(new int[] {1, 2, 3}, getSequenceOfStation(stations));
 

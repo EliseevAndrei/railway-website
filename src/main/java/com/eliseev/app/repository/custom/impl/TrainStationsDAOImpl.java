@@ -22,12 +22,12 @@ public class TrainStationsDAOImpl extends AbstractDAO<TrainStation>
 
         super.delete(id);
 
-        //todo check it later
+        //todo. check it later
         super.entityManager.flush();
         super.entityManager.clear();
 
         super.entityManager.createQuery("update TrainStation s set s.stationSerialNumber = s.stationSerialNumber - 1 where  s.stationSerialNumber >= :number and s.train.id = :idTrain")
-                .setParameter("number", 2)
+                .setParameter("number", trainStation.getStationSerialNumber())
                 .setParameter("idTrain", trainStation.getTrain().getId())
                 .executeUpdate();
 
@@ -38,7 +38,9 @@ public class TrainStationsDAOImpl extends AbstractDAO<TrainStation>
     @Override
     public TrainStation save(TrainStation trainStation) {
 
-        //todo 2.if there is already exists same station(unique pair train-station)
+        if (trainStation.getId() != null && trainStation.getId() == -1){
+            trainStation.setId(null);
+        }
 
         if (trainStation.getId() == null) {
 
@@ -55,9 +57,6 @@ public class TrainStationsDAOImpl extends AbstractDAO<TrainStation>
             entityManager.persist(trainStation);
         } else {
 
-            if (trainStation.getId() == -1) {
-                trainStation.setId(null);
-            }
             return entityManager.merge(trainStation);
 
         }
