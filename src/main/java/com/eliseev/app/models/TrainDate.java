@@ -1,5 +1,6 @@
 package com.eliseev.app.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -21,6 +22,7 @@ public class TrainDate extends AbstractEntity{
     @JoinColumn(name="train_id")
     private Train train;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "trainDate", cascade = CascadeType.ALL)
     private List<StationStopTime> stationStopTimes = new ArrayList<>();
 

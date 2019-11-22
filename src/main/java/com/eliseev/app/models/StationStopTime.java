@@ -111,6 +111,7 @@ public class StationStopTime extends AbstractEntity {
         this.trainStation = trainStation;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ", timezone = "Europe/Moscow")
     public Date getArriveTime() {
         return arriveTime;
     }
