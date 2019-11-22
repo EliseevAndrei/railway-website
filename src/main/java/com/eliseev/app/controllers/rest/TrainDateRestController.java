@@ -2,7 +2,7 @@ package com.eliseev.app.controllers.rest;
 
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.services.TrainDateService;
-import com.eliseev.app.services.dto.StationsStopTimeDTO;
+import com.eliseev.app.services.dto.StationStopTimeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,6 @@ public class TrainDateRestController extends AbstractRestController<TrainDate, T
 
     private Logger logger = LoggerFactory.getLogger(AbstractRestController.class);
 
-
     @Autowired
     public TrainDateRestController(TrainDateService trainDateService) {
         super(trainDateService);
@@ -29,14 +28,12 @@ public class TrainDateRestController extends AbstractRestController<TrainDate, T
     @Override
     public List<TrainDate> list(@PathVariable(required = false) long... id) {
         logger.info("User send GET /trains/list/{}/dates/list", id[0]);
-
-        //todo
-        return null;
+        return super.service.list(id[0]);
     }
 
-    @PostMapping
-    public TrainDate create(@RequestBody StationsStopTimeDTO stationsStopTimeDTO, @PathVariable(required = false) long ...id) {
-        logger.info("User send POST /trains/list/{}/stations/list with body {}", id[0], stationsStopTimeDTO);
-        return service.create(stationsStopTimeDTO, id[0]);
+    @PostMapping("/sequence")
+    public TrainDate create(@RequestBody List<StationStopTimeDTO> stationStopTimeDTO, @PathVariable(required = false) long ...id) {
+        logger.info("User send POST /trains/list/{}/stations/list with body {}", id[0], stationStopTimeDTO);
+        return service.create(stationStopTimeDTO, id[0]);
     }
 }

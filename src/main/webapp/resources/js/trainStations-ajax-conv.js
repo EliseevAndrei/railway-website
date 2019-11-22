@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+
     $('.nBtn, .table .eBtn').click(function (e) {
 
         e.preventDefault();
@@ -7,12 +8,11 @@ $(document).ready(function () {
         var id = $(this).attr('id');
 
         if (id === 'eBtn') {
-
+            console.log("edit");
             $.getJSON(href, function (response) {
-
                 $(".myForm #idTrain").val(response.train.id);
                 $(".myForm #stationSerialNumber").val(response.stationSerialNumber);
-                $(".myForm #station").append(`<option value="${response.station.id}">${response.station.name}</option>`)
+                $(".myForm #station").append(`<option id="addedOption" selected value="${response.station.id}">${response.station.name}</option>`)
             });
             $('.myForm #exampleModal').modal();
         } else {
@@ -27,9 +27,6 @@ $(document).ready(function () {
         }
     });
 
-    $('.myForm #edit-submit, .myForm #close-btn, .myForm #x-btn').click(function() {
-        $('.myForm #errors').empty();
-    });
 
     $('.myForm #edit-submit').click(function (event) {
 
@@ -76,7 +73,7 @@ $(document).ready(function () {
                 });
                 errorBlock.css("display", "block");
             }
-        })
+        });
     });
 
     let deleteHref;
@@ -101,7 +98,13 @@ $(document).ready(function () {
                 alert("Error with status" + textStatus + errorThrown);
             }
         })
-    })
+    });
+
+    $('.myForm #exampleModal').on('hidden.bs.modal', function() {
+        $('.myForm #errors').empty();
+        console.log("remove");
+        $('.myForm #addedOption').remove();
+    });
 
 });
 

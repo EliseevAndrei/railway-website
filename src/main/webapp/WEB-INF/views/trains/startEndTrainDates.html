@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container">
-    <form action="dates/form" method="get">
+    <form th:action="${'dates/form'}" method="get">
         <button class="btn btn-primary nBtn" th:text="#{button.new}">Create</button>
     </form>
     <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>
@@ -42,91 +42,12 @@
             <td th:text="${date.lastStation.trainStation.station.name}"></td>
             <td th:text="${#dates.format(date.lastStation.arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
             <td>
-                <!--<a class="btn btn-primary text-white eBtn"
-                   th:href="${'trains/list/' + train.id}" th:text="#{button.edit}">Edit</a>
-                <a class="btn btn-danger text-white rBtn" th:href="${'trains/list/'+train.id}" th:text="#{button.remove}">Remove</a>
-                <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/stations}" th:text="#{button.train_stop_stations}">Train stop stations</a>
-                <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/dates}" th:text="#{button.dates}">Dates</a>-->
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-<!--
- Modal Edit n New
-<div class="myForm">
-    <form th:action="${'dates/list/'}" id="form">
-        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-             id="exampleModal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Save and Update</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span id="x-btn" aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="errors" style="display: none; color: red;">
-                        </div>
-                        <input type="text" hidden id="id">
-                        <div class="form-group col-md-6">
-                            <lable for="name" class="col-form-label" th:text="#{label.name}">Name</lable>
-                            <input type="text" class="form-control" id="name" placeholder="Название">
-                        </div>
-                        <div class="form-group col-md-8">
-                            <lable for="name" class="col-form-label" th:text="#{label.amount_coupe_places}">amount coupe places</lable>
-                            <input type="text" th:field="*{countCoupe}" class="form-control" id="countCoupe"
-                                   placeholder="Купе">
-                        </div>
-                        <div class="form-group col-md-8">
-                            <lable for="name" class="col-form-label" th:text="#{label.amount_lying_places}">Amount of lying places</lable>
-                            <input type="text" th:field="*{countLying}" class="form-control" id="countLying"
-                                   placeholder="Плацкарт">
-                        </div>
-                        <div class="form-group col-md-8">
-                            <lable for="name" class="col-form-label" th:text="#{label.amount_common_places}">Amount of common places</lable>
-                            <input type="text" th:field="*{countCommon}" class="form-control" id="countCommon"
-                                   placeholder="Общее">
-                        </div>
 
-                        <div class="form-group col-md-8"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="close-btn" data-dismiss="modal" th:text="#{button.close}">Close</button>
-                        <button type="submit" class="btn btn-primary" id="edit-submit" th:text="#{button.save}">Сохранить</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-
-&lt;!&ndash; Modal Edit n Remove&ndash;&gt;
-<div class="myRemove">
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-         id="exampleModal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{header.remove}">Delete</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="alert-danger text-dark p-2" th:text="#{text.sure}">Are you sure?</div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{button.close}">Close</button>
-                    <a class="btn btn-danger dBtn" href="" id="delete-submit" th:text="#{button.remove}">Delete</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="/resources/js/ajax-conversation.js"></script>-->
 
 </body>
 </html>
