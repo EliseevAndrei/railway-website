@@ -31,7 +31,7 @@ public class TrainDateRestController extends AbstractRestController<TrainDate, T
         return super.service.list(id[0]);
     }
 
-    @PostMapping("/sequence")
+    @PostMapping("/stations-sequence")
     public TrainDate create(@RequestBody List<StationStopTimeDTO> stationStopTimeDTO, @PathVariable(required = false) long ...id) {
         logger.info("User send POST /trains/list/{}/stations/list with body {}", id[0], stationStopTimeDTO);
         return service.create(stationStopTimeDTO, id[0]);

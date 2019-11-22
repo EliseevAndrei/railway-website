@@ -57,16 +57,17 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
     public TrainDate create(List<StationStopTimeDTO> stationStopTimeDTOs, long trainId) {
 
         Train train = trainService.get(trainId);
+        TrainDate trainDate = new TrainDate(train);
+
 
         StationStopTime stationStopTime;
         List<StationStopTime> stationStopTimes = new ArrayList<>();
         for (StationStopTimeDTO stationStopTimeDTO : stationStopTimeDTOs) {
             stationStopTime = new StationStopTime(stationStopTimeDTO.getArriveTime(), stationStopTimeDTO.getDepartureTime(),
-                    train.getCountCoupe(), train.getCountLying(), train.getCountCommon(), trainStationsService.get(stationStopTimeDTO.getTrainStationId()));
+                    train.getCountCoupe(), train.getCountLying(), train.getCountCommon(), trainStationsService.get(stationStopTimeDTO.getTrainStationId()), trainDate);
             stationStopTimes.add(stationStopTime);
         }
 
-        TrainDate trainDate = new TrainDate(train);
         trainDate.getStationStopTimes().addAll(stationStopTimes);
         return dao.save(trainDate);
     }

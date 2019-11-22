@@ -58,41 +58,31 @@ public class StationStopTime extends AbstractEntity {
                            @Digits(integer = 4, fraction = 0, message = "Кол-во купе должно быть целым числом!") int coupe_places_amount,
                            @Digits(integer = 4, fraction = 0, message = "Кол-во плацкарта должно быть целым числом!") int lying_places_amount,
                            @Digits(integer = 4, fraction = 0, message = "Кол-во общих должно быть целым числом!") int common_places_amount,
-                           TrainStation trainStation) {
+                           TrainStation trainStation,
+                           TrainDate trainDate) {
         this.arriveTime = arriveTime;
         this.departureTime = departureTime;
         this.coupe_places_amount = coupe_places_amount;
         this.lying_places_amount = lying_places_amount;
         this.common_places_amount = common_places_amount;
         this.trainStation = trainStation;
+        this.trainDate = trainDate;
     }
-
     public StationStopTime(long id, @NotNull(message = "arrive date  is wrong") Date arriveTime,
                            @NotNull(message = "departure date  is wrong") Date departureTime,
                            @Digits(integer = 4, fraction = 0, message = "Кол-во купе должно быть целым числом!") int coupe_places_amount,
                            @Digits(integer = 4, fraction = 0, message = "Кол-во плацкарта должно быть целым числом!") int lying_places_amount,
                            @Digits(integer = 4, fraction = 0, message = "Кол-во общих должно быть целым числом!") int common_places_amount,
-                           TrainStation trainStation) {
-        this.id = id;
+                           TrainStation trainStation,
+                           TrainDate trainDate) {
+        super.id = id;
         this.arriveTime = arriveTime;
         this.departureTime = departureTime;
         this.coupe_places_amount = coupe_places_amount;
         this.lying_places_amount = lying_places_amount;
         this.common_places_amount = common_places_amount;
         this.trainStation = trainStation;
-    }
-
-    public StationStopTime(@NotNull(message = "arrive date  is wrong") Date arriveTime,
-                           @NotNull(message = "departure date  is wrong") Date departureTime,
-                           @Digits(integer = 4, fraction = 0, message = "Кол-во купе должно быть целым числом!") int coupe_places_amount,
-                           @Digits(integer = 4, fraction = 0, message = "Кол-во плацкарта должно быть целым числом!") int lying_places_amount,
-                           @Digits(integer = 4, fraction = 0, message = "Кол-во общих должно быть целым числом!") int common_places_amount) {
-        this.id = id;
-        this.arriveTime = arriveTime;
-        this.departureTime = departureTime;
-        this.coupe_places_amount = coupe_places_amount;
-        this.lying_places_amount = lying_places_amount;
-        this.common_places_amount = common_places_amount;
+        this.trainDate = trainDate;
     }
 
     public TrainDate getTrainDate() {

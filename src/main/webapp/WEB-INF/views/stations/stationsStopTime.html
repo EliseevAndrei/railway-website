@@ -17,14 +17,18 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/styles.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
     <script src="/resources/js/stations.js"></script>
+    <script src="/resources/js/trainDates-ajax-conv.js"></script>
 </head>
 <body>
 
 
 <!-- Modal Edit n New-->
 <div class="container">
-    <form th:action="@{/dates/list}" th:object="${trainStations}" id="form" method="post">
 
+    <form th:action="@{list/stations-sequence}" th:object="${trainStations}" id="form" method="post">
+        <a class="reload" th:href="@{form}" hidden></a>
+        <div id="errors" style="display: none; color: red;">
+        </div>
 
         <table>
             <tr>
@@ -37,17 +41,17 @@
                 <td th:text="${iStat.index} + 1 + '.'"></td>
                 <td hidden class="trainStationId" th:text="${trainStation.id}"></td>
                 <td class="station-name" th:text="${trainStation.station.name}"></td>
-                <td><input type="text" class="arriveTime" id="arriveTime" value=""></td>
-                <td><input type="text" class="departureTime" id="departureTime" value=""></td>
+                <td class="td-arriveTime"><input type="text" class="arriveTime" id="arriveTime" required></td>
+                <td class="td-departureTime"><input type="text" class="departureTime" id="departureTime" required></td>
             </tr>
         </table>
-
         <div class="form-group col-md-8">
             <input type="submit" class="btn btn-primary" id="submit-btn"/>
         </div>
-
     </form>
+
 </div>
+
 
 </body>
 </html>

@@ -21,7 +21,7 @@ public class UserDAOTest {
     @Test
     @Transactional
     public void signIn() {
-        assertNotNull(userDAO.findByLoginAndPass("dron", "dron"));
+        assertNotNull(userDAO.findByLoginAndPass("admin", "admin"));
         assertNull(userDAO.findByLoginAndPass("asdf", "asdfk"));
     }
 
