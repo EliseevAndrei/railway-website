@@ -18,6 +18,7 @@ User features:
 - Spring REST
 - JPA with Hibernate implementation
 - Embedded H2
+- jUnit
 - Thymeleaf
 - Bootstrap 4
 - jQuery
@@ -26,3 +27,10 @@ User features:
 To access a web console for H2 get URL `localhost:8082`
 * username: sa
 * pass:
+
+## Running notes
+
+- If you run a project from idea you should set application context to `/`
+- If you deploy a project manually in tomcat server, then you should add app files to ROOT folder
+- If you have some troubles with logger encoding in your system, then just replace encoding in log4j.properties from UTF-8 to cp866 for console.
+- To access web site write `localhost:8080`.
