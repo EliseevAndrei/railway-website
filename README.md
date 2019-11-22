@@ -1,6 +1,6 @@
 # Railway website
 This is a website for the railway to buy train tickets.
-###Project in progress
+### Project in progress
 Now you can use admin features:
 
 - CRUD operations for train. To do this use url `GET localhost:8080/trains` to get the page with trains.
@@ -12,7 +12,7 @@ User features:
 
 - User can search trains for trip and then buy tickets on these trains (Now does not work: using 'trash data')
 
-##Technologies
+## Technologies
 
 - Spring MVC    
 - Spring REST
