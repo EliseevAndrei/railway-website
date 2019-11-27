@@ -37,9 +37,9 @@
         <tr th:each="date, iStat : ${dates}">
             <!--<td th:text="${train.id}"></td>-->
             <td th:text="${iStat.index} + 1 + '.'"></td>
-            <td th:text="${date.firstStation.trainStation.station.name}"></td>
+            <td th:text="${date.firstStation.trainRoutePiece.station.name}"></td>
             <td th:text="${#dates.format(date.firstStation.departureTime, 'dd-MM-yyyy HH:mm')}"></td>
-            <td th:text="${date.lastStation.trainStation.station.name}"></td>
+            <td th:text="${date.lastStation.trainRoutePiece.station.name}"></td>
             <td th:text="${#dates.format(date.lastStation.arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
             <td>
             </td>

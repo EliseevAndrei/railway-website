@@ -18,17 +18,17 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
 
     private StationStopTimeService stationStopTimeService;
     private TrainService trainService;
-    private TrainStationsService trainStationsService;
+    private TrainRoutePieceService trainRoutePieceService;
 
     @Autowired
     public TrainDateService(TrainDateDAO dao,
                             StationStopTimeService stationStopTimeService,
                             TrainService trainService,
-                            TrainStationsService trainStationsService) {
+                            TrainRoutePieceService trainRoutePieceService) {
         super(dao);
         this.stationStopTimeService = stationStopTimeService;
         this.trainService = trainService;
-        this.trainStationsService = trainStationsService;
+        this.trainRoutePieceService = trainRoutePieceService;
     }
 
     @Transactional
@@ -63,8 +63,8 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
         StationStopTime stationStopTime;
         List<StationStopTime> stationStopTimes = new ArrayList<>();
         for (StationStopTimeDTO stationStopTimeDTO : stationStopTimeDTOs) {
-            stationStopTime = new StationStopTime(stationStopTimeDTO.getArriveTime(), stationStopTimeDTO.getDepartureTime(),
-                    train.getCountCoupe(), train.getCountLying(), train.getCountCommon(), trainStationsService.get(stationStopTimeDTO.getTrainStationId()), trainDate);
+            stationStopTime = new StationStopTime(stationStopTimeDTO.getStartArriveTime(), stationStopTimeDTO.getStartDepartureTime(), stationStopTimeDTO.getEndArriveTime(), stationStopTimeDTO.getEndDepartureTime(),
+                    train.getCountCoupe(), train.getCountLying(), train.getCountCommon(), trainRoutePieceService.get(stationStopTimeDTO.getTrainStationId()), trainDate);
             stationStopTimes.add(stationStopTime);
         }
 

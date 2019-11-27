@@ -2,7 +2,7 @@ package com.eliseev.app.services;
 
 import com.eliseev.app.models.Route;
 import com.eliseev.app.models.Train;
-import com.eliseev.app.models.TrainStation;
+import com.eliseev.app.models.TrainRoutePiece;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,29 +14,29 @@ import java.util.List;
 public class RouteService {
 
     private TrainService trainService;
-    private TrainStationsService trainStationsService;
+    private TrainRoutePieceService trainRoutePieceService;
 
     @Autowired
     public RouteService(TrainService trainService,
-                        TrainStationsService trainStationsService) {
+                        TrainRoutePieceService trainRoutePieceService) {
         this.trainService = trainService;
-        this.trainStationsService = trainStationsService;
+        this.trainRoutePieceService = trainRoutePieceService;
     }
 
     public List<Route> findRoutes(String depStation, String arrStation, Date date) {
         List<Route> routes = new ArrayList<>();
         List<Train> trains = trainService.list();
         Route route;
-        TrainStation depSt;
-        TrainStation arrSt;
+        TrainRoutePiece depSt;
+        TrainRoutePiece arrSt;
 
         for(Train train : trains) {
 
             route = new Route();
             route.setTrainId(train.getId());
             route.setTrainName(train.getName());
-            depSt = trainStationsService.list(train.getId()).get(0);
-            route.setDepStation(depSt.getStation().getName());
+            depSt = trainRoutePieceService.list(train.getId()).get(0);
+            route.setDepStation(depSt.getStartStation().getName());
             //todo return
             /*route.setDepTime(depSt.getDepartureTime());
             route.setCoupe_places_amount(depSt.getCoupe_places_amount());

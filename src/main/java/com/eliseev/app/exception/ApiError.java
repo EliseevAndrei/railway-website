@@ -1,4 +1,4 @@
-package com.eliseev.app.exeption;
+package com.eliseev.app.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;

@@ -36,4 +36,5 @@ public class TrainDateRestController extends AbstractRestController<TrainDate, T
         logger.info("User send POST /trains/list/{}/stations/list with body {}", id[0], stationStopTimeDTO);
         return service.create(stationStopTimeDTO, id[0]);
     }
+
 }

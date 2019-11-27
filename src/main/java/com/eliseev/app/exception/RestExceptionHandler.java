@@ -1,4 +1,4 @@
-package com.eliseev.app.exeption;
+package com.eliseev.app.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

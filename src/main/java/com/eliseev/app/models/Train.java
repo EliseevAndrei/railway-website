@@ -33,7 +33,7 @@ public class Train extends AbstractEntity implements Serializable {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "train",cascade = CascadeType.ALL)
-    private List<TrainStation> trainStationList = new ArrayList<>();
+    private List<TrainRoutePiece> trainRoutePieceList = new ArrayList<>();
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
@@ -65,12 +65,12 @@ public class Train extends AbstractEntity implements Serializable {
         this.trainDates = trainDates;
     }
 
-    public List<TrainStation> getTrainStationList() {
-        return trainStationList;
+    public List<TrainRoutePiece> getTrainRoutePieceList() {
+        return trainRoutePieceList;
     }
 
-    public void setTrainStationList(List<TrainStation> trainStationList) {
-        this.trainStationList = trainStationList;
+    public void setTrainRoutePieceList(List<TrainRoutePiece> trainRoutePieceList) {
+        this.trainRoutePieceList = trainRoutePieceList;
     }
 
     public String getName() {

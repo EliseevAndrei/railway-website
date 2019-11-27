@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration(classes = TestConfig.class)
 public class StationDAOTest {
 
-    private Logger logger = LoggerFactory.getLogger(TrainStationDAOTest.class);
+    private Logger logger = LoggerFactory.getLogger(TrainRoutePieceDAOTest.class);
 
     @Autowired
     private StationDAO stationDAO;

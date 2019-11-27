@@ -2,11 +2,11 @@ package com.eliseev.app.service;
 
 import com.eliseev.app.db.dao.TestConfig;
 import com.eliseev.app.models.TrainDate;
-import com.eliseev.app.models.TrainStation;
+import com.eliseev.app.models.TrainRoutePiece;
 import com.eliseev.app.services.StationStopTimeService;
 import com.eliseev.app.services.TrainDateService;
 import com.eliseev.app.services.TrainService;
-import com.eliseev.app.services.TrainStationsService;
+import com.eliseev.app.services.TrainRoutePieceService;
 import com.eliseev.app.services.dto.StationStopTimeDTO;
 import com.eliseev.app.services.dto.TrainDateDTO;
 import org.junit.Test;
@@ -37,7 +37,7 @@ public class TrainDateServiceTest {
     private TrainService trainService;
 
     @Autowired
-    private TrainStationsService trainStationsService;
+    private TrainRoutePieceService trainRoutePieceService;
 
     @Autowired
     private StationStopTimeService stationStopTimeService;
@@ -54,12 +54,12 @@ public class TrainDateServiceTest {
     @Transactional
     public void createTrainDate() {
 
-        List<TrainStation> trainStations = trainStationsService.list(1L);
+        List<TrainRoutePiece> trainRoutePieces = trainRoutePieceService.list(1L);
 
         StationStopTimeDTO stationStopTimeDTO;
         List<StationStopTimeDTO> stationStopTimeDTOs = new ArrayList<>();
-        for (TrainStation trainStation : trainStations) {
-            stationStopTimeDTO = new StationStopTimeDTO(trainStation.getId(), new Date(), new Date());
+        for (TrainRoutePiece trainRoutePiece : trainRoutePieces) {
+            stationStopTimeDTO = new StationStopTimeDTO(trainRoutePiece.getId(), new Date(), new Date(), new Date(), new Date());
             stationStopTimeDTOs.add(stationStopTimeDTO);
         }
 
