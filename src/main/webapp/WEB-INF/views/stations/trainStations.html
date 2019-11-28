@@ -24,12 +24,14 @@
     <table class="table table-hover">
         <thead class="bg-dark text-white">
         <tr>
-            <th>Станция</th>
+            <th>Станция отправления</th>
+            <th>Станция прибытия</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="station : ${stations}">
-            <td th:text="${station.station.name}"></td>
+            <td th:text="${station.startStation.name}"></td>
+            <td th:text="${station.endStation.name}"></td>
             <td>
                 <a class="btn btn-primary text-white eBtn" id="eBtn"
                    th:href="${'stations/list/' + station.id}">Edit</a>

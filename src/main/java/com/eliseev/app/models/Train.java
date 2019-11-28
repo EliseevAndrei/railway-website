@@ -1,13 +1,17 @@
 package com.eliseev.app.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -16,6 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Table(name="station_stop_time")
 public class Train extends AbstractEntity implements Serializable {
 
     @NotBlank(message = "{train.name.notBlank}")
@@ -33,112 +43,14 @@ public class Train extends AbstractEntity implements Serializable {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "train",cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<TrainRoutePiece> trainRoutePieceList = new ArrayList<>();
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<TrainDate> trainDates = new ArrayList<>();
 
-
-    public Train() { }
-
-    public Train(long id, String name, int countCoupe, int countLying, int countCommon) {
-        super.id = id;
-        this.name = name;
-        this.countCoupe = countCoupe;
-        this.countLying = countLying;
-        this.countCommon = countCommon;
-    }
-
-    public Train(String name, int countCoupe, int countLying, int countCommon) {
-        this.name = name;
-        this.countCoupe = countCoupe;
-        this.countLying = countLying;
-        this.countCommon = countCommon;
-    }
-
-    public List<TrainDate> getTrainDates() {
-        return trainDates;
-    }
-
-    public void setTrainDates(List<TrainDate> trainDates) {
-        this.trainDates = trainDates;
-    }
-
-    public List<TrainRoutePiece> getTrainRoutePieceList() {
-        return trainRoutePieceList;
-    }
-
-    public void setTrainRoutePieceList(List<TrainRoutePiece> trainRoutePieceList) {
-        this.trainRoutePieceList = trainRoutePieceList;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getCountCoupe() {
-        return countCoupe;
-    }
-
-    public int getCountLying() {
-        return countLying;
-    }
-
-    public int getCountCommon() {
-        return countCommon;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCountCoupe(int countCoupe) {
-        this.countCoupe = countCoupe;
-    }
-
-    public void setCountLying(int countLying) {
-        this.countLying = countLying;
-    }
-
-    public void setCountCommon(int countCommon) {
-        this.countCommon = countCommon;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (!(o instanceof Train)) return false;
-
-        Train train = (Train) o;
-
-        return new EqualsBuilder()
-                .append(countCoupe, train.countCoupe)
-                .append(countLying, train.countLying)
-                .append(countCommon, train.countCommon)
-                .append(name, train.name)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(name)
-                .append(countCoupe)
-                .append(countLying)
-                .append(countCommon)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "Train{" +
-                "name='" + name + '\'' +
-                ", countCoupe=" + countCoupe +
-                ", countLying=" + countLying +
-                ", countCommon=" + countCommon +
-                ", id=" + id +
-                '}';
-    }
 }

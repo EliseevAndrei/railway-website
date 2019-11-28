@@ -25,7 +25,7 @@
 <!-- Modal Edit n New-->
 <div class="container">
 
-    <form th:action="@{list/stations-sequence}" th:object="${trainRoutePieces}" id="form" method="post">
+    <form th:action="@{list/stations-sequence}" id="form" method="post">
         <a class="reload" th:href="@{form}" hidden></a>
         <div id="errors" style="display: none; color: red;">
         </div>
@@ -33,15 +33,17 @@
         <table>
             <tr>
                 <th></th>
-                <th>Станция</th>
-                <th>Отправление</th>
-                <th>Прибытие</th>
+                <th>Станция отправления</th>
+                <th>Время отправления</th>
+                <th>Станция прибытия</th>
+                <th>Время прибытия</th>
             </tr>
             <tr class="object" th:each="trainRoutePiece, iStat : ${trainRoutePieces}">
                 <td th:text="${iStat.index} + 1 + '.'"></td>
                 <td hidden class="trainStationId" th:text="${trainRoutePiece.id}"></td>
-                <td class="station-name" th:text="${trainRoutePiece.station.name}"></td>
+                <td class="dep-station-name" th:text="${trainRoutePiece.startStation.name}"></td>
                 <td class="td-arriveTime"><input type="text" class="arriveTime" id="arriveTime" required></td>
+                <td class="arr-station-name" th:text="${trainRoutePiece.endStation.name}"></td>
                 <td class="td-departureTime"><input type="text" class="departureTime" id="departureTime" required></td>
             </tr>
         </table>

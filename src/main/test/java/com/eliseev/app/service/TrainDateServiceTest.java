@@ -59,7 +59,7 @@ public class TrainDateServiceTest {
         StationStopTimeDTO stationStopTimeDTO;
         List<StationStopTimeDTO> stationStopTimeDTOs = new ArrayList<>();
         for (TrainRoutePiece trainRoutePiece : trainRoutePieces) {
-            stationStopTimeDTO = new StationStopTimeDTO(trainRoutePiece.getId(), new Date(), new Date(), new Date(), new Date());
+            stationStopTimeDTO = new StationStopTimeDTO(trainRoutePiece.getId(), new Date(), new Date());
             stationStopTimeDTOs.add(stationStopTimeDTO);
         }
 

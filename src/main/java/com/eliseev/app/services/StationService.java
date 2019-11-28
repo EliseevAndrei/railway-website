@@ -6,9 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class StationService extends AbstractService<Station, StationDAO> {
@@ -20,9 +17,9 @@ public class StationService extends AbstractService<Station, StationDAO> {
 
     private Logger logger = LoggerFactory.getLogger(StationService.class);
 
-    @Transactional
+    /*@Transactional
     public List<Station> getUnusedStations(long trainId) {
         return dao.getUnusedStations(trainId);
-    }
+    }*/
 
 }

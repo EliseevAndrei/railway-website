@@ -66,7 +66,7 @@ public class TrainRoutePieceDAOImpl extends AbstractDAO<TrainRoutePiece>
 
     @Override
     public List<TrainRoutePiece> findByTrainId(Long trainId) {
-        return super.entityManager.createQuery("select s from TrainStation s where s.train.id = :trainId order by s.stationSerialNumber", TrainRoutePiece.class)
+        return super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId order by s.serialNumber", TrainRoutePiece.class)
                 .setParameter("trainId", trainId)
                 .getResultList();
     }

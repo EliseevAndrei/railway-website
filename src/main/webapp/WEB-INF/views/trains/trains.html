@@ -53,7 +53,7 @@
                    th:href="${'trains/list/' + train.id}" th:text="#{button.edit}">Edit</a>
                 <a class="btn btn-danger text-white rBtn" th:href="${'trains/list/'+train.id}"
                    th:text="#{button.remove}">Remove</a>
-                <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/stations}"
+                <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/route-pieces}"
                    th:text="#{button.train_stop_stations}">Train stop stations</a>
                 <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/dates}" th:text="#{button.dates}">Dates</a>
             </td>

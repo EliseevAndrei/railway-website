@@ -168,7 +168,7 @@ $(document).ready(function () {
             contentType: "application/json",
             data: JSON.stringify(train),
             success: function (data, textStatus, xhr) {
-                $(location).attr('href', "/");
+                $(location).attr('href', "/trains");
             },
             error: function (xhr, textStatus, errorThrown) {
                 let errorBlock = $('.myForm #errors');

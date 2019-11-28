@@ -33,25 +33,13 @@ public class StationStopTime extends AbstractEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ", timezone = "Europe/Moscow")
     @NotNull(message = "arrive date  is wrong")
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="start_arr_time")
-    private Date startArriveTime;
+    @Column(name="arr_time")
+    private Date arriveTime;
     @JsonDeserialize(using = CustomRestDateDeserializer.class)
     @NotNull(message = "departure date  is wrong")
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="start_dep_time")
-    private Date startDepartureTime;
-    @JsonDeserialize(using = CustomRestDateDeserializer.class)
-    @NotNull(message = "departure date  is wrong")
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="end_arr_time")
-    private Date endArriveTime;
-    @JsonDeserialize(using = CustomRestDateDeserializer.class)
-    @NotNull(message = "departure date  is wrong")
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="end_dep_time")
-    private Date endDepartureTime;
-    @Digits(integer = 4, fraction = 0, message = "Кол-во купе должно быть целым числом!")
-    @Column(name="coupe_places_amount")
+    @Column(name="dep_time")
+    private Date departureTime;
     private int coupe_places_amount;
     @Digits(integer = 4, fraction = 0, message = "Кол-во плацкарта должно быть целым числом!")
     @Column(name="lying_places_amount")

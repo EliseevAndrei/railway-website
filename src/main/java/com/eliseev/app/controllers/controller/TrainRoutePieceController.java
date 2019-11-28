@@ -34,8 +34,8 @@ public class TrainRoutePieceController {
 
     @GetMapping("/route-pieces")
     public String findAll(@PathVariable("trainId") long trainId, Model model) {
-        logger.info("User send /trains/list/{}/stations", trainId);
-        model.addAttribute("allStations", stationService.getUnusedStations(trainId));
+        logger.info("User send /trains/list/{}/route-pieces", trainId);
+        /*model.addAttribute("allStations", stationService.getUnusedStations(trainId));*/
         model.addAttribute("stations", trainRoutePieceService.list(trainId));
         return "stations/trainStations";
     }
@@ -57,7 +57,7 @@ public class TrainRoutePieceController {
     @GetMapping("/dates/form")
     public String getTrainDateForm(@PathVariable("trainId") long trainId, Model model) {
 
-        model.addAttribute("trainStations", trainRoutePieceService.list(trainId));
+        model.addAttribute("trainRoutePieces", trainRoutePieceService.list(trainId));
 
         return "stations/stationsStopTime";
     }
