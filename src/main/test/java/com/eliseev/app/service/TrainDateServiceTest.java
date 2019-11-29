@@ -8,7 +8,7 @@ import com.eliseev.app.services.TrainDateService;
 import com.eliseev.app.services.TrainService;
 import com.eliseev.app.services.TrainRoutePieceService;
 import com.eliseev.app.services.dto.StationStopTimeDTO;
-import com.eliseev.app.services.dto.TrainDateDTO;
+import com.eliseev.app.services.dto.TrainRouteDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -45,7 +45,7 @@ public class TrainDateServiceTest {
     @Test
     @Transactional
     public void getDates() {
-        List<TrainDateDTO> trainDateDTOS = trainDateService.getDates(1);
+        List<TrainRouteDTO> trainDateDTOS = trainDateService.getDates(1);
         assertNotNull(trainDateDTOS);
         logger.info("{}", trainDateDTOS);
     }
@@ -69,5 +69,6 @@ public class TrainDateServiceTest {
         logger.info("{}", trainDate.getStationStopTimes());
 
     }
+
 
 }

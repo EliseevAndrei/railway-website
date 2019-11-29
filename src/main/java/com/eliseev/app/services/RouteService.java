@@ -1,11 +1,19 @@
 package com.eliseev.app.services;
 
 import com.eliseev.app.models.Route;
+import com.eliseev.app.models.Station;
 import com.eliseev.app.models.Train;
+import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.models.TrainRoutePiece;
+import com.eliseev.app.services.dto.TrainDateDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,41 +23,35 @@ public class RouteService {
 
     private TrainService trainService;
     private TrainRoutePieceService trainRoutePieceService;
+    private TrainDateService trainDateService;
+    private StationService stationService;
+    private Logger logger = LoggerFactory.getLogger(RouteService.class);
 
     @Autowired
     public RouteService(TrainService trainService,
-                        TrainRoutePieceService trainRoutePieceService) {
+                        TrainRoutePieceService trainRoutePieceService,
+                        TrainDateService trainDateService,
+                        StationService stationService) {
         this.trainService = trainService;
         this.trainRoutePieceService = trainRoutePieceService;
+        this.trainDateService = trainDateService;
+        this.stationService = stationService;
     }
 
-    public List<Route> findRoutes(String depStation, String arrStation, Date date) {
-        List<Route> routes = new ArrayList<>();
-        List<Train> trains = trainService.list();
-        Route route;
-        TrainRoutePiece depSt;
-        TrainRoutePiece arrSt;
+    @Transactional(readOnly = true)
+    public List<Train> findTrainsOnRoute(String depStation, String arrStation, Date date) {
 
-        for(Train train : trains) {
+        Station depStationObj = stationService.getStationByName(depStation);
+        Station arrStationObj= stationService.getStationByName(arrStation);
 
-            route = new Route();
-            route.setTrainId(train.getId());
-            route.setTrainName(train.getName());
-            depSt = trainRoutePieceService.list(train.getId()).get(0);
-            route.setDepStation(depSt.getStartStation().getName());
-            //todo return
-            /*route.setDepTime(depSt.getDepartureTime());
-            route.setCoupe_places_amount(depSt.getCoupe_places_amount());
-            route.setLying_places_amount(depSt.getLying_places_amount());
-            route.setCommon_places_amount(depSt.getCommon_places_amount());
-            arrSt = trainStationsService.list(train.getId()).get(1);
-            route.setArrStation(arrSt.getStation().getName());
-            route.setArrTime(arrSt.getArriveTime());*/
+        List<TrainDateDTO> trainDates = trainDateService.getTrainDates(depStationObj, arrStationObj, date);
 
-            routes.add(route);
-        }
+        List<Route> routes = trainDateService.getFreePlacesForTrainDates(trainDates);
 
-        return routes;
+
+
+
+        return null;
     }
 
 }

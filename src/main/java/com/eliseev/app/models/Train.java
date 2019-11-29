@@ -59,4 +59,8 @@ public class Train extends AbstractEntity implements Serializable {
         this.countLying = countLying;
         this.countCommon = countCommon;
     }
+
+    public Train(long id) {
+        super.id = id;
+    }
 }

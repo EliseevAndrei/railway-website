@@ -14,9 +14,6 @@ import java.util.List;
 @Service
 public class TrainRoutePieceService extends AbstractService<TrainRoutePiece, TrainRoutePieceDAO> {
 
-
-
-
     @Autowired
     public TrainRoutePieceService(TrainRoutePieceDAO dao) {
         super(dao);

@@ -1,23 +1,22 @@
 package com.eliseev.app.services.dto;
 
-import com.eliseev.app.models.Train;
+import com.eliseev.app.models.StationStopTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class TrainDateDTO {
+public class TrainRouteDTO implements Serializable {
 
-    private Long trainId;
-    private long[] dateIds;
-    private String trainName;
+    private StationStopTime firstStation;
+    private StationStopTime lastStation;
+
 }

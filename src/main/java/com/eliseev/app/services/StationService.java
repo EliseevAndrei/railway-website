@@ -17,6 +17,9 @@ public class StationService extends AbstractService<Station, StationDAO> {
 
     private Logger logger = LoggerFactory.getLogger(StationService.class);
 
+    public Station getStationByName(String name) {
+        return super.dao.findStationByName(name);
+    }
     /*@Transactional
     public List<Station> getUnusedStations(long trainId) {
         return dao.getUnusedStations(trainId);

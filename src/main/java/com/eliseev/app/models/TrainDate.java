@@ -23,7 +23,7 @@ import java.util.List;
 @ToString(callSuper = true)
 @Entity
 @Table(name="train_date")
-public class TrainDate extends AbstractEntity{
+public class TrainDate extends AbstractEntity {
 
 
     @ManyToOne
