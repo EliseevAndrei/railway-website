@@ -23,13 +23,6 @@ public class TrainService extends AbstractService<Train, TrainDAO> {
 
     private Logger logger = LoggerFactory.getLogger(TrainService.class);
 
-    {
-        Train a = new Train(1L,"23B3",10 , 10, 10);
-        super.entities.put(1L, a);
-        Train b = new Train(2L,"2DS3", 20, 20, 20);
-        super.entities.put(2L, b);
-    }
-
     @Transactional
     public Train create(Train train) {
         if (train.getTrainRoutePieceList().size() > 0) {

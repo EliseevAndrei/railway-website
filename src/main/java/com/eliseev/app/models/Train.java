@@ -25,7 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Table(name="station_stop_time")
+@Table(name="train")
 public class Train extends AbstractEntity implements Serializable {
 
     @NotBlank(message = "{train.name.notBlank}")
@@ -53,4 +53,10 @@ public class Train extends AbstractEntity implements Serializable {
     @ToString.Exclude
     private List<TrainDate> trainDates = new ArrayList<>();
 
+    public Train(@NotBlank(message = "{train.name.notBlank}") @Size(min = 1, max = 5, message = "{train.name.size}") String name, @Digits(integer = 4, fraction = 0, message = "{train.countCoupe.digits}") int countCoupe, @Digits(integer = 4, fraction = 0, message = "{train.countLying.digits}") int countLying, @Digits(integer = 4, fraction = 0, message = "{train.countCommon.digits}") int countCommon) {
+        this.name = name;
+        this.countCoupe = countCoupe;
+        this.countLying = countLying;
+        this.countCommon = countCommon;
+    }
 }

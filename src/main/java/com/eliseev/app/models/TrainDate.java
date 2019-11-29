@@ -36,4 +36,7 @@ public class TrainDate extends AbstractEntity{
     @ToString.Exclude
     private List<StationStopTime> stationStopTimes = new ArrayList<>();
 
+    public TrainDate(Train train) {
+        this.train = train;
+    }
 }
