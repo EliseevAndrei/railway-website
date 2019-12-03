@@ -3,10 +3,12 @@ package com.eliseev.app.service;
 import com.eliseev.app.db.dao.TestConfig;
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.models.TrainRoutePiece;
+import com.eliseev.app.services.StationService;
 import com.eliseev.app.services.StationStopTimeService;
 import com.eliseev.app.services.TrainDateService;
-import com.eliseev.app.services.TrainService;
 import com.eliseev.app.services.TrainRoutePieceService;
+import com.eliseev.app.services.TrainService;
+import com.eliseev.app.services.dto.RouteDTO;
 import com.eliseev.app.services.dto.StationStopTimeDTO;
 import com.eliseev.app.services.dto.TrainRouteDTO;
 import org.junit.Test;
@@ -18,6 +20,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +36,9 @@ public class TrainDateServiceTest {
 
     @Autowired
     private TrainDateService trainDateService;
+
+    @Autowired
+    private StationService stationService;
 
     @Autowired
     private TrainService trainService;
@@ -67,6 +74,25 @@ public class TrainDateServiceTest {
 
         logger.info("{}",trainDate);
         logger.info("{}", trainDate.getStationStopTimes());
+
+    }
+
+    @Test
+    @Transactional
+    public void getTrainDates() {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date;
+        try {
+            date = simpleDateFormat.parse("2019-10-11");
+
+            List<RouteDTO> routeDTOs = trainDateService.getTrainDates(stationService.get(1L), stationService.get(4L), date);
+            logger.info("{}", routeDTOs);
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 

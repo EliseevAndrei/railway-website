@@ -1,9 +1,7 @@
 package com.eliseev.app.db.dao;
 
-import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.repository.custom.TrainDateDAO;
 import com.eliseev.app.services.StationService;
-import com.eliseev.app.services.TrainDateService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +24,7 @@ public class TrainDateDAOTest {
     public void getFreePlacesForTrainDate() {
         trainDateDAO.getFreePlacesForTrainDateBetweenStations(1, 1, stationService.get(1L), stationService.get(4L));
     }
+
+
 
 }

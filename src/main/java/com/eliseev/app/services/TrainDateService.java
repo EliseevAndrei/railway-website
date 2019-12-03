@@ -1,13 +1,12 @@
 package com.eliseev.app.services;
 
-import com.eliseev.app.models.Route;
 import com.eliseev.app.models.Station;
 import com.eliseev.app.models.StationStopTime;
 import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.repository.custom.TrainDateDAO;
+import com.eliseev.app.services.dto.RouteDTO;
 import com.eliseev.app.services.dto.StationStopTimeDTO;
-import com.eliseev.app.services.dto.TrainDateDTO;
 import com.eliseev.app.services.dto.TrainRouteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,7 +86,7 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
     }
 
     @Transactional(readOnly = true)
-    public List<TrainDateDTO> getTrainDates(Station depStation, Station arrStation, Date date) {
+    public List<RouteDTO> getTrainDates(Station depStation, Station arrStation, Date date) {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String depDate = dateFormat.format(date);
@@ -100,12 +99,10 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
     }
 
     @Transactional(readOnly = true)
-    public List<Route> getFreePlacesForTrainDates(List<TrainDateDTO> trainDateDTOs) {
+    public List<RouteDTO> setFreePlacesForTrainDates(List<RouteDTO> routesWithTrainDate) {
 
-        for (TrainDateDTO trainDateDTO : trainDateDTOs) {
-            for (long trainDateId : trainDateDTO.getDateIds()) {
-                /*super.dao.getFreeplacesForTrainDate(trainId, trainDateId);*/
-            }
+        for (RouteDTO routeDTO : routesWithTrainDate) {
+
         }
         return null;
     }

@@ -5,6 +5,7 @@ import com.eliseev.app.repository.AbstractDAO;
 import com.eliseev.app.repository.custom.TrainRoutePieceDAO;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 @Repository
@@ -69,6 +70,36 @@ public class TrainRoutePieceDAOImpl extends AbstractDAO<TrainRoutePiece>
         return super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId order by s.serialNumber", TrainRoutePiece.class)
                 .setParameter("trainId", trainId)
                 .getResultList();
+    }
+
+    @Override
+    public TrainRoutePiece findByTrainIdAndStartStationId(long trainId, long startStationId) {
+        TrainRoutePiece trainRoutePiece;
+        try {
+            trainRoutePiece = super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId and s.startStationId.id = :startStationId", TrainRoutePiece.class)
+                    .setParameter("trainId", trainId)
+                    .setParameter("startStationId", startStationId)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return trainRoutePiece;
+
+    }
+
+    @Override
+    public TrainRoutePiece findByTrainIdAndEndStationId(long trainId, long endStationId) {
+        TrainRoutePiece trainRoutePiece;
+        try {
+            trainRoutePiece = super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId and s.endStationId.id = :endStationId", TrainRoutePiece.class)
+                    .setParameter("trainId", trainId)
+                    .setParameter("endStationId", endStationId)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return trainRoutePiece;
+
     }
 
 }

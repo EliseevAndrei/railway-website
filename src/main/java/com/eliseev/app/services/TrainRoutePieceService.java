@@ -1,7 +1,6 @@
 package com.eliseev.app.services;
 
 import com.eliseev.app.models.TrainRoutePiece;
-import com.eliseev.app.repository.custom.StationStopTimeDAO;
 import com.eliseev.app.repository.custom.TrainRoutePieceDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +25,10 @@ public class TrainRoutePieceService extends AbstractService<TrainRoutePiece, Tra
         return super.dao.findByTrainId(trainId);
     }
 
+    @Transactional(readOnly = true)
+    public TrainRoutePiece findByTrainIdAndStartStationId(long trainId, long startStationId) {
+        return null;
+    }
 
 }
 

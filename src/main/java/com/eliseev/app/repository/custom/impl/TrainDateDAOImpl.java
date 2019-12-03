@@ -6,6 +6,7 @@ import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.repository.AbstractDAO;
 import com.eliseev.app.repository.custom.TrainDateDAO;
+import com.eliseev.app.services.dto.RouteDTO;
 import com.eliseev.app.services.dto.TrainDateDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,12 +35,12 @@ public class TrainDateDAOImpl extends AbstractDAO<TrainDate>
     }
 
     @Override
-    public List<TrainDateDTO> getTrainDates(Station depStation, Station arrStation,
+    public List<RouteDTO> getTrainDates(Station depStation, Station arrStation,
                                                             String depDateLeftBorder, String depDateRightBorder) {
 
         @SuppressWarnings("unchecked")
         List<Object[]> objects = super.entityManager.createNativeQuery(
-                "select trainId, group_concat(train_date_id) as trainDateId, trainName \n" +
+                "select trainId, train_date_id as trainDateId, trainName \n" +
                         "from (" +
                         "       select trainId, train_route_piece.id as pieceId, trainName\n" +
                         "       from train_route_piece\n" +
@@ -62,34 +63,36 @@ public class TrainDateDAOImpl extends AbstractDAO<TrainDate>
                 .setParameter("depDateRightBorder", depDateRightBorder)
                 .getResultList();
 
-        List<TrainDateDTO> trainDateDTOs = new ArrayList<>();
-        TrainDateDTO trainDateDTO;
 
+        RouteDTO routeDTO;
+        List<RouteDTO> routeDTOs = new ArrayList<>();
         for (Object[] q : objects) {
 
-            String datesId = (String) q[1];
-            String[] dateId = datesId.split(",");
 
-            trainDateDTO = new TrainDateDTO(((BigInteger) q[0]).longValue(), Arrays.stream(dateId).mapToLong(Long::parseLong).toArray(), (String) q[2]);
-            trainDateDTOs.add(trainDateDTO);
+            routeDTO = new RouteDTO();
+            routeDTO.setTrainId(((BigInteger) q[0]).longValue());
+            routeDTO.setTrainDateId(((BigInteger) q[1]).longValue());
+            routeDTO.setTrainName((String) q[2]);
+
+           routeDTOs.add(routeDTO);
         }
 
-        return trainDateDTOs;
+        return routeDTOs;
     }
 
     @Override
-    public List<Route> getFreePlacesForTrainDateBetweenStations(long trainId, long trainDateId, Station depStation, Station arrStation) {
+    public List<RouteDTO> getFreePlacesForTrainDateBetweenRoutePieces(RouteDTO routeDTO, long depRoutePiece, long arrRoutePiece) {
 
         @SuppressWarnings("unchecked")
         List<Object[]> objects = super.entityManager.createNativeQuery(
                 "select  min(common_places_amount), min(coupe_places_amount), min(lying_places_amount)\n" +
                         "from (\n" +
-                        "       select id, serial_number, train_id, @max1 , @max2  from train_route_piece trp,\n" +
-                        "                     (select @max1 = (select trp.serial_number from train_route_piece trp\n" +
+                        "       select id, serial_number, train_id  from train_route_piece trp,\n" +
+                        "                     (select @max1 \\:= (select trp.serial_number from train_route_piece trp\n" +
                         "                        where trp.train_id = :trainId\n" +
                         "                        and trp.start_station_id = :depStationId\n" +
                         "                        limit 1)) as x,\n" +
-                        "                     (select @max2 = (select trp.serial_number from train_route_piece trp\n" +
+                        "                     (select @max2 \\:= (select trp.serial_number from train_route_piece trp\n" +
                         "                        where trp.train_id = :trainId\n" +
                         "                        and trp.end_station_id = :arrStationId\n" +
                         "                        limit 1)) as y\n" +

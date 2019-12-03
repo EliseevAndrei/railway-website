@@ -8,4 +8,6 @@ import java.util.List;
 public interface TrainRoutePieceDAO extends IDAO<TrainRoutePiece> {
 
     List<TrainRoutePiece> findByTrainId(Long trainId);
+    TrainRoutePiece findByTrainIdAndStartStationId(long trainId, long startStationId);
+    TrainRoutePiece findByTrainIdAndEndStationId(long trainId, long endStationId);
 }
