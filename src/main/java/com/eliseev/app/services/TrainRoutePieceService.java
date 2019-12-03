@@ -27,7 +27,12 @@ public class TrainRoutePieceService extends AbstractService<TrainRoutePiece, Tra
 
     @Transactional(readOnly = true)
     public TrainRoutePiece findByTrainIdAndStartStationId(long trainId, long startStationId) {
-        return null;
+        return super.dao.findByTrainIdAndStartStationId(trainId, startStationId);
+    }
+
+    @Transactional(readOnly = true)
+    public TrainRoutePiece findByTrainIdAndEndStationId(long trainId, long endStationId) {
+        return super.dao.findByTrainIdAndEndStationId(trainId, endStationId);
     }
 
 }

@@ -76,7 +76,7 @@ public class TrainRoutePieceDAOImpl extends AbstractDAO<TrainRoutePiece>
     public TrainRoutePiece findByTrainIdAndStartStationId(long trainId, long startStationId) {
         TrainRoutePiece trainRoutePiece;
         try {
-            trainRoutePiece = super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId and s.startStationId.id = :startStationId", TrainRoutePiece.class)
+            trainRoutePiece = super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId and s.startStation.id = :startStationId", TrainRoutePiece.class)
                     .setParameter("trainId", trainId)
                     .setParameter("startStationId", startStationId)
                     .getSingleResult();
@@ -91,7 +91,7 @@ public class TrainRoutePieceDAOImpl extends AbstractDAO<TrainRoutePiece>
     public TrainRoutePiece findByTrainIdAndEndStationId(long trainId, long endStationId) {
         TrainRoutePiece trainRoutePiece;
         try {
-            trainRoutePiece = super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId and s.endStationId.id = :endStationId", TrainRoutePiece.class)
+            trainRoutePiece = super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId and s.endStation.id = :endStationId", TrainRoutePiece.class)
                     .setParameter("trainId", trainId)
                     .setParameter("endStationId", endStationId)
                     .getSingleResult();

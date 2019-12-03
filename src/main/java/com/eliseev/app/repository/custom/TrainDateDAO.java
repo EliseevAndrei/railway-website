@@ -11,5 +11,7 @@ public interface TrainDateDAO extends IDAO<TrainDate> {
 
     List<TrainDate> findDatesByTrainId(long trainId);
     List<RouteDTO> getTrainDates(Station depStation, Station arrStation, String depDateLeftBorder, String depDateRightBorder);
-    public List<RouteDTO> getFreePlacesForTrainDateBetweenRoutePieces(RouteDTO routeDTO, long depRoutePiece, long arrRoutePiece);
+    RouteDTO getFreePlacesForTrainDateBetweenRoutePieces(RouteDTO routeDTO,
+                                                               int depRoutePieceSerialNumber,
+                                                               int arrRoutePieceSerialNumber);
 }

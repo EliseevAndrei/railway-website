@@ -1,9 +1,9 @@
 package com.eliseev.app.db.dao;
 
+import com.eliseev.app.TestConfig;
 import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainRoutePiece;
 import com.eliseev.app.repository.custom.TrainDAO;
-import com.eliseev.app.repository.custom.TrainRoutePieceDAO;
 import com.eliseev.app.services.StationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

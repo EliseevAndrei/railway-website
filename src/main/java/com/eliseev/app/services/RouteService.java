@@ -1,7 +1,6 @@
 package com.eliseev.app.services;
 
 import com.eliseev.app.models.Station;
-import com.eliseev.app.models.Train;
 import com.eliseev.app.services.dto.RouteDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,19 +32,14 @@ public class RouteService {
     }
 
     @Transactional(readOnly = true)
-    public List<Train> findTrainsOnRoute(String depStation, String arrStation, Date date) {
+    public List<RouteDTO> findTrainsOnRoute(String depStation, String arrStation, Date date) {
 
         Station depStationObj = stationService.getStationByName(depStation);
         Station arrStationObj= stationService.getStationByName(arrStation);
 
         List<RouteDTO> routesWithTrainDate = trainDateService.getTrainDates(depStationObj, arrStationObj, date);
 
-        List<RouteDTO> routes = trainDateService.setFreePlacesForTrainDates(routesWithTrainDate);
-
-
-
-
-        return null;
+        return trainDateService.setFreePlacesForTrainDates(routesWithTrainDate, depStationObj, arrStationObj);
     }
 
 }

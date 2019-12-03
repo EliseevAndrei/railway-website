@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface StationStopTimeDAO extends IDAO<StationStopTime> {
 
-
     List<StationStopTime> findStationsStopTimeByTrainDateId(Long id);
+
+    StationStopTime getStopTimeByTrainRouteIdAndTrainDateId(long trainRouteId, long trainDateId);
 }

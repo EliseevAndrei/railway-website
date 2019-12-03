@@ -1,6 +1,6 @@
 package com.eliseev.app.service;
 
-import com.eliseev.app.db.dao.TestConfig;
+import com.eliseev.app.TestConfig;
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.models.TrainRoutePiece;
 import com.eliseev.app.services.StationService;

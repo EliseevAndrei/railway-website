@@ -21,12 +21,12 @@
         </property>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                <!-- <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>-->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
                 <prop key="hibernate.dialect.storage_engine">InnoDB</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.import_files">classpath:db/sql/data.sql</prop>
+                <!--<prop key="hibernate.hbm2ddl.import_files">classpath:db/sql/data.sql</prop>-->
             </props>
         </property>
     </bean>
@@ -36,9 +36,9 @@
         &lt;!&ndash;<jdbc:script location="classpath:db/sql/data.sql"/>&ndash;&gt;
     </jdbc:embedded-database>-->
 
-    <bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start" destroy-method="stop">
+   <!-- <bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start" destroy-method="stop">
         <constructor-arg value="-web,-webAllowOthers,-webPort,8082"/>
-    </bean>
+    </bean>-->
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">

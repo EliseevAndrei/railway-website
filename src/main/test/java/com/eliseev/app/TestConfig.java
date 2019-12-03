@@ -1,4 +1,4 @@
-package com.eliseev.app.db.dao;
+package com.eliseev.app;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -45,13 +45,13 @@ public class TestConfig {
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUsername("root");
         dataSource.setPassword("12345");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/railway?useUnicode=true;serverTimezone=UTC;useSSL=true;verifyServerCertificate=false");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/railway?useUnicode=true&serverTimezone=UTC&useSSL=true&verifyServerCertificate=false");
         return dataSource;
     }
 
     Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "validate");
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect","org.hibernate.dialect.MySQL8Dialect");
         properties.setProperty("hibernate.dialect.storage_engine", "InnoDB");
         properties.setProperty("hibernate.show_sql", "true");

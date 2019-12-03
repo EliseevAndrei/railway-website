@@ -1,5 +1,6 @@
 package com.eliseev.app.db.dao;
 
+import com.eliseev.app.TestConfig;
 import com.eliseev.app.repository.custom.StationDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;

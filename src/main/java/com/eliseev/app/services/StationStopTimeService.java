@@ -21,5 +21,10 @@ public class StationStopTimeService extends AbstractService<StationStopTime, Sta
         return dao.findStationsStopTimeByTrainDateId(id);
     }
 
+    public StationStopTime getStopTimeByTrainRouteIdAndTrainDateId(long trainRoutePieceId, long trainDateId) {
+        return super.dao.getStopTimeByTrainRouteIdAndTrainDateId(trainRoutePieceId, trainDateId);
+    }
+
+
 
 }
