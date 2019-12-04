@@ -10,6 +10,7 @@
     <context:component-scan base-package="com.eliseev.app"/>
     <mvc:resources mapping="/resources/**" location="/resources/" />
     <mvc:view-controller path="/" view-name="main"/>
+    <mvc:default-servlet-handler/>
     <mvc:interceptors>
         <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
             <property name="paramName" value="lang"/>

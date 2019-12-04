@@ -48,9 +48,9 @@ public class Train extends AbstractEntity implements Serializable {
     private List<TrainRoutePiece> trainRoutePieceList = new ArrayList<>();
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
     private List<TrainDate> trainDates = new ArrayList<>();
 
     public Train(@NotBlank(message = "{train.name.notBlank}") @Size(min = 1, max = 5, message = "{train.name.size}") String name, @Digits(integer = 4, fraction = 0, message = "{train.countCoupe.digits}") int countCoupe, @Digits(integer = 4, fraction = 0, message = "{train.countLying.digits}") int countLying, @Digits(integer = 4, fraction = 0, message = "{train.countCommon.digits}") int countCommon) {

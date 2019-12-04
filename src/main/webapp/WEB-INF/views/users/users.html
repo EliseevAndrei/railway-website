@@ -26,21 +26,31 @@
     <div class="row">
         <div class="mx-auto col-md-6">
             <button class="btn btn-primary nBtn">New</button>
-            <a class="ml-3" id="reloadBtn" href="stations"><i class="fas fa-redo-alt"></i></a>
+            <a class="ml-3" id="reloadBtn" href="users"><i class="fas fa-redo-alt"></i></a>
             <table class="table table-hover">
                 <thead class="bg-dark text-white">
                 <tr>
-                    <th>Название</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Email</th>
+                    <th>Роли</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="station : ${stations}">
-                    <td th:text="${station.name}"></td>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.surname}"></td>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td>
+                        <ul th:each="role : ${user.roles}">
+                            <li th:text="${role.name}"></li>
+                        </ul>
+                    </td>
                     <td >
                         <a class="btn btn-primary text-white eBtn"
-                           th:href="${'stations/list/' + station.id}" id="eBtn">Edit</a>
-                        <a class="btn btn-danger text-white rBtn" id="rBtn" th:href="${'stations/list/'+station.id}">Remove</a>
+                           th:href="${'users/list/' + user.id}" id="eBtn">Edit</a>
+                        <a class="btn btn-danger text-white rBtn" id="rBtn" th:href="${'users/list/'+user.id}">Remove</a>
                     </td>
                 </tr>
                 </tbody>
@@ -51,7 +61,7 @@
 
 <!-- Modal Edit n New-->
 <div class="myForm">
-    <form th:action="@{stations/list}" id="form">
+    <form th:action="@{users/list}" id="form">
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
              id="exampleModal">
             <div class="modal-dialog" role="document">
@@ -66,9 +76,24 @@
                         <div id="errors" style="display: none; color: red;">
                         </div>
                         <input type="text" hidden id="id">
+                        <input type="text" hidden id="login">
+                        <input type="text" hidden id="pass">
                         <div class="form-group col-md-8">
-                            <label for="name" class=" label">Название</label>
+                            <label for="surname" class=" label">Фамилия</label>
+                            <input type="text" class="form-control" id="surname" name="surname" value="">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="name" class=" label">Имя</label>
                             <input type="text" class="form-control" id="name" name="name" value="">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="email" class=" label">Email</label>
+                            <input type="text" class="form-control" id="email" name="email" value="">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="roles" class=" label">Роли</label>
+                            <ul id="roles">
+                            </ul>
                         </div>
                         <div class="form-group col-md-8"></div>
                     </div>
@@ -106,7 +131,7 @@
     </div>
 </div>
 
-<script src="/resources/js/ajax-conversation.js"></script>
+<script src="/resources/js/users-ajax-conv.js"></script>
 
 </body>
 </html>

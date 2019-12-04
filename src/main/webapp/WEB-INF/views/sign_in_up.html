@@ -14,7 +14,7 @@
 
 <script>
 
-    $(document).ready(function () {
+    /*$(document).ready(function () {
         $('#Section1 #sign-in').click(function (event) {
             event.preventDefault();
             var user = {};
@@ -33,7 +33,7 @@
                     $(location).attr('href', data.id +"/orderTicket");
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                   /* alert("Error with status" + textStatus + errorThrown);*/
+                   /!* alert("Error with status" + textStatus + errorThrown);*!/
 
                     console.log("error");
                     let error = $("#Section1 #error");
@@ -62,13 +62,13 @@
                     $(location).attr('href', data.id +"/orderTicket");
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    /* alert("Error with status" + textStatus + errorThrown);*/
+                    /!* alert("Error with status" + textStatus + errorThrown);*!/
                     console.log("error");
                     $("#Section2 #error").css("display", "block");
                 }
             });
         });
-    });
+    });*/
 </script>
 
 <div class="container">
@@ -89,15 +89,14 @@
                         <div id="error" style="display: none; color: red">
                             <h5>Не удалось войти!</h5>
                         </div>
-                        <form class="form-horizontal" id="sign-in-form" th:action="@{users/sign-in}" method="post"
-                              th:object="${user}">
+                        <form class="form-horizontal" id="sign-in-form" th:action="@{/login}" method="post">
                             <div class="form-group">
                                 <label for="login">login</label>
-                                <input type="text" class="form-control" id="login" th:field="*{login}">
+                                <input type="text" class="form-control" id="login" name="login" >
                             </div>
                             <div class="form-group">
                                 <label for="pass">Password</label>
-                                <input type="text" class="form-control" id="pass" th:field="*{pass}">
+                                <input type="text" class="form-control" id="pass" name="pass">
                             </div>
                             <!--<div class="form-group">
                                 <div class="main-checkbox">
@@ -107,7 +106,8 @@
                                 <span class="text">Keep me Signed in</span>
                             </div>-->
                             <div class="form-group">
-                                <button type="submit" class="btn btn-default" id="sign-in">Sign in</button>
+                                <input type="submit" class="btn btn-default" value="Login">
+                                <!--<button type="submit" class="btn btn-default" id="sign-in">Sign in</button>-->
                             </div>
                             <!-- <div class="form-group forgot-pass">
                                  <button type="submit" class="btn btn-default">forgot password</button>
@@ -118,26 +118,26 @@
                         <div id="error" style="display: none; color: red">
                             <h5>Не удалось зарегистрироваться!</h5>
                         </div>
-                        <form class="form-horizontal" id="sign-up-form" th:action="@{users/sign-up}" method="post" th:object="${user}">
+                        <form class="form-horizontal" id="sign-up-form" th:action="@{/register}" method="post" th:object="${user}">
                             <div class="form-group">
                                 <label for="name">First Name</label>
-                                <input type="text" class="form-control" id="name" th:field="*{name}">
+                                <input type="text" class="form-control" th:field="*{name}" id="name" >
                             </div>
                             <div class="form-group">
                                 <label for="surname">Last Name</label>
-                                <input type="text" class="form-control" id="surname" th:field="*{surname}">
+                                <input type="text" class="form-control" th:field="*{surname}" id="surname">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="text" class="form-control" id="email" th:field="*{email}">
+                                <input type="text" class="form-control" th:field="*{email}" id="email">
                             </div>
                             <div class="form-group">
                                 <label for="login">Login</label>
-                                <input type="text" class="form-control" id="login" th:field="*{login}">
+                                <input type="text" class="form-control" th:field="*{login}" id="login">
                             </div>
                             <div class="form-group">
                                 <label for="pass">Password</label>
-                                <input type="text" class="form-control" id="pass" th:field="*{pass}">
+                                <input type="password" class="form-control" th:field="*{pass}" id="pass">
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-default" id="sign-up">Sign up</button>

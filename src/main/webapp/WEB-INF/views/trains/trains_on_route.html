@@ -73,9 +73,7 @@
             <th></th>
             <th></th>
             <th>Поезд</th>
-            <th>Ст.отправления</th>
             <th>Время отправления</th>
-            <th>Ст.прибытия</th>
             <th>Время прибытия</th>
             <th>Кол-во мест купе</th>
             <th>Кол-во мест плацкарт</th>
@@ -92,17 +90,16 @@
             <td th:text="${iStat.index + 1 + '.'}"></td>
             <td hidden class="text" name="trainId" th:text="${route.trainId}"></td>
             <td class="text" name="trainName" th:text="${route.trainName}"></td>
-            <td class="text" name="depStation" th:text="${route.depStation}"></td>
+            <td class="text" name="trainDateId" hidden th:text="${route.trainDateId}"></td>
             <td class="text" name="depTime" th:text="${#dates.format(route.depTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td class="text" name="arrStation" th:text="${route.arrStation}"></td>
             <td class="text" name="arrTime" th:text="${#dates.format(route.arrTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td class="text" name="coupe_places_amount" th:text="${route.coupe_places_amount}"></td>
-            <td class="text" name="lying_places_amount" th:text="${route.lying_places_amount}"></td>
-            <td class="text" name="common_places_amount" th:text="${route.common_places_amount}"></td>
-            <td>
+            <td class="text" name="coupe_places_amount" th:text="${route.coupePlacesAmount}"></td>
+            <td class="text" name="lying_places_amount" th:text="${route.lyingPlacesAmount}"></td>
+            <td class="text" name="common_places_amount" th:text="${route.commonPlacesAmount}"></td>
+           <!-- <td>
                 <a class="btn btn-info" th:href="@{/trains/list/} + ${route.trainId} + @{/stationsForUser}">Станкции
                     остановки</a>
-            </td>
+            </td>-->
         </tr>
         </tbody>
     </table>

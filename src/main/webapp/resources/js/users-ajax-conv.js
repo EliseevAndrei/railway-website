@@ -5,26 +5,23 @@ $(document).ready(function () {
 
         e.preventDefault();
         var href = $(this).attr('href');
-        var id  = $(this).attr('id');
+        var id = $(this).attr('id');
 
 
         if (id === 'eBtn') {
 
             $.getJSON(href, function (response) {
 
-                $(".myForm :input[type='text'], .myForm :input[type='number'], .myForm select").each(function () {
-
+                $(".myForm :input[type='text'], .myForm :input[type='number']").each(function () {
                     $(this).val(response[$(this).attr('id')]);
-
-
                 });
-                $(".myForm #arriveTime, .myForm #departureTime").each(function () {
-                    let str = response[$(this).attr('id')].replace("@", " ");
-                    str = str.slice(0, 16);
-
-                    $(this).val(str);
+                let rolesHtml = '';
+                response.roles.forEach(function (e) {
+                   rolesHtml += `<li id="${e.id}">${e.name}</li>`
                 });
+                $('#roles').append(rolesHtml);
             });
+
             $('.myForm #exampleModal').modal();
         } else {
             console.log("new");
@@ -52,13 +49,6 @@ $(document).ready(function () {
             object[$(this).attr('id')] = $(this).val();
         });
 
-        $(".myForm #arriveTime, .myForm #departureTime").each(function () {
-            let str = $(this).val().replace(/\s+/g, '');
-            let date = str.substring(0, 10);
-            let time = str.substring(10, 16);
-            str = date + " " + time;
-            object[$(this).attr('id')] = str;
-        });
         var putMethod = 'PUT';
         var postMethod = 'POST';
         var method;
