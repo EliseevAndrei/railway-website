@@ -58,8 +58,12 @@ from (
 where train_date_id = 1;
 
 ------------------------------------
-select *  from (
-                   select * from station_stop_time sst
-                   where sst.train_date_id = 1
-               ) as tab inner join train_route_piece trp on trp.id = tab.train_route_piece_id
-where trp.serial_number between 1 and 3
+update station_stop_time
+set coupe_places_amount = coupe_places_amount -1
+where id in (
+  select tab.stopTimeId  from (
+                                select sst.id as stopTimeID, sst.train_route_piece_id from station_stop_time sst
+                                where sst.train_date_id = 1
+                              ) as tab inner join train_route_piece trp on trp.id = tab.train_route_piece_id
+  where trp.serial_number between 1 and 3
+)

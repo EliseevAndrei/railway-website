@@ -15,6 +15,7 @@ import lombok.ToString;
 public class OrderDTO {
 
     private Ticket ticket;
+    private Long trainDateId;
     private Long startRoutePieceId;
     private Long endRoutePieceId;
     private int startRoutePieceSerialNumber;

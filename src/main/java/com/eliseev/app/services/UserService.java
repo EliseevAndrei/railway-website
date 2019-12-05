@@ -22,16 +22,6 @@ public class UserService extends AbstractService<User, UserDAO>
     private Logger logger = LoggerFactory.getLogger(TrainService.class);
 
 
-    public User signIn(User user) {
-        logger.info("sign-in user {}", user);
-        return super.entities.values().stream()
-                .filter(u -> u.getLogin().equals(user.getLogin())
-                && (u.getPass().equals(user.getPass())))
-                .findAny()
-                .orElse(null);
-    }
-
-
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = dao.findByUsername(s);

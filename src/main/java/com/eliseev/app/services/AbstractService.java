@@ -7,18 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public abstract class AbstractService<E extends AbstractEntity,
         R extends IDAO<E>> implements IService<E> {
 
     Logger logger = LoggerFactory.getLogger(AbstractService.class);
-
-    protected Map<Long, E> entities =
-            new HashMap<>();
-    protected long idIndex = 3L;
 
     protected R dao;
 

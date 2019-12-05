@@ -2,6 +2,7 @@ package com.eliseev.app.controllers.rest;
 
 import com.eliseev.app.models.Ticket;
 import com.eliseev.app.models.User;
+import com.eliseev.app.services.OrderService;
 import com.eliseev.app.services.TicketService;
 import com.eliseev.app.services.UserService;
 import com.eliseev.app.services.dto.OrderDTO;
@@ -15,28 +16,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/tickets", produces = "application/json")
+@RequestMapping(path = "/tickets/list", produces = "application/json")
 public class TicketRestController {
 
     private Logger logger = LoggerFactory.getLogger(AbstractRestController.class);
 
-    private TicketService ticketService;
     private UserService userService;
+    private OrderService orderService;
+    private TicketService ticketService;
 
     @Autowired
-    public TicketRestController(TicketService service) {
+    public TicketRestController(TicketService service,
+                                OrderService orderService) {
         this.ticketService = service;
+        this.orderService = orderService;
     }
+
 
     @PostMapping("/order")
     public Ticket orderTicket(Authentication authentication,
                               @RequestBody OrderDTO orderDTO) {
         logger.info("{}", orderDTO);
-        Ticket ticket = orderDTO.getTicket();
-        ticket.setUser((User) authentication.getPrincipal());
-        ticketService.create(ticket);
-        return ticket;
-
+        orderDTO.getTicket().setUser((User) authentication.getPrincipal());
+        return orderService.orderTicket(orderDTO);
     }
+
+
+
 
 }

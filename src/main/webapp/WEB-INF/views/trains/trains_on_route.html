@@ -40,6 +40,7 @@
                 }
             };
             let orderDTO = {
+                trainDateId: selectedTrHtml.siblings("#trainDateId").text(),
                 startRoutePieceId: selectedTrHtml.siblings("#startRoutePieceId").text(),
                 endRoutePieceId: selectedTrHtml.siblings("#endRoutePieceId").text(),
                 startRoutePieceSerialNumber: selectedTrHtml.siblings("#startRoutePieceSerialNumber").text(),
@@ -60,13 +61,13 @@
 
 
                 $.ajax({
-                    url: "/tickets/order",
+                    url: "/tickets/list/order",
                     type: 'POST',
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(orderDTO),
                     success: function (data, textStatus, xhr) {
-                        $(location).attr('href', '/');
+                        $(location).attr('href', '/tickets/forUser');
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         alert("error");
