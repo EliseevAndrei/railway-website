@@ -55,4 +55,11 @@ from (
          and trp.serial_number between @max1 and @max2
      ) as tab
        left join station_stop_time sst on sst.train_route_piece_id = tab.id
-where train_date_id = 1
+where train_date_id = 1;
+
+------------------------------------
+select *  from (
+                   select * from station_stop_time sst
+                   where sst.train_date_id = 1
+               ) as tab inner join train_route_piece trp on trp.id = tab.train_route_piece_id
+where trp.serial_number between 1 and 3

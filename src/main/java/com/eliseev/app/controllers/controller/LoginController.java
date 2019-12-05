@@ -1,8 +1,6 @@
 package com.eliseev.app.controllers.controller;
 
-import com.eliseev.app.models.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
 
     @GetMapping
-    public String getLoginForm(Model model) {
-        model.addAttribute("user", new User());
+    public String getLoginForm() {
         return "sign_in_up";
     }
 

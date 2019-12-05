@@ -1,21 +1,23 @@
 package com.eliseev.app.services.dto;
 
+import com.eliseev.app.models.Ticket;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class TrainDateDTO {
+public class OrderDTO {
 
-    private Long trainId;
-    private long[] dateIds;
-    private String trainName;
+    private Ticket ticket;
+    private Long startRoutePieceId;
+    private Long endRoutePieceId;
+    private int startRoutePieceSerialNumber;
+    private int endRoutePieceSerialNumber;
+
 }

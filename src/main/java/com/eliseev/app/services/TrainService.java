@@ -1,19 +1,14 @@
 package com.eliseev.app.services;
 
-import com.eliseev.app.models.Station;
 import com.eliseev.app.models.Train;
-import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.models.TrainRoutePiece;
 import com.eliseev.app.repository.custom.TrainDAO;
-import com.eliseev.app.services.dto.TrainDateDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 

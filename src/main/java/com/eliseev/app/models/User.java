@@ -1,11 +1,15 @@
 package com.eliseev.app.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,15 +21,19 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
-@NoArgsConstructor
+@NoArgsConstructor(access= AccessLevel.PRIVATE, force=true)
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class User extends AbstractEntity implements Serializable {
+public class User extends AbstractEntity
+        implements Serializable, UserDetails {
 
 
     @NotBlank(message = "Surname is required")
@@ -41,7 +49,7 @@ public class User extends AbstractEntity implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private List<Ticket> trainStationList = new ArrayList<>();
+    private List<Ticket> ticketList = new ArrayList<>();
 
     public User(@NotBlank(message = "Surname is required") String surname, @NotBlank(message = "Name is required") String name,
                 @Email(message = "Email must be formatted like sometext@mail.ru") String email,
@@ -64,4 +72,42 @@ public class User extends AbstractEntity implements Serializable {
     @ToString.Exclude
     private List<Role> roles = new ArrayList<>();
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> roles = new HashSet<>();
+        for (Role role : this.getRoles()) {
+            roles.add(new SimpleGrantedAuthority("ROLE_" + role.getName().name()));
+        }
+        return roles;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.getPass();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.getLogin();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

@@ -22,7 +22,6 @@
 
     $(document).ready(function () {
 
-
         $('#route-table .a-radio ').click(function (event) {
             event.preventDefault();
             let selectedTrHtml = $(this).parent();
@@ -40,7 +39,14 @@
                     id: $('.container #arr_station_id').text()
                 }
             };
-            console.log(ticket);
+            let orderDTO = {
+                startRoutePieceId: selectedTrHtml.siblings("#startRoutePieceId").text(),
+                endRoutePieceId: selectedTrHtml.siblings("#endRoutePieceId").text(),
+                startRoutePieceSerialNumber: selectedTrHtml.siblings("#startRoutePieceSerialNumber").text(),
+                endRoutePieceSerialNumber: selectedTrHtml.siblings("#endRoutePieceSerialNumber").text(),
+                ticket: ticket
+            };
+            console.log(orderDTO);
             $(".myForm #orderModal").modal();
 
             $(".myForm #order-submit-btn").click(function(e) {
@@ -50,7 +56,7 @@
                 ticket.name = $('.myForm #name').val();
                 ticket.passportNumber = $('.myForm #passportNumber').val();
                 ticket.seatType = $(".myForm input[name='seatType']:checked").val();
-                console.log(ticket);
+                console.log(orderDTO);
 
 
                 $.ajax({
@@ -58,7 +64,7 @@
                     type: 'POST',
                     dataType: "json",
                     contentType: "application/json",
-                    data: JSON.stringify(ticket),
+                    data: JSON.stringify(orderDTO),
                     success: function (data, textStatus, xhr) {
                         $(location).attr('href', '/');
                     },
@@ -74,9 +80,7 @@
                 })
 
             });
-
         })
-
 
     })
 
@@ -120,6 +124,10 @@
             <td class="text" id="coupePlacesAmount" th:text="${route.coupePlacesAmount}"></td>
             <td class="text" id="lyingPlacesAmount" th:text="${route.lyingPlacesAmount}"></td>
             <td class="text" id="commonPlacesAmount" th:text="${route.commonPlacesAmount}"></td>
+            <td hidden class="text" id="startRoutePieceId" th:text="${route.startRoutePieceId}"></td>
+            <td hidden class="text" id="endRoutePieceId" th:text="${route.endRoutePieceId}"></td>
+            <td hidden class="text" id="startRoutePieceSerialNumber" th:text="${route.startRoutePieceSerialNumber}"></td>
+            <td hidden class="text" id="endRoutePieceSerialNumber" th:text="${route.endRoutePieceSerialNumber}"></td>
            <!-- <td>
                 <a class="btn btn-info" th:href="@{/trains/list/} + ${route.trainId} + @{/stationsForUser}">Станкции
                     остановки</a>

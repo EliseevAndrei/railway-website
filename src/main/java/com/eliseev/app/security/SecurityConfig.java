@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/stations/**", "/tickets/**")
+                .antMatchers("/stations/**", "/tickets/**", "/trains/**")
                 .hasRole(UserRoleEnum.USER.name())
                 .antMatchers("/**").access("permitAll")
 

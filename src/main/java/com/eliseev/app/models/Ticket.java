@@ -60,4 +60,8 @@ public class Ticket extends AbstractEntity {
     @JoinColumn(name="arr_station_id")
     private Station arrStation;
 
+    @ManyToOne
+    @JoinColumn(name="train_id")
+    private Train train;
+
 }
