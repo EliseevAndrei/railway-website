@@ -22,38 +22,58 @@
 
     $(document).ready(function () {
 
+
         $('#route-table .a-radio ').click(function (event) {
             event.preventDefault();
+            let selectedTrHtml = $(this).parent();
 
-            let route = {};
-            let href = $(this).attr('href');
-
-            $(this).parent().siblings('.text').each(function() {
-                console.log($(this).attr('name') + " = " + $(this).text());
-                route[$(this).attr('name')] = $(this).text();
-            });
-            console.log(route);
-
-            $.ajax({
-                url: href,
-                type: 'POST',
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(route),
-                success: function (data, textStatus, xhr) {
-                    $(location).attr('href', '/users/authoriseForm');
+            let ticket = {
+                train: {
+                    id: selectedTrHtml.siblings('#trainId').text()
                 },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert("error");
-                    let errorBlock =  $('.myForm #errors');
-                    let response = JSON.parse(xhr.responseText);
-                    response.errors.forEach(function(error) {
-                        errorBlock.append("<p>"+ error +"</p>");
-                        /*console.log(error);*/
-                    });
-                    errorBlock.css("display", "block");
+                depTime: selectedTrHtml.siblings('#depTime').text().replace("@", " "),
+                arrTime: selectedTrHtml.siblings('#arrTime').text().replace("@", " "),
+                depStation: {
+                    id: $('.container #dep_station_id').text()
+                },
+                arrStation: {
+                    id: $('.container #arr_station_id').text()
                 }
-            })
+            };
+            console.log(ticket);
+            $(".myForm #orderModal").modal();
+
+            $(".myForm #order-submit-btn").click(function(e) {
+                e.preventDefault();
+
+                ticket.surname = $('.myForm #surname').val();
+                ticket.name = $('.myForm #name').val();
+                ticket.passportNumber = $('.myForm #passportNumber').val();
+                ticket.seatType = $(".myForm input[name='seatType']:checked").val();
+                console.log(ticket);
+
+
+                $.ajax({
+                    url: "/tickets/order",
+                    type: 'POST',
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(ticket),
+                    success: function (data, textStatus, xhr) {
+                        $(location).attr('href', '/');
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert("error");
+                        let errorBlock =  $('.myForm #errors');
+                        let response = JSON.parse(xhr.responseText);
+                        response.errors.forEach(function(error) {
+                            errorBlock.append("<p>"+ error +"</p>");
+                        });
+                        errorBlock.css("display", "block");
+                    }
+                })
+
+            });
 
         })
 
@@ -61,9 +81,13 @@
     })
 
 </script>
+
+
 <div class="container">
-    <p>Станция отправления: <span th:text="${dep_station}"></span></p>
-    <p>Станция прибытия: <span th:text="${arr_station}"></span></p>
+    <span id="dep_station_id" hidden th:text="${dep_station.id}"></span>
+    <p>Станция отправления: <span th:text="${dep_station.name}"></span></p>
+    <p>Станция прибытия: <span th:text="${arr_station.name}"></span></p>
+    <span id="arr_station_id" hidden th:text="${arr_station.id}"></span>
     <p>Дата: <span th:text="${#dates.format(dep_date, 'dd-MM-yyyy')}"></span></p>
 
     <!-- <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>-->
@@ -88,14 +112,14 @@
                 Выбрать:
             </a></td>
             <td th:text="${iStat.index + 1 + '.'}"></td>
-            <td hidden class="text" name="trainId" th:text="${route.trainId}"></td>
-            <td class="text" name="trainName" th:text="${route.trainName}"></td>
-            <td class="text" name="trainDateId" hidden th:text="${route.trainDateId}"></td>
-            <td class="text" name="depTime" th:text="${#dates.format(route.depTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td class="text" name="arrTime" th:text="${#dates.format(route.arrTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td class="text" name="coupe_places_amount" th:text="${route.coupePlacesAmount}"></td>
-            <td class="text" name="lying_places_amount" th:text="${route.lyingPlacesAmount}"></td>
-            <td class="text" name="common_places_amount" th:text="${route.commonPlacesAmount}"></td>
+            <td hidden class="text" id="trainId" th:text="${route.trainId}"></td>
+            <td hidden class="text" id="trainDateId" th:text="${route.trainDateId}"></td>
+            <td class="text" id="trainName" th:text="${route.trainName}"></td>
+            <td class="text" id="depTime" th:text="${#dates.format(route.depTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td class="text" id="arrTime" th:text="${#dates.format(route.arrTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td class="text" id="coupePlacesAmount" th:text="${route.coupePlacesAmount}"></td>
+            <td class="text" id="lyingPlacesAmount" th:text="${route.lyingPlacesAmount}"></td>
+            <td class="text" id="commonPlacesAmount" th:text="${route.commonPlacesAmount}"></td>
            <!-- <td>
                 <a class="btn btn-info" th:href="@{/trains/list/} + ${route.trainId} + @{/stationsForUser}">Станкции
                     остановки</a>
@@ -103,6 +127,62 @@
         </tr>
         </tbody>
     </table>
+</div>
+
+<div class="myForm">
+    <form  id="form">
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false"
+             id="orderModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" th:text="#{header.new_edit}">Составить заявку</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span id="x-btn" aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="errors" style="display: none; color: red;">
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <lable for="name" class="col-form-label">Фамилия:</lable>
+                            <input type="text" class="form-control" id="surname" placeholder="Фамилия"/>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <lable for="name" class="col-form-label">Имя</lable>
+                            <input type="text" class="form-control" id="name" placeholder="Имя">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <lable for="name" class="col-form-label">Номер паспорта</lable>
+                            <input type="text" class="form-control" id="passportNumber" placeholder="Паспорт">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <span></span>
+                            <input type="radio" value="Купе" name="seatType">
+                            <span>Купе</span><br/>
+                            <span></span>
+                            <input type="radio" value="Плацкарт" name="seatType">
+                            <span>Плацкарт</span><br/>
+                            <span></span>
+                            <input type="radio" value="Общее" name="seatType">
+                            <span>Общее</span><br/>
+                        </div>
+
+                        <div class="form-group col-md-8"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="close-btn" data-dismiss="modal"
+                                th:text="#{button.close}">Close
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="order-submit-btn" th:text="#{button.save}">
+                            Сохранить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 
 </body>

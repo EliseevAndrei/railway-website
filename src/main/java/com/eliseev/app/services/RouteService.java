@@ -32,14 +32,11 @@ public class RouteService {
     }
 
     @Transactional(readOnly = true)
-    public List<RouteDTO> findTrainsOnRoute(String depStation, String arrStation, Date date) {
+    public List<RouteDTO> findTrainsOnRoute(Station depStation, Station arrStation, Date date) {
 
-        Station depStationObj = stationService.getStationByName(depStation);
-        Station arrStationObj= stationService.getStationByName(arrStation);
+        List<RouteDTO> routesWithTrainDate = trainDateService.getTrainDates(depStation, arrStation, date);
 
-        List<RouteDTO> routesWithTrainDate = trainDateService.getTrainDates(depStationObj, arrStationObj, date);
-
-        return trainDateService.setFreePlacesForTrainDates(routesWithTrainDate, depStationObj, arrStationObj);
+        return trainDateService.setFreePlacesForTrainDates(routesWithTrainDate, depStation, arrStation);
     }
 
 }

@@ -1,7 +1,9 @@
 package com.eliseev.app.controllers.controller;
 
+import com.eliseev.app.models.Station;
 import com.eliseev.app.models.Train;
 import com.eliseev.app.services.RouteService;
+import com.eliseev.app.services.StationService;
 import com.eliseev.app.services.TrainService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +28,15 @@ public class TrainController {
 
     private TrainService service;
     private RouteService routeService;
+    private StationService stationService;
 
     @Autowired
     public TrainController(TrainService service,
-                           RouteService routeService) {
+                           RouteService routeService,
+                           StationService stationService) {
         this.service = service;
         this.routeService = routeService;
+        this.stationService = stationService;
     }
 
     @GetMapping
@@ -43,15 +48,17 @@ public class TrainController {
     }
 
     @GetMapping("/onRoute")
-    public String showTrainsOnStations(@RequestParam("dep_station") String dep_station,
-                                       @RequestParam("arr_station") String arr_station,
+    public String showTrainsOnStations(@RequestParam("dep_station_id") long dep_station_id,
+                                       @RequestParam("arr_station_id") long arr_station_id,
                                        @RequestParam("dep_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") @Valid Date date,
                                        Model model) {
-        logger.info("user send GET /trains/onRoute with model attributes {}, {}, {}", dep_station, arr_station, date);
-        model.addAttribute("dep_station", dep_station);
-        model.addAttribute("arr_station", arr_station);
+        logger.info("user send GET /trains/onRoute with model attributes {}, {}, {}", dep_station_id, arr_station_id, date);
+        Station depStation = stationService.get(dep_station_id);
+        Station arrStation = stationService.get(arr_station_id);
+        model.addAttribute("dep_station", depStation);
+        model.addAttribute("arr_station", arrStation);
         model.addAttribute("dep_date", date);
-        model.addAttribute("routes", routeService.findTrainsOnRoute(dep_station, arr_station, date));
+        model.addAttribute("routes", routeService.findTrainsOnRoute(depStation, arrStation, date));
         return "trains/trains_on_route";
     }
 

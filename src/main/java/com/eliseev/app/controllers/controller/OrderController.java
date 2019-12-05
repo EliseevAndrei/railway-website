@@ -64,7 +64,7 @@ public class OrderController {
             return "order";
         }
 
-        ticket.setRoute(route);
+        /*ticket.setRoute(route);*/
         sessionStatus.setComplete();
         logger.info("user create ticket = {}", ticket);
 

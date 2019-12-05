@@ -1,19 +1,30 @@
 package com.eliseev.app.models;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import com.eliseev.app.utils.CustomRestDateDeserializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-public class Ticket extends AbstractEntity implements Serializable {
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class Ticket extends AbstractEntity {
 
     @NotBlank(message = "surname is required")
     private String surname;
@@ -26,115 +37,27 @@ public class Ticket extends AbstractEntity implements Serializable {
     @Column(name="seat_type")
     private String seatType;
 
+    @Column(name="dep_time")
+    @JsonDeserialize(using = CustomRestDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ", timezone = "Europe/Moscow")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date depTime;
+    @Column(name="arr_time")
+    @JsonDeserialize(using = CustomRestDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ", timezone = "Europe/Moscow")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date arrTime;
+
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
-    private Route route;
+    @ManyToOne
+    @JoinColumn(name="dep_station_id")
+    private Station depStation;
 
-    public Ticket() { }
+    @ManyToOne
+    @JoinColumn(name="arr_station_id")
+    private Station arrStation;
 
-    public Ticket(long id,
-                  User user,
-                  String surname,
-                  String name,
-                  String passportNumber,
-                  String seatType,
-                  Route route) {
-        super.id = id;
-        this.user = user;
-        this.surname = surname;
-        this.name = name;
-        this.passportNumber = passportNumber;
-        this.route = route;
-        this.seatType = seatType;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Route getRoute() {
-        return route;
-    }
-
-    public void setRoute(Route route) {
-        this.route = route;
-    }
-
-    public String getSeatType() {
-        return seatType;
-    }
-
-    public void setSeatType(String seatType) {
-        this.seatType = seatType;
-    }
-
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPassportNumber(String passportNumber) {
-        this.passportNumber = passportNumber;
-    }
-
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPassportNumber() {
-        return passportNumber;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                ", surname='" + surname + '\'' +
-                ", name='" + name + '\'' +
-                ", passportNumber='" + passportNumber + '\'' +
-                ", route=" + route +
-                ", id=" + id +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (!(o instanceof Ticket)) return false;
-
-        Ticket ticket = (Ticket) o;
-
-        return new EqualsBuilder()
-                .append(surname, ticket.surname)
-                .append(name, ticket.name)
-                .append(passportNumber, ticket.passportNumber)
-                .append(route, ticket.route)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(surname)
-                .append(name)
-                .append(passportNumber)
-                .append(route)
-                .toHashCode();
-    }
 }

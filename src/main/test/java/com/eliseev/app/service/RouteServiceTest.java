@@ -2,6 +2,7 @@ package com.eliseev.app.service;
 
 import com.eliseev.app.TestConfig;
 import com.eliseev.app.services.RouteService;
+import com.eliseev.app.services.StationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -24,13 +25,16 @@ public class RouteServiceTest {
     @Autowired
     private RouteService routeService;
 
+    @Autowired
+    private StationService stationService;
+
     @Test
     public void getTrainsOnRoute() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date;
         try {
             date = simpleDateFormat.parse("2019-10-11");
-            logger.info("{}", routeService.findTrainsOnRoute("Брест", "Минск", date));
+            logger.info("{}", routeService.findTrainsOnRoute(stationService.get(1L), stationService.get(4L), date));
         } catch (ParseException e) {
             e.printStackTrace();
         }

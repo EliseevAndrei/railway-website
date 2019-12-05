@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/stations/**")
+                .antMatchers("/stations/**", "/tickets/**")
                 .hasRole(UserRoleEnum.USER.name())
                 .antMatchers("/**").access("permitAll")
 
@@ -55,7 +55,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .logout()
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/")
+
+                .and()
+                .rememberMe()
+                .key("uniqueAndSecret")
 
                 // Allow pages to be loaded in frames from the same origin; needed for H2-Console
                 .and()

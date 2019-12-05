@@ -11,12 +11,16 @@
         <div class="card-body">
             <form class="form-inline" method="get" action="/trains/onRoute">
                 <div class="form-group">
-                    <label for="dep_station" class="mr-sm-2">Departure station:</label>
-                    <input type="text" class="form-control mb-2 mr-sm-2" id="dep_station" name="dep_station" th:value="${dep_station}"/>
+                    <label for="dep_station_id" class="mr-sm-2">Departure station:</label>
+                    <select class="form-control mb-2 mr-sm-2" id="dep_station_id" name="dep_station_id">
+                        <option th:each="depStation : ${allStations}" th:text="${depStation.name}" th:value="${depStation.id}"></option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="arr_station" class="mr-sm-2">Arrive station</label>
-                    <input type="text" class="form-control mb-2 mr-sm-2" id="arr_station" name="arr_station" th:value="${arr_station}"/>
+                    <label for="arr_station_id" class="mr-sm-2">Arrive station</label>
+                    <select class="form-control mb-2 mr-sm-2" id="arr_station_id" name="arr_station_id">
+                        <option th:each="arrStation : ${allStations}" th:text="${arrStation.name}" th:value="${arrStation.id}"></option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="dep_date" class="mr-sm-2">Date</label>
@@ -27,13 +31,6 @@
         </div>
     </div>
 </div>
-<!--
-jQuery library
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-&lt;!&ndash;Popper JS&ndash;&gt;
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-&lt;!&ndash;Latest compiled JavaScript&ndash;&gt;
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
 
 </body>
 </html>
