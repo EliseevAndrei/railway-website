@@ -51,16 +51,6 @@ public class User extends AbstractEntity
     @ToString.Exclude
     private List<Ticket> ticketList = new ArrayList<>();
 
-    public User(@NotBlank(message = "Surname is required") String surname, @NotBlank(message = "Name is required") String name,
-                @Email(message = "Email must be formatted like sometext@mail.ru") String email,
-                @NotBlank(message = "Login is required") String login, @NotBlank(message = "Password is required") String pass) {
-        this.surname = surname;
-        this.name = name;
-        this.email = email;
-        this.login = login;
-        this.pass = pass;
-    }
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name="user_role",
@@ -71,6 +61,17 @@ public class User extends AbstractEntity
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Role> roles = new ArrayList<>();
+
+    public User(@NotBlank(message = "Surname is required") String surname, @NotBlank(message = "Name is required") String name,
+                @Email(message = "Email must be formatted like sometext@mail.ru") String email,
+                @NotBlank(message = "Login is required") String login, @NotBlank(message = "Password is required") String pass) {
+        this.surname = surname;
+        this.name = name;
+        this.email = email;
+        this.login = login;
+        this.pass = pass;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

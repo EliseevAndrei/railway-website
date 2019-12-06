@@ -66,4 +66,35 @@ where id in (
                                 where sst.train_date_id = 1
                               ) as tab inner join train_route_piece trp on trp.id = tab.train_route_piece_id
   where trp.serial_number between 1 and 3
-)
+);
+
+---------------------------------------
+
+select station_stop_time_id, car_place.carriage_id, place_id, is_taken, number, type from (
+                                                                                              select * from station_stop_time_car sstc
+                                                                                              where sstc.station_stop_time_id in (
+
+                                                                                                  select sst.id as stopStationId
+                                                                                                  from (
+                                                                                                           select * from train_route_piece trp,
+                                                                                                                         (select @max1 := (select trp.serial_number from train_route_piece trp
+							where trp.train_id = 1
+							and trp.start_station_id = @ind1
+							limit 1)) as x,
+                                                                                                                         (select @max2 := (select trp.serial_number from train_route_piece trp
+							where trp.train_id = 1
+							and trp.end_station_id = @ind2
+							limit 1)) as y
+                                                                                                           where trp.train_id = 1
+                                                                                                             and trp.serial_number between @max1 and @max2
+                                                                                                       ) as tab
+                                                                                                           left join station_stop_time sst on sst.train_route_piece_id = tab.id
+                                                                                                  where train_date_id = 1
+
+                                                                                                  )
+                                                                                          ) as tabl  join car_place on car_place.carriage_id = tabl.carriage_id
+                                                                                                     join place on place.id = place_id
+
+group by carriage_id, number
+having count(if(is_taken = 0, null, is_taken)) = 0
+order by station_stop_time_id, carriage_id, type, number
