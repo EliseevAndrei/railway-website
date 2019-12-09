@@ -6,9 +6,9 @@ import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.models.TrainRoutePiece;
 import com.eliseev.app.repository.custom.TrainDateDAO;
-import com.eliseev.app.services.dto.RouteDTO;
 import com.eliseev.app.services.dto.StationStopTimeDTO;
 import com.eliseev.app.services.dto.TrainRouteDTO;
+import com.eliseev.app.services.dto.TrainStopTimeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
@@ -41,18 +42,18 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
     }
 
     @Transactional
-    public List<TrainRouteDTO> getDates(long trainId) {
+    public List<TrainStopTimeDTO> getDates(long trainId) {
 
-        List<TrainRouteDTO> trainDateDTOS = new ArrayList<>();
+        List<TrainStopTimeDTO> trainDateDTOS = new ArrayList<>();
         List<TrainDate> trainDates = dao.findDatesByTrainId(trainId);
-        TrainRouteDTO trainDateDTO;
+        TrainStopTimeDTO trainDateDTO;
 
         for (TrainDate trainDate : trainDates) {
 
             List<StationStopTime> stationStopTimes = stationStopTimeService.findStationsStopTimeByTrainDateId(trainDate.getId());
 
             if (stationStopTimes.size() >= 2) {
-                trainDateDTO = new TrainRouteDTO(stationStopTimes.get(0), stationStopTimes.get(stationStopTimes.size() - 1));
+                trainDateDTO = new TrainStopTimeDTO(stationStopTimes.get(0), stationStopTimes.get(stationStopTimes.size() - 1));
                 trainDateDTOS.add(trainDateDTO);
             }
         }
@@ -84,7 +85,7 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
     }
 
     @Transactional(readOnly = true)
-    public List<RouteDTO> getTrainDates(Station depStation, Station arrStation, Date date) {
+    public List<TrainRouteDTO> getTrainDates(Station depStation, Station arrStation, Date date) {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String depDate = dateFormat.format(date);
@@ -93,37 +94,46 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
 
         logger.info("{} {}", depDateLeftBorder, depDateRightBorder);
 
-        return  super.dao.getTrainDates(depStation, arrStation, depDateLeftBorder, depDateRightBorder);
+        return super.dao.getTrainDates(depStation, arrStation, depDateLeftBorder, depDateRightBorder);
     }
 
     @Transactional(readOnly = true)
-    public List<RouteDTO> setFreePlacesForTrainDates(List<RouteDTO> routesWithTrainDate, Station depStationObj, Station arrStationObj) {
+    public List<TrainRouteDTO> setFreePlacesForTrainDates(List<TrainRouteDTO> routesWithTrainDate, Station depStationObj, Station arrStationObj) {
 
         TrainRoutePiece depTrainRoutePiece, arrTrainRoutePiece;
         StationStopTime depStationStopTime, arrStationStopTime;
-        for (RouteDTO routeDTO : routesWithTrainDate) {
 
-            depTrainRoutePiece = trainRoutePieceService.findByTrainIdAndStartStationId(routeDTO.getTrainId(), depStationObj.getId());
-            arrTrainRoutePiece = trainRoutePieceService.findByTrainIdAndEndStationId(routeDTO.getTrainId(), arrStationObj.getId());
-            depStationStopTime = stationStopTimeService.getStopTimeByTrainRouteIdAndTrainDateId(depTrainRoutePiece.getId(), routeDTO.getTrainDateId());
-            arrStationStopTime = stationStopTimeService.getStopTimeByTrainRouteIdAndTrainDateId(arrTrainRoutePiece.getId(), routeDTO.getTrainDateId());
+        for (TrainRouteDTO trainRouteDTO : routesWithTrainDate) {
 
-            routeDTO.setEndRoutePieceId(arrTrainRoutePiece.getId());
-            routeDTO.setEndRoutePieceSerialNumber(arrTrainRoutePiece.getSerialNumber());
-            routeDTO.setStartRoutePieceId(depTrainRoutePiece.getId());
-            routeDTO.setStartRoutePieceSerialNumber(depTrainRoutePiece.getSerialNumber());
-            routeDTO.setDepTime(depStationStopTime.getDepartureTime());
-            routeDTO.setArrTime(arrStationStopTime.getArriveTime());
+            depTrainRoutePiece = trainRoutePieceService.
+                    findByTrainIdAndStartStationId(trainRouteDTO.getTrain().getId(), depStationObj.getId());
+            arrTrainRoutePiece = trainRoutePieceService.
+                    findByTrainIdAndEndStationId(trainRouteDTO.getTrain().getId(), arrStationObj.getId());
+            depStationStopTime = stationStopTimeService.
+                    getStopTimeByTrainRouteIdAndTrainDateId(depTrainRoutePiece.getId(), trainRouteDTO.getTrainDateId());
+            arrStationStopTime = stationStopTimeService.
+                    getStopTimeByTrainRouteIdAndTrainDateId(arrTrainRoutePiece.getId(), trainRouteDTO.getTrainDateId());
 
-            super.dao.getFreePlacesForTrainDateBetweenRoutePieces(routeDTO,
-                    routeDTO.getStartRoutePieceSerialNumber(),
-                    routeDTO.getEndRoutePieceSerialNumber());
+            trainRouteDTO.setEndRoutePieceId(arrTrainRoutePiece.getId());
+            trainRouteDTO.setEndRoutePieceSerialNumber(arrTrainRoutePiece.getSerialNumber());
+            trainRouteDTO.setStartRoutePieceId(depTrainRoutePiece.getId());
+            trainRouteDTO.setStartRoutePieceSerialNumber(depTrainRoutePiece.getSerialNumber());
+            trainRouteDTO.setDepTime(depStationStopTime.getDepartureTime());
+            trainRouteDTO.setArrTime(arrStationStopTime.getArriveTime());
+
+            Map<String, Integer> places = this.trainService.
+                    getFreePlacesAmountForTrainRoute(
+                            trainRouteDTO.getTrain().getId(),
+                            trainRouteDTO.getTrainDateId(),
+                            depTrainRoutePiece.getSerialNumber(),
+                            arrTrainRoutePiece.getSerialNumber());
+
+            trainRouteDTO.setFreePlaces(places);
 
         }
 
         return routesWithTrainDate;
     }
-
 
 
 }

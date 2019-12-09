@@ -8,9 +8,9 @@ import com.eliseev.app.services.StationStopTimeService;
 import com.eliseev.app.services.TrainDateService;
 import com.eliseev.app.services.TrainRoutePieceService;
 import com.eliseev.app.services.TrainService;
-import com.eliseev.app.services.dto.RouteDTO;
-import com.eliseev.app.services.dto.StationStopTimeDTO;
 import com.eliseev.app.services.dto.TrainRouteDTO;
+import com.eliseev.app.services.dto.StationStopTimeDTO;
+import com.eliseev.app.services.dto.TrainStopTimeDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -52,7 +52,7 @@ public class TrainDateServiceTest {
     @Test
     @Transactional
     public void getDates() {
-        List<TrainRouteDTO> trainDateDTOS = trainDateService.getDates(1);
+        List<TrainStopTimeDTO> trainDateDTOS = trainDateService.getDates(1);
         assertNotNull(trainDateDTOS);
         logger.info("{}", trainDateDTOS);
     }
@@ -86,8 +86,8 @@ public class TrainDateServiceTest {
         try {
             date = simpleDateFormat.parse("2019-10-11");
 
-            List<RouteDTO> routeDTOs = trainDateService.getTrainDates(stationService.get(1L), stationService.get(4L), date);
-            logger.info("{}", routeDTOs);
+            List<TrainRouteDTO> trainRouteDTOS = trainDateService.getTrainDates(stationService.get(1L), stationService.get(4L), date);
+            logger.info("{}", trainRouteDTOS);
 
 
         } catch (ParseException e) {

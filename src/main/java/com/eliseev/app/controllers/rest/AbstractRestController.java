@@ -7,9 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 public abstract class AbstractRestController<E extends AbstractEntity,
@@ -26,7 +24,8 @@ public abstract class AbstractRestController<E extends AbstractEntity,
     @Override
     public List<E> list(@PathVariable(required = false) long... id) {
         logger.info("User send GET /<entities>/list");
-        return service.list();
+        List<E> en = service.list();
+        return en;
     }
 
     @Override

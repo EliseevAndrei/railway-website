@@ -52,16 +52,32 @@ public class Ticket extends AbstractEntity {
     @JoinColumn(name="user_id")
     private User user;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name="dep_station_id")
     private Station depStation;
 
     @ManyToOne
     @JoinColumn(name="arr_station_id")
-    private Station arrStation;
+    private Station arrStation;*/
+
+    /*@ManyToOne
+    @JoinColumn(name="train_id")
+    private Train train;*/
 
     @ManyToOne
-    @JoinColumn(name="train_id")
-    private Train train;
+    @JoinColumn(name="train_date_id")
+    private TrainDate trainDate;
+
+    @ManyToOne
+    @JoinColumn(name="dep_train_route_piece_id")
+    private TrainRoutePiece depTrainRoutePiece;
+
+    @ManyToOne
+    @JoinColumn(name="arr_train_route_piece_id")
+    private TrainRoutePiece arrTrainRoutePiece;
+
+    @ManyToOne
+    @JoinColumn(name="place_id")
+    private Place place;
 
 }

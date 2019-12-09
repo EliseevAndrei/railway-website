@@ -1,6 +1,7 @@
 package com.eliseev.app.db.dao;
 
 import com.eliseev.app.TestConfig;
+import com.eliseev.app.models.Carriage;
 import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainRoutePiece;
 import com.eliseev.app.repository.custom.TrainDAO;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -98,5 +101,18 @@ public class TrainDAOTest {
 
     }
 
+
+    @Test
+    @Transactional
+    public void getFreePlacesForTrainRoute() {
+        trainDAO.getFreePlacesAmountForTrainRoute(1, 1, 1, 3);
+    }
+
+    @Test
+    @Transactional
+    public void getCarriages() {
+        List<Carriage> carriages = trainDAO.getCarriages(1, 1, 1, 3);
+        logger.info("{}", carriages);
+    }
 
 }

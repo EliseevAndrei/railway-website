@@ -1,10 +1,11 @@
 package com.eliseev.app.repository.custom.impl;
 
 import com.eliseev.app.models.Station;
+import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.repository.AbstractDAO;
 import com.eliseev.app.repository.custom.TrainDateDAO;
-import com.eliseev.app.services.dto.RouteDTO;
+import com.eliseev.app.services.dto.TrainRouteDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -31,8 +32,8 @@ public class TrainDateDAOImpl extends AbstractDAO<TrainDate>
     }
 
     @Override
-    public List<RouteDTO> getTrainDates(Station depStation, Station arrStation,
-                                                            String depDateLeftBorder, String depDateRightBorder) {
+    public List<TrainRouteDTO> getTrainDates(Station depStation, Station arrStation,
+                                             String depDateLeftBorder, String depDateRightBorder) {
 
         @SuppressWarnings("unchecked")
         List<Object[]> objects = super.entityManager.createNativeQuery(
@@ -60,50 +61,23 @@ public class TrainDateDAOImpl extends AbstractDAO<TrainDate>
                 .getResultList();
 
 
-        RouteDTO routeDTO;
-        List<RouteDTO> routeDTOs = new ArrayList<>();
+
+        TrainRouteDTO trainRouteDTO;
+        List<TrainRouteDTO> trainRouteDTOS = new ArrayList<>();
+        Train train;
         for (Object[] q : objects) {
 
-            routeDTO = new RouteDTO();
-            routeDTO.setTrainId(((BigInteger) q[0]).longValue());
-            routeDTO.setTrainDateId(((BigInteger) q[1]).longValue());
-            routeDTO.setTrainName((String) q[2]);
-
-            routeDTOs.add(routeDTO);
+            train = new Train();
+            train.setId(((BigInteger) q[0]).longValue());
+            train.setName((String) q[2]);
+            trainRouteDTO = new TrainRouteDTO();
+            trainRouteDTO.setTrainDateId(((BigInteger) q[1]).longValue());
+            trainRouteDTO.setTrain(train);
+            trainRouteDTOS.add(trainRouteDTO);
         }
 
-        return routeDTOs;
+        return trainRouteDTOS;
     }
 
-    @Override
-    public RouteDTO getFreePlacesForTrainDateBetweenRoutePieces(RouteDTO routeDTO,
-                                                                      int depRoutePieceSerialNumber,
-                                                                      int arrRoutePieceSerialNumber) {
-
-        @SuppressWarnings("unchecked")
-        List<Object[]> objects = super.entityManager.createNativeQuery(
-                "select  min(common_places_amount), min(coupe_places_amount), min(lying_places_amount)\n" +
-                        "from (\n" +
-                        "       select id, serial_number, train_id  from train_route_piece trp\n" +
-                        "       where trp.train_id = :trainId\n" +
-                        "         and trp.serial_number between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber\n" +
-                        "     ) as tab\n" +
-                        "       left join station_stop_time sst on sst.train_route_piece_id = tab.id\n" +
-                        "where train_date_id = :trainDateId\n" +
-                        "group by train_date_id")
-                .setParameter("depRoutePieceSerialNumber", depRoutePieceSerialNumber)
-                .setParameter("arrRoutePieceSerialNumber", arrRoutePieceSerialNumber)
-                .setParameter("trainId", routeDTO.getTrainId())
-                .setParameter("trainDateId", routeDTO.getTrainDateId())
-                .getResultList();
-
-        Object[] object =  objects.get(0);
-
-        routeDTO.setCommonPlacesAmount((int)object[0]);
-        routeDTO.setCoupePlacesAmount((int)object[1]);
-        routeDTO.setLyingPlacesAmount((int)object[2]);
-
-        return routeDTO;
-    }
 
 }

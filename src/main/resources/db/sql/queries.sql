@@ -97,4 +97,21 @@ select station_stop_time_id, car_place.carriage_id, place_id, is_taken, number, 
 
 group by carriage_id, number
 having count(if(is_taken = 0, null, is_taken)) = 0
-order by station_stop_time_id, carriage_id, type, number
+order by station_stop_time_id, carriage_id, type, number;
+
+----------------------------------------------------
+
+select * from carriage c
+                inner join train_car on c.id = train_car.carriage_id
+                inner join car_place on car_place.carriage_id = c.id
+where train_id = 1 and place_id not in (
+
+  select ta.place_id as placeId from (
+                                       select * from ticket t
+                                       where t.train_date_id = 1
+
+                                     ) as ta
+                                       left join train_route_piece trp1 on trp1.id = ta.dep_train_route_piece_id
+                                       left join train_route_piece trp2 on trp2.id = ta.arr_train_route_piece_id
+  where  (trp1.serial_number between @max1 and @max2) and (trp2.serial_number between @max1 and @max2)
+  )

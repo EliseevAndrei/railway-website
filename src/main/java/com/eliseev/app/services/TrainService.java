@@ -1,5 +1,6 @@
 package com.eliseev.app.services;
 
+import com.eliseev.app.models.Carriage;
 import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainRoutePiece;
 import com.eliseev.app.repository.custom.TrainDAO;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -54,6 +56,22 @@ public class TrainService extends AbstractService<Train, TrainDAO> {
         train.getTrainRoutePieceList().addAll(trainRoutePieces);
 
         return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Map<String, Integer> getFreePlacesAmountForTrainRoute(long trainId,
+                                                                 long trainDateId,
+                                                                 int depRoutePieceSerialNumber,
+                                                                 int arrRoutePieceSerialNumber) {
+        return super.dao.getFreePlacesAmountForTrainRoute(trainId, trainDateId,
+                depRoutePieceSerialNumber, arrRoutePieceSerialNumber);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Carriage> getCarriages(long trainId, long trainDateId,
+                                int depRoutePieceSerialNumber,
+                                int arrRoutePieceSerialNumber) {
+        return super.dao.getCarriages(trainId, trainDateId, depRoutePieceSerialNumber, arrRoutePieceSerialNumber);
     }
 
 

@@ -24,6 +24,8 @@
 
         $('#route-table .a-radio ').click(function (event) {
             event.preventDefault();
+
+
             let selectedTrHtml = $(this).parent();
 
             let ticket = {
@@ -47,10 +49,15 @@
                 endRoutePieceSerialNumber: selectedTrHtml.siblings("#endRoutePieceSerialNumber").text(),
                 ticket: ticket
             };
+
+
+
+
+
             console.log(orderDTO);
             $(".myForm #orderModal").modal();
 
-            $(".myForm #order-submit-btn").click(function(e) {
+            $(".myForm #order-submit-btn").click(function (e) {
                 e.preventDefault();
 
                 ticket.surname = $('.myForm #surname').val();
@@ -71,10 +78,10 @@
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         alert("error");
-                        let errorBlock =  $('.myForm #errors');
+                        let errorBlock = $('.myForm #errors');
                         let response = JSON.parse(xhr.responseText);
-                        response.errors.forEach(function(error) {
-                            errorBlock.append("<p>"+ error +"</p>");
+                        response.errors.forEach(function (error) {
+                            errorBlock.append("<p>" + error + "</p>");
                         });
                         errorBlock.css("display", "block");
                     }
@@ -104,9 +111,7 @@
             <th>Поезд</th>
             <th>Время отправления</th>
             <th>Время прибытия</th>
-            <th>Кол-во мест купе</th>
-            <th>Кол-во мест плацкарт</th>
-            <th>Кол-во мест общих</th>
+            <th>Свободные места</th>
             <th></th>
         </tr>
         </thead>
@@ -117,68 +122,87 @@
                 Выбрать:
             </a></td>
             <td th:text="${iStat.index + 1 + '.'}"></td>
-            <td hidden class="text" id="trainId" th:text="${route.trainId}"></td>
+            <td hidden class="text" id="trainId" th:text="${route.train.id}"></td>
             <td hidden class="text" id="trainDateId" th:text="${route.trainDateId}"></td>
-            <td class="text" id="trainName" th:text="${route.trainName}"></td>
+            <td class="text" id="trainName" th:text="${route.train.name}"></td>
             <td class="text" id="depTime" th:text="${#dates.format(route.depTime, 'yyyy-MM-dd HH:mm')}"></td>
             <td class="text" id="arrTime" th:text="${#dates.format(route.arrTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td class="text" id="coupePlacesAmount" th:text="${route.coupePlacesAmount}"></td>
-            <td class="text" id="lyingPlacesAmount" th:text="${route.lyingPlacesAmount}"></td>
-            <td class="text" id="commonPlacesAmount" th:text="${route.commonPlacesAmount}"></td>
+            <td class="text" id="freePlaces">
+                <ul th:each="place : ${route.freePlaces}">
+                    <li th:text="${place.key + ' - ' + place.value}"></li>
+                </ul>
+            </td>
+
             <td hidden class="text" id="startRoutePieceId" th:text="${route.startRoutePieceId}"></td>
             <td hidden class="text" id="endRoutePieceId" th:text="${route.endRoutePieceId}"></td>
-            <td hidden class="text" id="startRoutePieceSerialNumber" th:text="${route.startRoutePieceSerialNumber}"></td>
+            <td hidden class="text" id="startRoutePieceSerialNumber"
+                th:text="${route.startRoutePieceSerialNumber}"></td>
             <td hidden class="text" id="endRoutePieceSerialNumber" th:text="${route.endRoutePieceSerialNumber}"></td>
-           <!-- <td>
-                <a class="btn btn-info" th:href="@{/trains/list/} + ${route.trainId} + @{/stationsForUser}">Станкции
-                    остановки</a>
-            </td>-->
+            <!-- <td>
+                 <a class="btn btn-info" th:href="@{/trains/list/} + ${route.trainId} + @{/stationsForUser}">Станкции
+                     остановки</a>
+             </td>-->
         </tr>
         </tbody>
     </table>
 </div>
 
 <div class="myForm">
-    <form  id="form">
-        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false"
+    <form id="form">
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+             data-backdrop="static" data-keyboard="false"
              id="orderModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel" th:text="#{header.new_edit}">Составить заявку</h5>
+                        <p>
+                            <a class="btn btn-primary" data-toggle="collapse" href="#orderCollapse" role="button"
+                               aria-expanded="false" aria-controls="collapseExample">
+                                Order
+                            </a>
+                        </p>
+
+                        <!--<h5 class="modal-title" id="exampleModalLabel" th:text="#{header.new_edit}">Составить заявку</h5>-->
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span id="x-btn" aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div id="errors" style="display: none; color: red;">
-                        </div>
 
-                        <div class="form-group col-md-8">
-                            <lable for="name" class="col-form-label">Фамилия:</lable>
-                            <input type="text" class="form-control" id="surname" placeholder="Фамилия"/>
-                        </div>
-                        <div class="form-group col-md-8">
-                            <lable for="name" class="col-form-label">Имя</lable>
-                            <input type="text" class="form-control" id="name" placeholder="Имя">
-                        </div>
-                        <div class="form-group col-md-8">
-                            <lable for="name" class="col-form-label">Номер паспорта</lable>
-                            <input type="text" class="form-control" id="passportNumber" placeholder="Паспорт">
-                        </div>
-                        <div class="form-group col-md-8">
-                            <span></span>
-                            <input type="radio" value="Купе" name="seatType">
-                            <span>Купе</span><br/>
-                            <span></span>
-                            <input type="radio" value="Плацкарт" name="seatType">
-                            <span>Плацкарт</span><br/>
-                            <span></span>
-                            <input type="radio" value="Общее" name="seatType">
-                            <span>Общее</span><br/>
-                        </div>
 
-                        <div class="form-group col-md-8"></div>
+
+                        <div class="collapse" id="orderCollapse">
+                            <div class="card card-body">
+                                <div id="errors" style="display: none; color: red;">
+                                </div>
+
+                                <div class="form-group col-md-8">
+                                    <lable for="name" class="col-form-label">Фамилия:</lable>
+                                    <input type="text" class="form-control" id="surname" placeholder="Фамилия"/>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <lable for="name" class="col-form-label">Имя</lable>
+                                    <input type="text" class="form-control" id="name" placeholder="Имя">
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <lable for="name" class="col-form-label">Номер паспорта</lable>
+                                    <input type="text" class="form-control" id="passportNumber" placeholder="Паспорт">
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <span></span>
+                                    <input type="radio" value="Купе" name="seatType">
+                                    <span>Купе</span><br/>
+                                    <span></span>
+                                    <input type="radio" value="Плацкарт" name="seatType">
+                                    <span>Плацкарт</span><br/>
+                                    <span></span>
+                                    <input type="radio" value="Общее" name="seatType">
+                                    <span>Общее</span><br/>
+                                </div>
+
+                                <div class="form-group col-md-8"></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" id="close-btn" data-dismiss="modal"

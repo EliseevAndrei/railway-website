@@ -10,10 +10,6 @@ import lombok.ToString;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
@@ -21,7 +17,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -57,16 +55,11 @@ public class Train extends AbstractEntity implements Serializable {
     @OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
     private List<TrainDate> trainDates = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name="train_car",
-            joinColumns = @JoinColumn(
-                    name="train_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name="carriage_id", referencedColumnName = "id"))
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private List<Carriage> carriages = new ArrayList<>();
+    @OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
+    private Set<Carriage> carriages = new HashSet<>();
 
     public Train(@NotBlank(message = "{train.name.notBlank}") @Size(min = 1, max = 5, message = "{train.name.size}") String name, @Digits(integer = 4, fraction = 0, message = "{train.countCoupe.digits}") int countCoupe, @Digits(integer = 4, fraction = 0, message = "{train.countLying.digits}") int countLying, @Digits(integer = 4, fraction = 0, message = "{train.countCommon.digits}") int countCommon) {
         this.name = name;

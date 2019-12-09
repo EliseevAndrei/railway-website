@@ -5,6 +5,7 @@ import com.eliseev.app.models.Train;
 import com.eliseev.app.services.RouteService;
 import com.eliseev.app.services.StationService;
 import com.eliseev.app.services.TrainService;
+import com.eliseev.app.services.dto.TrainRouteDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 
 
 @Controller
@@ -58,7 +60,9 @@ public class TrainController {
         model.addAttribute("dep_station", depStation);
         model.addAttribute("arr_station", arrStation);
         model.addAttribute("dep_date", date);
-        model.addAttribute("routes", routeService.findTrainsOnRoute(depStation, arrStation, date));
+        List<TrainRouteDTO> trainRouteDTO = routeService.findTrainsOnRoute(depStation, arrStation, date);
+        logger.info("{}", trainRouteDTO);
+        model.addAttribute("routes", trainRouteDTO);
         return "trains/trains_on_route";
     }
 
