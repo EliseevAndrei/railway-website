@@ -67,29 +67,21 @@ public class TrainDAOImpl extends AbstractDAO<Train>
 
         List<Carriage> carriages = super.entityManager.createQuery(
                 "select distinct carriage from Carriage carriage\n" +
-                        "join fetch carriage.places place\n", Carriage.class)
+                        "join fetch carriage.places place\n" +
+                        "where carriage.train.id = :trainId and place.id not in (" +
+                        "   select t.place.id from Ticket t" +
+                        "       left join TrainRoutePiece trp1 on trp1.id = t.depTrainRoutePiece.id\n" +
+                        "       left join TrainRoutePiece trp2 on trp2.id = t.arrTrainRoutePiece.id\n" +
+                        "   where t.trainDate.id = :trainDateId and (trp1.serialNumber between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber) \n" +
+                        "and (trp2.serialNumber between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber)\n" +
+                        ")", Carriage.class)
+                .setParameter("trainDateId", trainDateId)
+                .setParameter("trainId", trainId)
+                .setParameter("depRoutePieceSerialNumber", depRoutePieceSerialNumber)
+                .setParameter("arrRoutePieceSerialNumber", arrRoutePieceSerialNumber)
                 .getResultList();
-        /*for (Carriage carriage : carriages) {
-            logger.info("{}", carriage);
-        }*/
         return carriages;
     }
-
-/*    List<Carriage> carriages = super.entityManager.createQuery(
-            "select distinct carriage from Carriage carriage\n" +
-                    "left join carriage.places place\n" +
-                    "where place.id not in(\n" +
-                    "   select t from Ticket t\n" +
-                    "       left join TrainRoutePiece trp1 on trp1.id = t.depTrainRoutePiece.id\n" +
-                    "       left join TrainRoutePiece trp2 on trp2.id = t.arrTrainRoutePiece.id\n" +
-                    "   where t.trainDate.id = :trainDateId and (trp1.serialNumber between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber) \n" +
-                    "and (trp2.serialNumber between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber)\n" +
-                    ") and carriage.train.id = :trainId", Carriage.class)
-            .setParameter("trainDateId", trainDateId)
-            .setParameter("trainId", trainId)
-            .setParameter("depRoutePieceSerialNumber", depRoutePieceSerialNumber)
-            .setParameter("arrRoutePieceSerialNumber", arrRoutePieceSerialNumber)
-            .getResultList();*/
 
 
 

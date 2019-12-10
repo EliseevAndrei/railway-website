@@ -22,12 +22,20 @@
     <table class="table table-hover">
         <thead class="bg-dark text-white">
         <tr>
-            <th>Поезд</th>
-            <th>Станция отправления</th>
-            <th>Время отправления</th>
-            <th>Станция прибытия</th>
-            <th>Время прибытия</th>
-            <th>Тип места</th>
+            <th rowspan="2">Поезд</th>
+            <th rowspan="2">Станция отправления</th>
+            <th rowspan="2">Время отправления</th>
+            <th rowspan="2">Станция прибытия</th>
+            <th rowspan="2">Время прибытия</th>
+            <th colspan="2">Вагон</th>
+            <th colspan="2">Место</th>
+            <th colspan="3">Данные пассажира</th>
+        </tr>
+        <tr>
+            <th>Номер</th>
+            <th>Тип</th>
+            <th>Номер</th>
+            <th>Тип</th>
             <th>Фамилия пассажира</th>
             <th>Имя</th>
             <th>Паспорт</th>
@@ -37,12 +45,15 @@
 
         <tr th:each="ticket : ${tickets}">
             <td th:text="${ticket.train.name}"></td>
-            <td th:text="${ticket.depStation.name}"></td>
+            <td th:text="${ticket.depTrainRoutePiece.startStation.name}"></td>
             <td th:text="${#dates.format(ticket.depTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${ticket.arrStation.name}"></td>
+            <td th:text="${ticket.arrTrainRoutePiece.endStation.name}"></td>
             <td th:text="${#dates.format(ticket.arrTime, 'yyyy-MM-dd HH:mm')}"></td>
             <!--<td th:text="${#dates.format(ticket.date, 'dd-MM-yyyy')}"></td>-->
-            <td th:text="${ticket.seatType}"></td>
+            <td th:text="${ticket.carriage.number}"></td>
+            <td th:text="${ticket.carriage.type}"></td>
+            <td th:text="${ticket.place.number}"></td>
+            <td th:text="${ticket.place.type}"></td>
             <td th:text="${ticket.surname}"></td>
             <td th:text="${ticket.name}"></td>
             <td th:text="${ticket.passportNumber}"></td>

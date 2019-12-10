@@ -5,7 +5,6 @@ import com.eliseev.app.models.User;
 import com.eliseev.app.services.OrderService;
 import com.eliseev.app.services.TicketService;
 import com.eliseev.app.services.UserService;
-import com.eliseev.app.services.dto.OrderDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +21,21 @@ public class TicketRestController {
     private Logger logger = LoggerFactory.getLogger(AbstractRestController.class);
 
     private UserService userService;
-    private OrderService orderService;
     private TicketService ticketService;
 
     @Autowired
     public TicketRestController(TicketService service,
                                 OrderService orderService) {
         this.ticketService = service;
-        this.orderService = orderService;
     }
 
 
     @PostMapping("/order")
     public Ticket orderTicket(Authentication authentication,
-                              @RequestBody OrderDTO orderDTO) {
-        logger.info("{}", orderDTO);
-        orderDTO.getTicket().setUser((User) authentication.getPrincipal());
-        return orderService.orderTicket(orderDTO);
+                              @RequestBody Ticket ticket) {
+        logger.info("{}", ticket);
+        ticket.setUser((User) authentication.getPrincipal());
+        return ticketService.create(ticket);
     }
 
 

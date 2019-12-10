@@ -20,5 +20,4 @@ public class OrderDTO {
     private Long endRoutePieceId;
     private int startRoutePieceSerialNumber;
     private int endRoutePieceSerialNumber;
-
 }

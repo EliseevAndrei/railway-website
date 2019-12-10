@@ -113,6 +113,9 @@ public class TrainDAOTest {
     public void getCarriages() {
         List<Carriage> carriages = trainDAO.getCarriages(1, 1, 1, 3);
         logger.info("{}", carriages);
+        for (Carriage carriage : carriages) {
+            logger.info("{}", carriage.getPlaces());
+        }
     }
 
 }

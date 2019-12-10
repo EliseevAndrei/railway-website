@@ -35,7 +35,7 @@ public class StationStopTimeDAOImpl extends AbstractDAO<StationStopTime>
         }
     }
 
-    @Override
+    /*@Override
     public void orderCoupePlace(Long trainDateId, int startRoutePieceSerialNumber, int endRoutePieceSerialNumber) {
         super.entityManager.createNativeQuery(
                 "update station_stop_time\n" +
@@ -87,7 +87,7 @@ public class StationStopTimeDAOImpl extends AbstractDAO<StationStopTime>
                 .setParameter("startSerialNumber", startRoutePieceSerialNumber)
                 .setParameter("endSerialNumber", endRoutePieceSerialNumber)
                 .executeUpdate();
-    }
+    }*/
 
 
 }

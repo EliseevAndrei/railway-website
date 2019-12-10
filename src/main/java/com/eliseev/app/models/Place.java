@@ -22,11 +22,12 @@ public class Place extends AbstractEntity {
 
     private Integer number;
     private String type;
-    private boolean is_taken;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="carriage_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Carriage carriage;
 
 }

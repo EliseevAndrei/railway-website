@@ -1,11 +1,8 @@
 package com.eliseev.app.services;
 
-import com.eliseev.app.models.Ticket;
 import com.eliseev.app.repository.custom.StationStopTimeDAO;
-import com.eliseev.app.services.dto.OrderDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OrderService {
@@ -22,7 +19,7 @@ public class OrderService {
     }
 
 
-    @Transactional
+   /* @Transactional
     public Ticket orderTicket(OrderDTO orderDTO) {
 
         Ticket ticket = orderDTO.getTicket();
@@ -43,6 +40,6 @@ public class OrderService {
 
         }
         return ticketService.create(ticket);
-    }
+    }*/
 
 }

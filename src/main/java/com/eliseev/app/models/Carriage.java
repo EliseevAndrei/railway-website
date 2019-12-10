@@ -40,6 +40,8 @@ public class Carriage extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="train_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Train train;
 
 }

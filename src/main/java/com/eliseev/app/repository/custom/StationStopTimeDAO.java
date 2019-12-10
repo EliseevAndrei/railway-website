@@ -11,9 +11,9 @@ public interface StationStopTimeDAO extends IDAO<StationStopTime> {
 
     StationStopTime getStopTimeByTrainRouteIdAndTrainDateId(long trainRouteId, long trainDateId);
 
-    void orderCoupePlace(Long trainDateId, int startRoutePieceSerialNumber, int endRoutePieceSerialNumber);
+    /*void orderCoupePlace(Long trainDateId, int startRoutePieceSerialNumber, int endRoutePieceSerialNumber);
 
     void orderLyingPlace(Long trainDateId, int startRoutePieceSerialNumber, int endRoutePieceSerialNumber);
 
-    void orderCommonPlace(Long trainDateId, int startRoutePieceSerialNumber, int endRoutePieceSerialNumber);
+    void orderCommonPlace(Long trainDateId, int startRoutePieceSerialNumber, int endRoutePieceSerialNumber);*/
 }

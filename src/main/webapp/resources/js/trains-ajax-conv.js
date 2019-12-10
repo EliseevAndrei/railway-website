@@ -20,12 +20,12 @@ $(document).ready(function () {
 
 
                 });
-                $(".myForm #arriveTime, .myForm #departureTime").each(function () {
+                /*$(".myForm #arriveTime, .myForm #departureTime").each(function () {
                     let str = response[$(this).attr('id')].replace("@", " ");
                     str = str.slice(0, 16);
 
                     $(this).val(str);
-                });
+                });*/
             });
             $('.myForm #exampleModal').modal();
         } else {
@@ -40,8 +40,8 @@ $(document).ready(function () {
             $.ajaxSetup({
                 async: false
             });
-            $.getJSON('/stations/list', function(response) {
-                response.forEach(function(station) {
+            $.getJSON('/stations/list', function (response) {
+                response.forEach(function (station) {
                     stationsOptionsHtml += `<option value="${station.id}">${station.name}</option>`
                 })
             });
@@ -59,7 +59,7 @@ $(document).ready(function () {
     });
 
 
-    $('#routeFormModal').on('hide.bs.modal', function() {
+    $('#routeFormModal').on('hide.bs.modal', function () {
 
     });
 
@@ -112,14 +112,14 @@ $(document).ready(function () {
 
     });
 
-    $(".routeForm #add-station-btn").click(function(e) {
+    $(".routeForm #add-station-btn").click(function (e) {
         e.preventDefault();
 
         routePiecesAmount += 1;
 
         let previousStationDOMElement = $("#stations-table tr:last-child #endStation option:selected");
         $('#stations-table').append('<tr>\n' +
-                                            `<td class="serialNumber">${routePiecesAmount}</td>\n` +
+            `<td class="serialNumber">${routePiecesAmount}</td>\n` +
             '                                <td class="startStation">\n' +
             '                                    <select id="startStation" required>\n' +
             `                        <option selected value="${previousStationDOMElement.val()}">${previousStationDOMElement.text()}</option>\n` +
@@ -138,13 +138,13 @@ $(document).ready(function () {
             '                            </tr>')
     });
 
-    $(".routeForm #routeForm #submit-btn").click(function(e) {
+    $(".routeForm #routeForm #submit-btn").click(function (e) {
         e.preventDefault();
         let routePieces = [];
         let routePiece = {};
 
-        $('#stations-table tr').each(function() {
-            if($(this).attr('class') !== 'table-head') {
+        $('#stations-table tr').each(function () {
+            if ($(this).attr('class') !== 'table-head') {
                 routePiece = {
                     serialNumber: $(this).children(".serialNumber").text(),
                     startStation: {
@@ -162,7 +162,7 @@ $(document).ready(function () {
         train.trainRoutePieceList = routePieces;
 
         $.ajax({
-            url:  $('.myForm #form').attr('action'),
+            url: $('.myForm #form').attr('action'),
             type: "POST",
             dataType: "json",
             contentType: "application/json",

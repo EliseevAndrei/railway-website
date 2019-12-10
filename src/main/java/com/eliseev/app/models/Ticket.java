@@ -33,9 +33,6 @@ public class Ticket extends AbstractEntity {
     @NotBlank(message = "passportNumber is required")
     @Column(name="passport_number")
     private String passportNumber;
-    @NotBlank(message = "seatType is required")
-    @Column(name="seat_type")
-    private String seatType;
 
     @Column(name="dep_time")
     @JsonDeserialize(using = CustomRestDateDeserializer.class)
@@ -52,17 +49,9 @@ public class Ticket extends AbstractEntity {
     @JoinColumn(name="user_id")
     private User user;
 
-    /*@ManyToOne
-    @JoinColumn(name="dep_station_id")
-    private Station depStation;
-
     @ManyToOne
-    @JoinColumn(name="arr_station_id")
-    private Station arrStation;*/
-
-    /*@ManyToOne
     @JoinColumn(name="train_id")
-    private Train train;*/
+    private Train train;
 
     @ManyToOne
     @JoinColumn(name="train_date_id")
@@ -80,4 +69,7 @@ public class Ticket extends AbstractEntity {
     @JoinColumn(name="place_id")
     private Place place;
 
+    @ManyToOne
+    @JoinColumn(name="carriage_id")
+    private Carriage carriage;
 }
