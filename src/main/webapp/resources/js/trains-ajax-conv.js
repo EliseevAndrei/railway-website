@@ -2,7 +2,6 @@ $(document).ready(function () {
 
     let train = {};
     let stationsOptionsHtml = "";
-    let routePiecesAmount;
 
     $('.nBtn, .table .eBtn').click(function (e) {
 
@@ -14,10 +13,9 @@ $(document).ready(function () {
 
             $.getJSON(href, function (response) {
 
-                $(".myForm :input[type='text'], .myForm :input[type='number'], .myForm select").each(function () {
+                $(".train-edit-form :input[type='text'], .train-edit-form :input[type='number'], .train-edit-form select").each(function () {
 
                     $(this).val(response[$(this).attr('id')]);
-
 
                 });
                 /*$(".myForm #arriveTime, .myForm #departureTime").each(function () {
@@ -27,29 +25,29 @@ $(document).ready(function () {
                     $(this).val(str);
                 });*/
             });
-            $('.myForm #exampleModal').modal();
+            $('.train-edit-form #exampleModal').modal();
         } else {
             console.log("new");
-            $(".myForm :input[type='text']").each(function () {
+            $(".train-create-form :input[type='text']").each(function () {
                 $(this).val('');
             });
-            $('.myForm #id').val('-1').hide();
+            $('.train-create-form #id').val('-1').hide();
 
-            $('.myForm #exampleModal').modal();
+            $('.train-create-form #trainModal').modal();
 
-            $.ajaxSetup({
+            /*$.ajaxSetup({
                 async: false
-            });
+            });*/
             $.getJSON('/stations/list', function (response) {
                 response.forEach(function (station) {
                     stationsOptionsHtml += `<option value="${station.id}">${station.name}</option>`
-                })
+                });
+                $("#stations-table #startStation").append(stationsOptionsHtml);
+                $("#stations-table #endStation").append(stationsOptionsHtml);
             });
-            $.ajaxSetup({
+            /*$.ajaxSetup({
                 async: true
-            });
-            $(".routeForm #startStation").append(stationsOptionsHtml);
-            $(".routeForm #endStation").append(stationsOptionsHtml);
+            });*/
 
         }
     });
@@ -60,47 +58,41 @@ $(document).ready(function () {
 
 
     $('#routeFormModal').on('hide.bs.modal', function () {
-
     });
 
-    $('.myForm #edit-submit').click(function (event) {
+    $('.train-edit-form #edit-submit').click(function (event) {
 
         event.preventDefault();
 
-        var href = $('.myForm #form').attr('action');
-        var object = {};
+        let href = $('.train-edit-form #form').attr('action');
+        let object = {};
 
-        $(".myForm :input[type='text'], .myForm :input[type='number'], .myForm select").each(function () {
+        $(".train-edit-form :input[type='text'], .train-edit-form :input[type='number'], .train-edit-form select").each(function () {
             object[$(this).attr('id')] = $(this).val();
         });
 
-        $(".myForm #arriveTime, .myForm #departureTime").each(function () {
-            let str = $(this).val().replace(/\s+/g, '');
-            let date = str.substring(0, 10);
-            let time = str.substring(10, 16);
-            str = date + " " + time;
-            object[$(this).attr('id')] = str;
-        });
 
         if (object.id == -1) {
             train = object;
 
-            routePiecesAmount = 1;
-            $("#routeFormModal").modal();
         } else {
-            href = href + "/" + object.id;
+            href = href + object.id;
 
             $.ajax({
                 url: href,
-                type: "PUT",
+                type: 'PUT',
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(object),
                 success: function (data, textStatus, xhr) {
-                    $(location).attr('href', href + "/route-pieces-form");
+                    $(location).attr('href', '/trains');
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    let errorBlock = $('.myForm #errors');
+                    let errorBlock = $('.train-edit-form #errors');
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                    console.log(xhr.responseText);
+                    $('.train-edit-form #errors').append(xhr.responseText);
                     let response = JSON.parse(xhr.responseText);
                     response.errors.forEach(function (error) {
                         errorBlock.append("<p>" + error + "</p>");
@@ -112,14 +104,14 @@ $(document).ready(function () {
 
     });
 
-    $(".routeForm #add-station-btn").click(function (e) {
+    let routePieceSerialNumber = 1;
+    $(".train-create-form #add-station-btn").click(function (e) {
         e.preventDefault();
 
-        routePiecesAmount += 1;
-
+        routePieceSerialNumber += 1;
         let previousStationDOMElement = $("#stations-table tr:last-child #endStation option:selected");
         $('#stations-table').append('<tr>\n' +
-            `<td class="serialNumber">${routePiecesAmount}</td>\n` +
+            `<td class="serialNumber">${routePieceSerialNumber}</td>\n` +
             '                                <td class="startStation">\n' +
             '                                    <select id="startStation" required>\n' +
             `                        <option selected value="${previousStationDOMElement.val()}">${previousStationDOMElement.text()}</option>\n` +
@@ -138,7 +130,7 @@ $(document).ready(function () {
             '                            </tr>')
     });
 
-    $(".routeForm #routeForm #submit-btn").click(function (e) {
+    $(".train-create-form #train-create-submit").click(function (e) {
         e.preventDefault();
         let routePieces = [];
         let routePiece = {};
@@ -160,9 +152,9 @@ $(document).ready(function () {
             }
         });
         train.trainRoutePieceList = routePieces;
-
+        train.name = $('#train-card #name').val();
         $.ajax({
-            url: $('.myForm #form').attr('action'),
+            url: '/trains/list',
             type: "POST",
             dataType: "json",
             contentType: "application/json",

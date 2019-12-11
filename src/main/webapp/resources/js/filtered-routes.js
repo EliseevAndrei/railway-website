@@ -27,21 +27,7 @@ $(document).ready(function () {
                 id: selectedTrHtml.siblings("#endRoutePieceId").text(),
                 serialNumber: selectedTrHtml.siblings("#endRoutePieceSerialNumber").text()
             }
-            /*depStation: {
-                id: $('.container #dep_station_id').text()
-            },
-            arrStation: {
-                id: $('.container #arr_station_id').text()
-            }*/
         };
-        /*let orderDTO = {
-            trainDateId: selectedTrHtml.siblings("#trainDateId").text(),
-            startRoutePieceId: selectedTrHtml.siblings("#startRoutePieceId").text(),
-            endRoutePieceId: selectedTrHtml.siblings("#endRoutePieceId").text(),
-            startRoutePieceSerialNumber: selectedTrHtml.siblings("#startRoutePieceSerialNumber").text(),
-            endRoutePieceSerialNumber: selectedTrHtml.siblings("#endRoutePieceSerialNumber").text(),
-            ticket: ticket
-        };*/
 
         let href = `/trains/list/${ticket.train.id}/carriages/onDate/${ticket.trainDate.id}?depRoutePieceNumber=${ticket.depTrainRoutePiece.id}&arrRoutePieceNumber=${ticket.arrTrainRoutePiece.id}`;
         console.log(`href ${href}`);
@@ -113,7 +99,7 @@ $(document).ready(function () {
                 id: checkedPlace.parent().siblings('#placeId').text()
             };
             ticket.carriage = {
-                id:checkedPlace.parent().siblings('#carriageId').text()
+                id: checkedPlace.parent().siblings('#carriageId').text()
             };
             console.log(ticket);
 

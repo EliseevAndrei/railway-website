@@ -24,8 +24,7 @@ public abstract class AbstractRestController<E extends AbstractEntity,
     @Override
     public List<E> list(@PathVariable(required = false) long... id) {
         logger.info("User send GET /<entities>/list");
-        List<E> en = service.list();
-        return en;
+        return service.list();
     }
 
     @Override

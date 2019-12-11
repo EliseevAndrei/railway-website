@@ -17,6 +17,7 @@
     <script src="/resources/js/trains-ajax-conv.js"></script>
 </head>
 <body>
+
 <div class="container">
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -34,9 +35,6 @@
         <thead class="bg-dark text-white">
         <tr>
             <th th:text="#{label.name}">Name</th>
-            <th th:text="#{label.amount_coupe_places}">Amount coupe</th>
-            <th th:text="#{label.amount_lying_places}">Amount lying places</th>
-            <th th:text="#{label.amount_common_places}">Amount common places</th>
             <th></th>
         </tr>
         </thead>
@@ -63,9 +61,10 @@
 </div>
 
 <!-- Modal Edit n New-->
-<div class="myForm">
+<div class="train-edit-form">
     <form th:action="${'trains/list/'}" th:object="${train}" id="form">
-        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false"
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+             data-backdrop="static" data-keyboard="false"
              id="exampleModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -76,7 +75,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div id="errors" style="display: none; color: red;">
+                        <div id="errors" >
                         </div>
                         <input type="text" hidden id="id">
                         <div class="form-group col-md-6">
@@ -100,81 +99,21 @@
     </form>
 </div>
 
-<div class="routeForm">
-    <form th:action="${'trains/list/'}" th:object="${train}" id="routeForm">
-        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false"
-             id="routeFormModal">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Добавьте маршрут</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span id="x-btn" aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
 
-                        <table id="stations-table">
-                            <tr class="table-head">
-                                <th>Номер</th>
-                                <th>Станция отправления</th>
-                                <th>Станция прибытия</th>
-                                <th>Дистанция</th>
-                            </tr>
-                            <tr>
-                                <td class="serialNumber">1</td>
-                                <td class="startStation">
-                                    <select id="startStation" required>
-                                    </select>
-                                </td>
-                                <td class="endStation">
-                                    <select id="endStation" required>
-                                    </select>
-                                </td>
-
-                                <td class="distance">
-                                    <input type="number" id="distance">
-                                </td>
-
-                            </tr>
-                        </table>
-
-
-                        <button type="button" class="btn btn-primary mt-2" id="add-station-btn">
-                            Добавить станцию
-                        </button>
-                        <br>
-
-                        <div class="form-group col-md-8"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="close-btn" data-dismiss="modal"
-                                th:text="#{button.close}">Close
-                        </button>
-                        <button type="submit" class="btn btn-primary" id="submit-btn" th:text="#{button.save}">
-                            Сохранить
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-
-<div class="myForm">
-    <form id="form">
+<div class="train-create-form">
+    <form id="train-create-form">
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-             id="orderModal">
+             id="trainModal">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content" id="modal-content">
                     <div class="modal-header" id="modal-header">
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active nav-item">
-                                <a href="#product" class="nav-link" aria-controls="product" role="tab"
-                                   data-toggle="tab">Выбор места</a>
+                                <a href="#train" class="nav-link" aria-controls="product" role="tab"
+                                   data-toggle="tab">Поезд</a>
                             </li>
                             <li role="presentation" class="nav-item">
-                                <a href="#order" class="nav-link" aria-controls="order" role="tab" data-toggle="tab">Заказ</a>
+                                <a href="#route" class="nav-link" aria-controls="order" role="tab" data-toggle="tab">Маршрут</a>
                             </li>
                         </ul>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -187,44 +126,53 @@
                             <!-- Nav tabs -->
                             <div class="tab-content">
 
-                                <div role="tabpanel" class="tab-pane fade in active" id="product">
-                                    <div class="card card-body" id="carriage-card">
-
-                                    </div>
-                                </div>
-
-                                <div role="tabpanel" class="tab-pane fade" id="order">
-                                    <form>
-                                        <div class="card card-body">
+                                <div role="tabpanel" class="tab-pane fade in active" id="train">
+                                    <div class="card card-body" id="train-card">
+                                        <form>
                                             <div id="errors" style="display: none; color: red;">
                                             </div>
-
-                                            <div class="form-group col-md-8">
-                                                <lable for="name" class="col-form-label">Фамилия:</lable>
-                                                <input type="text" class="form-control" id="surname" placeholder="Фамилия"/>
-                                            </div>
-                                            <div class="form-group col-md-8">
-                                                <lable for="name" class="col-form-label">Имя</lable>
-                                                <input type="text" class="form-control" id="name" placeholder="Имя">
-                                            </div>
-                                            <div class="form-group col-md-8">
-                                                <lable for="name" class="col-form-label">Номер паспорта</lable>
-                                                <input type="text" class="form-control" id="passportNumber" placeholder="Паспорт">
-                                            </div>
-                                            <div class="form-group col-md-8">
-                                                <span></span>
-                                                <input type="radio" value="Купе" name="seatType">
-                                                <span>Купе</span><br/>
-                                                <span></span>
-                                                <input type="radio" value="Плацкарт" name="seatType">
-                                                <span>Плацкарт</span><br/>
-                                                <span></span>
-                                                <input type="radio" value="Общее" name="seatType">
-                                                <span>Общее</span><br/>
+                                            <div class="form-group col-md-6">
+                                                <lable for="name" class="col-form-label" th:text="#{label.name}">Name
+                                                </lable>
+                                                <input type="text" class="form-control" id="name"
+                                                       placeholder="Название">
                                             </div>
 
                                             <div class="form-group col-md-8"></div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane fade" id="route">
+                                    <form>
+                                        <div class="card card-body">
+
+                                            <table class="table" id="stations-table">
+                                                <tr class="table-head">
+                                                    <th>Номер</th>
+                                                    <th>Станция отправления</th>
+                                                    <th>Станция прибытия</th>
+                                                    <th>Дистанция</th>
+                                                </tr>
+                                                <tr>
+                                                    <td class="serialNumber">1</td>
+                                                    <td class="startStation">
+                                                        <select id="startStation" required>
+                                                        </select>
+                                                    </td>
+                                                    <td class="endStation">
+                                                        <select id="endStation" required>
+                                                        </select>
+                                                    </td>
+
+                                                    <td class="distance">
+                                                        <input type="number" id="distance">
+                                                    </td>
+
+                                                </tr>
+                                            </table>
                                         </div>
+                                        <button type="submit" class="btn btn-secondary" id="add-station-btn">Добавить станцию</button>
                                     </form>
                                 </div>
                             </div>
@@ -233,7 +181,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="order-submit-btn">Save</button>
+                        <button type="submit" class="btn btn-primary" id="train-create-submit">Save</button>
                     </div>
                 </div>
             </div>
@@ -243,7 +191,8 @@
 
 <!-- Modal Edit n Remove-->
 <div class="myRemove">
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false"
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         data-backdrop="static" data-keyboard="false"
          id="exampleModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
