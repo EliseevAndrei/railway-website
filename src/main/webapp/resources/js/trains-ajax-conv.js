@@ -1,4 +1,4 @@
-$(document).ready(function () {
+/*$(document).ready(function () {
 
     let train = {};
     let stationsOptionsHtml = "";
@@ -18,12 +18,12 @@ $(document).ready(function () {
                     $(this).val(response[$(this).attr('id')]);
 
                 });
-                /*$(".myForm #arriveTime, .myForm #departureTime").each(function () {
+                /!*$(".myForm #arriveTime, .myForm #departureTime").each(function () {
                     let str = response[$(this).attr('id')].replace("@", " ");
                     str = str.slice(0, 16);
 
                     $(this).val(str);
-                });*/
+                });*!/
             });
             $('.train-edit-form #exampleModal').modal();
         } else {
@@ -35,9 +35,9 @@ $(document).ready(function () {
 
             $('.train-create-form #trainModal').modal();
 
-            /*$.ajaxSetup({
+            /!*$.ajaxSetup({
                 async: false
-            });*/
+            });*!/
             $.getJSON('/stations/list', function (response) {
                 response.forEach(function (station) {
                     stationsOptionsHtml += `<option value="${station.id}">${station.name}</option>`
@@ -45,9 +45,9 @@ $(document).ready(function () {
                 $("#stations-table #startStation").append(stationsOptionsHtml);
                 $("#stations-table #endStation").append(stationsOptionsHtml);
             });
-            /*$.ajaxSetup({
+            /!*$.ajaxSetup({
                 async: true
-            });*/
+            });*!/
 
         }
     });
@@ -130,23 +130,6 @@ $(document).ready(function () {
             '                            </tr>')
     });
 
-    $(".train-create-form #add-carriage-btn").click(e => {
-        e.preventDefault();
-
-        $('.train-create-form #carriage-table').append('<tr>\n' +
-            '                                                    <td class="carriageType">\n' +
-            '                                                        <select class="form-control mb-2 mr-sm-2">\n' +
-            '                                                            <option value="Купе">Купе</option>\n' +
-            '                                                            <option value="Плацкарт">Плацкарт</option>\n' +
-            '                                                            <option value="Общий">Общий</option>\n' +
-            '                                                        </select>\n' +
-            '                                                    </td>\n' +
-            '                                                    <td class="carriageAmount">\n' +
-            '                                                        <input type="number" class="form-control mb-2 mr-sm-2">\n' +
-            '                                                    </td>\n' +
-            '                                                </tr>');
-
-    });
 
     $(".train-create-form #train-create-submit").click(function (e) {
         e.preventDefault();
@@ -171,6 +154,8 @@ $(document).ready(function () {
         });
         train.trainRoutePieceList = routePieces;
         train.name = $('#train-card #name').val();
+
+
         $.ajax({
             url: '/trains/list',
             type: "POST",
@@ -216,5 +201,280 @@ $(document).ready(function () {
         })
     })
 
+});*/
+
+$(document).ready(function() {
+
+    $(".train-create-form #add-carriage-btn").click(e => {
+
+        e.preventDefault();
+        $('.train-create-form #carriage-table').append(
+            '<tr>\n' +
+            '                                                    <td class="carriageType">\n' +
+            '                                                        <select style="width: 90px" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                            <option value="Купе">Купе</option>\n' +
+            '                                                            <option value="Плацкарт">Плацкарт</option>\n' +
+            '                                                            <option value="Общий">Общий</option>\n' +
+            '                                                        </select>\n' +
+            '                                                    </td>\n' +
+            '                                                    <td class="carriageAmount">\n' +
+            '                                                        <input type="number" style="width: 70px" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                    </td>\n' +
+            '                                                    <td>\n' +
+            '                                                        <ul class="placeType">\n' +
+            '                                                            <li>\n' +
+            '                                                                <select style="width: 100px" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                                    <option value="Верхнее">Верхнее</option>\n' +
+            '                                                                    <option value="Нижнее">Нижнее</option>\n' +
+            '                                                                    <option value="Сидячее">Сидячее</option>\n' +
+            '                                                                    <option value="Купе">Купе</option>\n' +
+            '                                                                </select>\n' +
+            '                                                            </li>\n' +
+            '                                                        </ul>\n' +
+            '                                                    </td>\n' +
+            '                                                    <td>\n' +
+            '                                                        <ul class="amountLeftBorder">\n' +
+            '                                                            <li>\n' +
+            '                                                                <input type="number" style="width: 70px" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                            </li>\n' +
+            '                                                        </ul>\n' +
+            '                                                    </td>\n' +
+            '                                                    <td>\n' +
+            '                                                        <ul class="amountRightBorder">\n' +
+            '                                                            <li>\n' +
+            '                                                                <input type="number" style="width: 70px" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                            </li>\n' +
+            '                                                        </ul>\n' +
+            '                                                    </td>\n' +
+            '                                                    <td>\n' +
+            '                                                        <ul class="placesParity">\n' +
+            '                                                            <li>\n' +
+            '                                                                <select class="form-control mb-2 mr-sm-2">\n' +
+            '                                                                    <option value="Все">Все</option>\n' +
+            '                                                                    <option value="Четные">Четные</option>\n' +
+            '                                                                    <option value="Нечетные">Нечетные</option>\n' +
+            '                                                                </select>\n' +
+            '                                                            </li>\n' +
+            '                                                        </ul>\n' +
+            '                                                    </td>\n' +
+            '                                                    <td>\n' +
+            '                                                        <a href="#" name="add-place" class="fas fa-plus"></a>\n' +
+            '                                                    </td>\n' +
+            '                                                </tr>'
+        );
+
+    });
+
+    $('.train-create-form #carriage-table').on('click', 'a[name="add-place"]',function (e) {
+        e.preventDefault();
+
+        let parent = $(this).parent().parent();
+
+        parent.find('.placeType').append(
+            '                                                           <li>\n' +
+            '                                                                <select style="width: 100px" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                                    <option value="Верхнее">Верхнее</option>\n' +
+            '                                                                    <option value="Нижнее">Нижнее</option>\n' +
+            '                                                                    <option value="Сидячее">Сидячее</option>\n' +
+            '                                                                    <option value="Купе">Купе</option>\n' +
+            '                                                                </select>\n' +
+            '                                                            </li>'
+        );
+
+        parent.find('.amountLeftBorder').append(
+            '                                                            <li>\n' +
+            '                                                                <input type="number" style="width: 70px" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                            </li>'
+        );
+
+        parent.find('.amountRightBorder').append(
+            '                                                           <li>\n' +
+            '                                                                <input type="number" style="width: 70px" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                            </li>'
+        );
+
+        parent.find('.placesParity').append(
+            '                                                           <li>\n' +
+            '                                                                <select class="form-control mb-2 mr-sm-2">\n' +
+            '                                                                    <option value="Все">Все</option>\n' +
+            '                                                                    <option value="Четные">Четные</option>\n' +
+            '                                                                    <option value="Нечетные">Нечетные</option>\n' +
+            '                                                                </select>\n' +
+            '                                                            </li>'
+        );
+
+    });
+
+
+    $('#train-create-form #train-create-submit').click(function(e) {
+        e.preventDefault();
+
+        let carriage, place;
+        let carriages = [], places;
+        let carriageIndex = 0;
+        let carriageAmount = 0;
+        let carriageType = '';
+        let parent;
+        let placesType = [], leftBorderAmount = [], rightBorderAmount = [], placesParity = [];
+        $('.carriageType').each(function() {
+
+            placesType = [];
+            leftBorderAmount = [];
+            rightBorderAmount = [];
+            placesParity = [];
+
+            carriageType = $(this).find('option:selected').val();
+            carriageAmount = $(this).siblings('.carriageAmount').children('input').val();
+
+            console.log(`carriageAmount = ${carriageAmount}`);
+
+            parent = $(this).parent();
+
+            console.log(parent);
+
+            parent.find('.placeType li').each(function() {
+                placesType.push($(this).find('option:selected').val());
+            });
+
+            parent.find('.amountLeftBorder li input').each(function() {
+                leftBorderAmount.push($(this).val());
+            });
+
+            parent.find('.amountRightBorder li input').each(function() {
+                rightBorderAmount.push($(this).val());
+            });
+
+            parent.find('.placesParity li').each(function() {
+                placesParity.push($(this).find('option:selected').val());
+            });
+
+            console.log(`placesType = ${placesType}\nleftBorderAmount=${leftBorderAmount}\nrightBorder=${rightBorderAmount}\nplacesParity=${placesParity}`);
+
+            let leftBorder;
+            let rightBorder;
+            let offset = 0;
+            console.log(places);
+            places = [];
+            console.log(places);
+            for (let i = 0; i < placesType.length; i++) {
+                leftBorder = leftBorderAmount[i];
+                rightBorder = rightBorderAmount[i];
+                if (placesParity[i] === "Все") {
+                    offset = 1;
+                } else {
+                    if (placesParity[i] === "Четные") {
+                        if (leftBorder[i] % 2 !== 0) {
+                            leftBorder++;
+                        }
+                    } else {
+                        if (leftBorder[i] % 2 === 0) {
+                            leftBorder++;
+                        }
+                    }
+                    offset = 2;
+                }
+
+                for (let j = Number(leftBorder); j <= rightBorder; j += offset) {
+                    place = {
+                        type: placesType[i],
+                        number: j
+                    };
+                    places.push(place);
+                }
+            }
+            console.log(places);
+
+            for (let i = 0; i < carriageAmount; i++) {
+
+                carriage = {
+                    number: ++carriageIndex,
+                    type: carriageType,
+                    places: places
+                };
+                carriages.push(carriage);
+            }
+
+
+        });
+        console.log(carriages);
+        return carriages;
+    })
+
 });
+
+/*let createCarriagesWithPlaces = function(event) {
+
+
+    let carriage, place;
+    let carriages = [], places = [];
+    let carriageAmount = 0;
+    let carriageType = '';
+    let parent;
+    let placesType = [], leftBorderAmount = [], rightBorderAmount = [], placesParity = [];
+    $('.carriageType').each(function() {
+        carriageType = $(this).find('option:selected').val();
+        carriageAmount = $(this).siblings('.carriageAmount').children('input').val();
+
+        parent = $(this).parent();
+
+        parent.find('.placeType li').each(function() {
+            placesType.push($(this).find('option:selected').val());
+        });
+
+        parent.find('.amountLeftBorder li').each(function() {
+            leftBorderAmount.push($(this).find('option:selected').val());
+        });
+
+        parent.find('.amountRightBorder li').each(function() {
+            rightBorderAmount.push($(this).find('option:selected').val());
+        });
+
+        parent.find('.placesParity li').each(function() {
+            placesParity.push($(this).find('option:selected').val());
+        });
+
+
+        for (let i = 0; i < placesType.length; i++) {
+            let leftBorder = leftBorderAmount[i];
+            let rightBorder = rightBorderAmount[i];
+            let offset;
+            if (placesParity[i] === "Все") {
+                offset = 1;
+            } else {
+                if (placesParity[i] === "Четные") {
+                    if (leftBorder[i] % 2 !== 0) {
+                        leftBorder++;
+                    }
+                } else {
+                    if (leftBorder[i] % 2 === 0) {
+                        leftBorder++;
+                    }
+                }
+                offset = 2;
+            }
+
+            for (let j = leftBorder; j <= rightBorder; j++) {
+                place = {
+                    type: placesType[i],
+                    number: j
+                };
+                places.push(place);
+            }
+        }
+
+        for (let i = 0; i < carriageAmount; i++) {
+
+            carriage = {
+                number: i + 1,
+                type: carriageType,
+                places: places
+            };
+            carriages.push(carriage);
+        }
+
+
+    });
+    console.log(carriage);
+    return carriages;
+};*/
 

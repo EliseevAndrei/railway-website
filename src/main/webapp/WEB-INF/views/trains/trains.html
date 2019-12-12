@@ -4,6 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <style>
+        .train-create-form #carriage-table ul {
+            margin-left: 0; /* Отступ слева в браузере IE и Opera */
+            padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+            list-style-type: none;
+        }
+    </style>
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -14,9 +22,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-    <script src="/resources/js/trains-ajax-conv.js"></script>
+    <script src="../../../resources/js/trains-ajax-conv.js" th:src="@{/resources/js/trains-ajax-conv.js}"></script>
 </head>
-<body>
+<body style="overflow: scroll">
 
 <div class="container">
     <div class="dropdown">
@@ -99,13 +107,18 @@
     </form>
 </div>
 
+<script>
+    $(document).ready(function() {
+        $('#trainModal').modal();
+    })
+</script>
 
 <div class="train-create-form">
     <form id="train-create-form">
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
              id="trainModal">
             <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content" id="modal-content">
+                <div class="modal-content" id="modal-content" style="min-width: 900px">
                     <div class="modal-header" id="modal-header">
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active nav-item">
@@ -160,16 +173,16 @@
                                                 <tr>
                                                     <td class="serialNumber">1</td>
                                                     <td class="startStation">
-                                                        <select id="startStation" required>
+                                                        <select id="startStation" class="form-control mb-2 mr-sm-2" required>
                                                         </select>
                                                     </td>
                                                     <td class="endStation">
-                                                        <select id="endStation" required>
+                                                        <select id="endStation" class="form-control mb-2 mr-sm-2" required>
                                                         </select>
                                                     </td>
 
                                                     <td class="distance">
-                                                        <input type="number" id="distance">
+                                                        <input type="number" class="form-control mb-2 mr-sm-2" id="distance">
                                                     </td>
 
                                                 </tr>
@@ -188,20 +201,59 @@
                                                     <th>Тип вагона</th>
                                                     <th>Количество</th>
                                                     <th>Тип места</th>
-                                                    <th>Кол-во мест</th>
+                                                    <th colspan="2">Кол-во мест (промежуток)</th>
+                                                    <th>Четность добавляемых мест</th>
+                                                    <th>Добавить места</th>
                                                 </tr>
                                                 <tr>
                                                     <td class="carriageType">
-                                                        <select class="form-control mb-2 mr-sm-2">
+                                                        <select style="width: 90px" class="form-control mb-2 mr-sm-2">
                                                             <option value="Купе">Купе</option>
                                                             <option value="Плацкарт">Плацкарт</option>
                                                             <option value="Общий">Общий</option>
                                                         </select>
                                                     </td>
                                                     <td class="carriageAmount">
-                                                        <input type="number" class="form-control mb-2 mr-sm-2">
+                                                        <input type="number" style="width: 70px" class="form-control mb-2 mr-sm-2">
                                                     </td>
-                                                    <td class="placeType">
+                                                    <td>
+                                                        <ul class="placeType">
+                                                            <li>
+                                                                <select style="width: 100px" class="form-control mb-2 mr-sm-2">
+                                                                    <option value="Верхнее">Верхнее</option>
+                                                                    <option value="Нижнее">Нижнее</option>
+                                                                    <option value="Сидячее">Сидячее</option>
+                                                                    <option value="Купе">Купе</option>
+                                                                </select>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <ul class="amountLeftBorder">
+                                                            <li>
+                                                                <input type="number" style="width: 70px" class="form-control mb-2 mr-sm-2">
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <ul class="amountRightBorder">
+                                                            <li>
+                                                                <input type="number" style="width: 70px" class="form-control mb-2 mr-sm-2">
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <ul class="placesParity">
+                                                            <li>
+                                                                <select class="form-control mb-2 mr-sm-2">
+                                                                    <option value="Все">Все</option>
+                                                                    <option value="Четные">Четные</option>
+                                                                    <option value="Нечетные">Нечетные</option>
+                                                                </select>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
                                                         <a href="#" name="add-place" class="fas fa-plus"></a>
                                                     </td>
                                                 </tr>
