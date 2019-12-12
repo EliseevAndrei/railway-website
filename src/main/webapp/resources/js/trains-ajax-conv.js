@@ -130,6 +130,24 @@ $(document).ready(function () {
             '                            </tr>')
     });
 
+    $(".train-create-form #add-carriage-btn").click(e => {
+        e.preventDefault();
+
+        $('.train-create-form #carriage-table').append('<tr>\n' +
+            '                                                    <td class="carriageType">\n' +
+            '                                                        <select class="form-control mb-2 mr-sm-2">\n' +
+            '                                                            <option value="Купе">Купе</option>\n' +
+            '                                                            <option value="Плацкарт">Плацкарт</option>\n' +
+            '                                                            <option value="Общий">Общий</option>\n' +
+            '                                                        </select>\n' +
+            '                                                    </td>\n' +
+            '                                                    <td class="carriageAmount">\n' +
+            '                                                        <input type="number" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                    </td>\n' +
+            '                                                </tr>');
+
+    });
+
     $(".train-create-form #train-create-submit").click(function (e) {
         e.preventDefault();
         let routePieces = [];
