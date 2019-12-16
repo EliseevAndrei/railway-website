@@ -4,30 +4,42 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
+    <script th:src="@{/resources/js/customDataTable.js}"></script>
+    <script th:src="@{/resources/js/locale.js}"></script>
 </head>
-<body>
-<div class="container">
-    <form th:action="${'dates/form'}" method="get">
-        <button class="btn btn-primary nBtn" th:text="#{button.new}">Create</button>
-    </form>
-    <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>
-    <table class="table table-hover">
-        <thead class="bg-dark text-white">
+<body class="bg-light">
+
+<div th:replace="fragments/header :: header">
+</div>
+
+<div class="container bg-white mt-5 py-2">
+    <form action='dates/form' method="get">
+        <button class="btn btn-outline-primary nBtn mt-2" th:text="#{button.new}">Создать дату</button>
+        <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>
+    </form><br>
+
+    <p>Станция отправления: <span th:text="${dates[0].firstStation.trainRoutePiece.startStation.name}"></span></p>
+    <p>Станция прибытия: <span th:text="${dates[0].lastStation.trainRoutePiece.endStation.name}"></span></p>
+
+    <table class="table table-striped customDataTable">
+        <thead>
         <tr>
             <th></th>
-            <th>Начальная станция</th>
+     <!--       <th>Начальная станция</th>-->
             <th>Время отправления</th>
-            <th>Конечная стацния</th>
+            <!--<th>Конечная стацния</th>-->
             <th>Время прибытия</th>
             <th></th>
         </tr>
@@ -37,12 +49,11 @@
         <tr th:each="date, iStat : ${dates}">
             <!--<td th:text="${train.id}"></td>-->
             <td th:text="${iStat.index} + 1 + '.'"></td>
-            <td th:text="${date.firstStation.trainRoutePiece.startStation.name}"></td>
+            <!--<td th:text="${date.firstStation.trainRoutePiece.startStation.name}"></td>-->
             <td th:text="${#dates.format(date.firstStation.departureTime, 'dd-MM-yyyy HH:mm')}"></td>
-            <td th:text="${date.lastStation.trainRoutePiece.endStation.name}"></td>
+            <!--<td th:text="${date.lastStation.trainRoutePiece.endStation.name}"></td>-->
             <td th:text="${#dates.format(date.lastStation.arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
-            <td>
-            </td>
+            <td></td>
         </tr>
         </tbody>
     </table>

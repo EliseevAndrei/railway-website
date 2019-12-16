@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -13,30 +14,34 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
+    <script th:src="@{/resources/js/locale.js}"></script>
 </head>
 
-<body>
-<div class="container">
+<body class="bg-light">
+<div th:replace="fragments/header :: header">
+</div>
+<div class="container bg-white mt-5 py-2">
 
-    <button class="btn btn-primary nBtn">New</button>
+    <!--<button class="btn btn-primary nBtn">New</button>-->
     <a class="ml-3" id="reloadBtn" href="stations"><i class="fas fa-redo-alt"></i></a>
-    <table class="table table-hover">
-        <thead class="bg-dark text-white">
+    <table class="table table-striped mt-2">
+        <thead>
         <tr>
             <th>Станция отправления</th>
             <th>Станция прибытия</th>
+            <th>Дистанция</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="station : ${stations}">
             <td th:text="${station.startStation.name}"></td>
             <td th:text="${station.endStation.name}"></td>
-            <td>
+            <td th:text="${station.distance}"></td>
+            <!--<td>
                 <a class="btn btn-primary text-white eBtn" id="eBtn"
                    th:href="${'stations/list/' + station.id}">Edit</a>
                 <a class="btn btn-danger text-white rBtn" th:href="${'stations/list/'+station.id}">Remove</a>
-            </td>
+            </td>-->
         </tr>
         </tbody>
     </table>
@@ -50,7 +55,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Save or Update</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Промежуток маршрута</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span id="x-btn" aria-hidden="true">&times;</span>
                         </button>
@@ -65,7 +70,7 @@
                             <input type="text"  class="form-control" id="stationSerialNumber" placeholder="Номер" disabled>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="station" class=" label">station</label>
+                            <label for="station" class=" label">Название станции</label>
                             <select id="station" class="form-control">
                                 <option th:each="stat : ${allStations}" th:text="${stat.name}" th:value="${stat.id}"></option>
                             </select>
@@ -73,8 +78,8 @@
                         <div class="form-group col-md-8"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="close-btn"  data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="edit-submit">Save</button>
+                        <button type="button" class="btn btn-secondary" id="close-btn"  data-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary" id="edit-submit">Сохранить</button>
                     </div>
                 </div>
             </div>
@@ -89,17 +94,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Save or Update</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Удаление промежутка</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="alert-danger text-dark p-2">Are you sure?</div>
+                    <div class="alert-danger text-dark p-2">Вы уверены?</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a class="btn btn-danger dBtn" href="" id="delete-submit">Delete</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <a class="btn btn-danger dBtn" href="" id="delete-submit">Удалить</a>
                 </div>
             </div>
         </div>

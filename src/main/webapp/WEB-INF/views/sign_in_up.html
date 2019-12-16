@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <script th:src="@{/resources/js/locale.js}"></script>
 </head>
-<body>
+<body class="bg-light">
+
 
 <script>
 
@@ -71,7 +72,7 @@
     });*/
 </script>
 
-<div class="container">
+<div class="container bg-white mt-5 py-2">
     <div class="row">
 
         <div class="col-md-offset-3 col-md-6">
@@ -79,9 +80,8 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab"
-                                                              data-toggle="tab">sign in</a></li>
-                    <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">sign
-                        up</a></li>
+                                                              data-toggle="tab">Войти</a></li>
+                    <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">Регистрация</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content tabs">
@@ -91,22 +91,21 @@
                         </div>
                         <form class="form-horizontal" id="sign-in-form" th:action="@{/login}" method="post">
                             <div class="form-group">
-                                <label for="login">login</label>
+                                <label for="login">Логин</label>
                                 <input type="text" class="form-control" id="login" name="login" >
                             </div>
                             <div class="form-group">
-                                <label for="pass">Password</label>
-                                <input type="text" class="form-control" id="pass" name="pass">
+                                <label for="pass">Пароль</label>
+                                <input type="password" class="form-control" id="pass" name="pass">
                             </div>
                             <div class="form-group">
                                 <div class="main-checkbox">
                                     <input id="checkbox1" name="remember-me" type="checkbox">
-                                    <label for="checkbox1"></label>
+                                    <label for="checkbox1">Запомнить меня</label>
                                 </div>
-                                <span class="text">Запомнить меня</span>
                             </div>
                             <div class="form-group">
-                                <input type="submit" class="btn btn-default" value="Login">
+                                <input type="submit" class="btn btn-default" value="Войти">
                                 <!--<button type="submit" class="btn btn-default" id="sign-in">Sign in</button>-->
                             </div>
                             <!-- <div class="form-group forgot-pass">
@@ -120,11 +119,11 @@
                         </div>
                         <form class="form-horizontal" id="sign-up-form" th:action="@{/register}" method="post">
                             <div class="form-group">
-                                <label for="name">First Name</label>
+                                <label for="name">Имя</label>
                                 <input type="text" class="form-control" id="name" >
                             </div>
                             <div class="form-group">
-                                <label for="surname">Last Name</label>
+                                <label for="surname">Фамилия</label>
                                 <input type="text" class="form-control" id="surname">
                             </div>
                             <div class="form-group">
@@ -132,15 +131,15 @@
                                 <input type="text" class="form-control" id="email">
                             </div>
                             <div class="form-group">
-                                <label for="login">Login</label>
+                                <label for="login">Логин</label>
                                 <input type="text" class="form-control" id="login">
                             </div>
                             <div class="form-group">
-                                <label for="pass">Password</label>
+                                <label for="pass">Пароль</label>
                                 <input type="password" class="form-control" id="pass">
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-default" id="sign-up">Sign up</button>
+                                <button type="submit" class="btn btn-default" id="sign-up">Отправить</button>
                             </div>
                         </form>
                     </div>

@@ -6,6 +6,7 @@ import com.eliseev.app.repository.custom.StationDAO;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
+import java.util.List;
 
 @Repository
 public class StationDAOImpl extends AbstractDAO<Station>
@@ -27,6 +28,12 @@ public class StationDAOImpl extends AbstractDAO<Station>
                 return null;
             }
             return station;
+    }
+
+    @Override
+    public List<Station> findAll() {
+        return super.entityManager.createQuery("select s from Station s order by s.name", Station.class)
+                .getResultList();
     }
 
     /*@Override

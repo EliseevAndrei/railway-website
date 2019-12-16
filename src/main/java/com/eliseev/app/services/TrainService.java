@@ -1,6 +1,7 @@
 package com.eliseev.app.services;
 
 import com.eliseev.app.models.Carriage;
+import com.eliseev.app.models.Place;
 import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainRoutePiece;
 import com.eliseev.app.repository.custom.TrainDAO;
@@ -33,6 +34,12 @@ public class TrainService extends AbstractService<Train, TrainDAO> {
         if (train.getTrainRoutePieceList().size() > 0) {
             for (TrainRoutePiece trainRoutePiece : train.getTrainRoutePieceList()) {
                 trainRoutePiece.setTrain(train);
+            }
+        }
+        for(Carriage carriage : train.getCarriages()) {
+            carriage.setTrain(train);
+            for (Place place : carriage.getPlaces()) {
+                place.setCarriage(carriage);
             }
         }
         return super.dao.save(train);
@@ -74,6 +81,9 @@ public class TrainService extends AbstractService<Train, TrainDAO> {
         return super.dao.getCarriages(trainId, trainDateId, depRoutePieceSerialNumber, arrRoutePieceSerialNumber);
     }
 
-
+    @Transactional(readOnly = true)
+    public List<Carriage> getCarriages(long trainId) {
+        return super.dao.getCarriages(trainId);
+    }
 
 }

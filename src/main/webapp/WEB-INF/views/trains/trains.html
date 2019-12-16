@@ -1,4 +1,6 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
 <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -11,61 +13,70 @@
             list-style-type: none;
         }
     </style>
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
+    <script th:src="@{/resources/js/locale.js}"></script>
+    <script th:src="@{/resources/js/customDataTable.js}"></script>
     <script src="../../../resources/js/trains-ajax-conv.js" th:src="@{/resources/js/trains-ajax-conv.js}"></script>
 </head>
-<body style="overflow: scroll">
+<body class="bg-light">
 
-<div class="container">
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" th:text="#{button.select_lang}">
-            Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" th:href="@{/trains(lang=ru_RU)}" th:text="#{lang.ru}">Russian</a>
-            <a class="dropdown-item" th:href="@{/trains(lang=en_US)}" th:text="#{lang.en_US}">ENGLISH</a>
-        </div>
-    </div>
-    <button class="btn btn-primary nBtn" th:text="#{button.new}">Create</button>
-    <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>
-    <table class="table table-hover">
-        <thead class="bg-dark text-white">
-        <tr>
-            <th th:text="#{label.name}">Name</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
 
-        <tr th:each="train : ${trains}">
-            <!--<td th:text="${train.id}"></td>-->
-            <td th:text="${train.name}"></td>
-            <!--<td th:text="${train.countCoupe}"></td>
-            <td th:text="${train.countLying}"></td>
-            <td th:text="${train.countCommon}"></td>-->
-            <td>
-                <a class="btn btn-primary text-white eBtn" id="eBtn"
-                   th:href="${'trains/list/' + train.id}" th:text="#{button.edit}">Edit</a>
-                <a class="btn btn-danger text-white rBtn" th:href="${'trains/list/'+train.id}"
-                   th:text="#{button.remove}">Remove</a>
-                <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/route-pieces}"
-                   th:text="#{button.train_stop_stations}">Train stop stations</a>
-                <a class="btn btn-info" th:href="@{trains/list/} + ${train.id} + @{/dates}" th:text="#{button.dates}">Dates</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<div th:replace="fragments/header :: header">
+</div>
+
+<div class="container bg-white mt-5 py-2">
+        <button class="btn btn-outline-primary nBtn" th:text="#{button.new.train}">Создать поезд</button>
+        <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>
+
+        <table id="trains-table" class="table table-striped customDataTable">
+            <thead>
+            <tr>
+                <th th:text="#{label.train.name}">Name</th>
+                <th th:text="#{label.train.actions}">Действия</th>
+                <th th:text="#{label.train.name}">Доп. информация</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="train : ${trains}">
+                <!--<td th:text="${train.id}"></td>-->
+                <td th:text="${train.name}"></td>
+                <!--<td th:text="${train.countCoupe}"></td>
+                <td th:text="${train.countLying}"></td>
+                <td th:text="${train.countCommon}"></td>-->
+                <td>
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-outline-primary eBtn" id="eBtn"
+                           th:href="${'trains/list/' + train.id}" th:text="#{button.edit}">Edit</a>
+                        <a class="btn btn-outline-danger rBtn" th:href="${'trains/list/'+train.id}"
+                           th:text="#{button.remove}">Remove</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-group-vertical" role="group">
+                        <a class="btn btn-outline-info" th:href="@{trains/list/} + ${train.id} + @{/route-pieces}"
+                           th:text="#{label.train.stations}">Train stop stations</a>
+                        <a class="btn btn-outline-info" th:href="@{trains/list/} + ${train.id} + @{/dates}"
+                           th:text="#{label.train.dates}">Dates</a>
+                        <a class="btn btn-outline-info getCarriagesBtn"
+                           th:href="@{trains/list/} + ${train.id} + @{/carriages/list}"
+                           th:text="#{label.train.carriages}">Вагоны</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 </div>
 
 <!-- Modal Edit n New-->
@@ -77,27 +88,27 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel" th:text="#{header.new_edit}">Save and Update</h5>
+                        <h5 class="modal-title" id="exampleModalLabel" th:text="#{header.train.edit}">Редактирование</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span id="x-btn" aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div id="errors" >
+                        <div id="errors">
                         </div>
                         <input type="text" hidden id="id">
                         <div class="form-group col-md-6">
-                            <lable for="name" class="col-form-label" th:text="#{label.name}">Name</lable>
+                            <lable for="name" class="col-form-label" th:text="#{label.train.name}">Name</lable>
                             <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Название">
                         </div>
 
                         <div class="form-group col-md-8"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="close-btn" data-dismiss="modal"
-                                th:text="#{button.close}">Close
+                        <button type="button" class="btn btn-outline-secondary" id="close-btn" data-dismiss="modal"
+                                th:text="#{button.close}">Закрыть
                         </button>
-                        <button type="submit" class="btn btn-primary" id="edit-submit" th:text="#{button.save}">
+                        <button type="submit" class="btn btn-outline-primary" id="edit-submit" th:text="#{button.save}">
                             Сохранить
                         </button>
                     </div>
@@ -107,11 +118,39 @@
     </form>
 </div>
 
-<script>
-    $(document).ready(function() {
-        $('#trainModal').modal();
-    })
-</script>
+
+<div class="train-carriages">
+    <form th:action="${'trains/list/'}" th:object="${train}" id="train-carriages-form">
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+             data-backdrop="static" data-keyboard="false"
+             id="train-carriages">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Вагоны поезда</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span id="x-btn" aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card card-body" id="carriage-card">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" id="close-btn" data-dismiss="modal"
+                                th:text="#{button.close}">Закрыть
+                        </button>
+                        <button type="submit" class="btn btn-outline-primary" id="edit-submit" th:text="#{button.save}">
+                            Сохранить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 
 <div class="train-create-form">
     <form id="train-create-form">
@@ -123,13 +162,15 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active nav-item">
                                 <a href="#train" class="nav-link" aria-controls="product" role="tab"
-                                   data-toggle="tab">Поезд</a>
+                                   data-toggle="tab" th:text="#{label.train}">Поезд</a>
                             </li>
                             <li role="presentation" class="nav-item">
-                                <a href="#carriage" class="nav-link" aria-controls="order" role="tab" data-toggle="tab">Вагоны</a>
+                                <a href="#carriage" class="nav-link" aria-controls="order" role="tab" data-toggle="tab"
+                                   th:text="#{label.train.carriages}">Вагоны</a>
                             </li>
                             <li role="presentation" class="nav-item">
-                                <a href="#route" class="nav-link" aria-controls="order" role="tab" data-toggle="tab">Маршрут</a>
+                                <a href="#route" class="nav-link" aria-controls="order" role="tab" data-toggle="tab"
+                                   th:text="#{label.train.route}">Маршрут</a>
                             </li>
                         </ul>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -144,23 +185,21 @@
 
                                 <div role="tabpanel" class="tab-pane fade in active" id="train">
                                     <div class="card card-body" id="train-card">
-                                        <form>
                                             <div id="errors" style="display: none; color: red;">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <lable for="name" class="col-form-label" th:text="#{label.name}">Name
+                                                <lable for="name" class="col-form-label" th:text="#{label.train.name}">Name
                                                 </lable>
-                                                <input type="text" class="form-control" id="name"
+                                                <input type="text" class="form-control" required id="name"
                                                        placeholder="Название">
                                             </div>
 
                                             <div class="form-group col-md-8"></div>
-                                        </form>
                                     </div>
                                 </div>
 
                                 <div role="tabpanel" class="tab-pane fade" id="route">
-                                    <form>
+
                                         <div class="card card-body">
 
                                             <table class="table" id="stations-table">
@@ -173,27 +212,30 @@
                                                 <tr>
                                                     <td class="serialNumber">1</td>
                                                     <td class="startStation">
-                                                        <select id="startStation" class="form-control mb-2 mr-sm-2" required>
+                                                        <select id="startStation" class="form-control mb-2 mr-sm-2"
+                                                                required>
                                                         </select>
                                                     </td>
                                                     <td class="endStation">
-                                                        <select id="endStation" class="form-control mb-2 mr-sm-2" required>
+                                                        <select id="endStation" class="form-control mb-2 mr-sm-2"
+                                                                required>
                                                         </select>
                                                     </td>
 
                                                     <td class="distance">
-                                                        <input type="number" class="form-control mb-2 mr-sm-2" id="distance">
+                                                        <input type="number" min="1" required class="form-control mb-2 mr-sm-2"
+                                                               id="distance">
                                                     </td>
 
                                                 </tr>
                                             </table>
                                         </div>
-                                        <button type="submit" class="btn btn-secondary" id="add-station-btn">Добавить станцию</button>
-                                    </form>
+                                        <button type="submit" class="btn btn-outline-secondary mt-2" id="add-station-btn">Добавить
+                                            станцию
+                                        </button>
                                 </div>
 
                                 <div role="tabpanel" class="tab-pane fade" id="carriage">
-                                    <form>
                                         <div class="card card-body">
 
                                             <table class="table" id="carriage-table">
@@ -214,12 +256,14 @@
                                                         </select>
                                                     </td>
                                                     <td class="carriageAmount">
-                                                        <input type="number" style="width: 70px" class="form-control mb-2 mr-sm-2">
+                                                        <input type="number" required min="0" style="width: 70px"
+                                                               class="form-control mb-2 mr-sm-2">
                                                     </td>
                                                     <td>
                                                         <ul class="placeType">
                                                             <li>
-                                                                <select style="width: 100px" class="form-control mb-2 mr-sm-2">
+                                                                <select style="width: 100px"
+                                                                        class="form-control mb-2 mr-sm-2">
                                                                     <option value="Верхнее">Верхнее</option>
                                                                     <option value="Нижнее">Нижнее</option>
                                                                     <option value="Сидячее">Сидячее</option>
@@ -231,14 +275,16 @@
                                                     <td>
                                                         <ul class="amountLeftBorder">
                                                             <li>
-                                                                <input type="number" style="width: 70px" class="form-control mb-2 mr-sm-2">
+                                                                <input type="number" required min="0" style="width: 70px"
+                                                                       class="form-control mb-2 mr-sm-2">
                                                             </li>
                                                         </ul>
                                                     </td>
                                                     <td>
                                                         <ul class="amountRightBorder">
                                                             <li>
-                                                                <input type="number" style="width: 70px" class="form-control mb-2 mr-sm-2">
+                                                                <input type="number" required min="0" style="width: 70px"
+                                                                       class="form-control mb-2 mr-sm-2">
                                                             </li>
                                                         </ul>
                                                     </td>
@@ -259,8 +305,9 @@
                                                 </tr>
                                             </table>
                                         </div>
-                                        <button type="submit" class="btn btn-secondary" id="add-carriage-btn">Добавить вагон</button>
-                                    </form>
+                                        <button type="submit" class="btn btn-outline-secondary mt-2" id="add-carriage-btn">Добавить
+                                            вагон
+                                        </button>
                                 </div>
 
                             </div>
@@ -268,8 +315,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="train-create-submit">Save</button>
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-outline-primary" id="train-create-submit">Сохранить</button>
                     </div>
                 </div>
             </div>
@@ -285,7 +332,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{header.remove}">Delete</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{button.remove}">Delete</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -294,10 +341,10 @@
                     <div class="alert-danger text-dark p-2" th:text="#{text.sure}">Are you sure?</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{button.close}">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" th:text="#{button.close}">
                         Close
                     </button>
-                    <a class="btn btn-danger dBtn" href="" id="delete-submit" th:text="#{button.remove}">Delete</a>
+                    <a class="btn btn-outline-danger dBtn" href="" id="delete-submit" th:text="#{button.remove}">Delete</a>
                 </div>
             </div>
         </div>

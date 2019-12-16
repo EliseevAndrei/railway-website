@@ -29,7 +29,7 @@ $(document).ready(function () {
             }
         };
 
-        let href = `/trains/list/${ticket.train.id}/carriages/onDate/${ticket.trainDate.id}?depRoutePieceNumber=${ticket.depTrainRoutePiece.id}&arrRoutePieceNumber=${ticket.arrTrainRoutePiece.id}`;
+        let href = `/trains/list/${ticket.train.id}/carriages/onDate/${ticket.trainDate.id}?depRoutePieceNumber=${ticket.depTrainRoutePiece.serialNumber}&arrRoutePieceNumber=${ticket.arrTrainRoutePiece.serialNumber}`;
         console.log(`href ${href}`);
         $.getJSON(href, function (response) {
             let carriages = response;
@@ -84,7 +84,6 @@ $(document).ready(function () {
         });
 
 
-        console.log(ticket);
         $(".myForm #orderModal").modal();
 
         $(".myForm #order-submit-btn").click(function (e) {
@@ -133,3 +132,9 @@ $(document).ready(function () {
     });
 
 });
+
+let getCarriagesForTrainByHref = function(href) {
+
+
+
+};

@@ -3,7 +3,7 @@
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="stylesheet" href="/resources/css/styles.css"/>
     <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -12,13 +12,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-
+    <script th:src="@{/resources/js/locale.js}"></script>
     <script src="/resources/js/filtered-routes.js"></script>
 </head>
-<body>
+<body class="bg-light">
+<div th:replace="fragments/header :: header">
+</div>
 
-
-<div class="container">
+<div class="container bg-white mt-5 py-2">
 
     <span id="dep_station_id" hidden th:text="${dep_station.id}"></span>
     <p>Станция отправления: <span th:text="${dep_station.name}"></span></p>
@@ -136,8 +137,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="order-submit-btn">Save</button>
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-outline-primary" id="order-submit-btn">Сохранить</button>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,166 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
+<head>
+    <title>Home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        /*label.error {
+            color: #a94442;
+            background-color: #f2dede;
+            !*border-color: red;*!
+            !*padding: 1px 20px 1px 20px;
+            opacity: 0.8;
+            display: block;*!
+        }*/
+        /*.your-field.error {
+            border-color: red;
+        }
+
+        .your-field.mismatch {
+            border-color: orange;
+        }
+
+        .your-field.valid {
+            border-color: green;
+        }*/
+        input:not([type="file"]).error,
+        textarea.error,
+        select.error {
+            border: 1px solid red !important;
+        }
+
+        input:not([type="file"]).no-error,
+        textarea.no-error,
+        select.no-error {
+            border: 1px solid green !important;
+        }
+
+        /*div.error-field {
+            color: red;
+            font-size: small;
+        }
+*/
+        label.error {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: red;
+            padding: 1px 20px 1px 20px;
+            opacity: 0.8;
+            font-size: small;
+        }
+    </style>
+    <link rel="stylesheet" href="/resources/css/styles.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="validity" method="post" action="/" id="form">
+                        <input id="name" name="name" class="your-field" type="text" required
+                               data-missing="This field is required">
+                        <input id="name1" name="name" class="your-field" type="text" required
+                               data-missing="This field is required">
+                        <input type="text"
+                               pattern="^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01]) (00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$"
+                               class="departureTime form-control mb-2 mr-sm-2" id="myDate" name="myDate" required>
+                        <button type="submit" id="submit">Submit</button>
+                    </form>
+                    <!--<form id="validationExampleForm" name="validationExampleForm">
+                        <select id="city" name="city">
+                            <option value="default">Select Your City</option>
+                            <option value="mumbai">Mumbai</option>
+                            <option value="pune">Pune</option>
+                            <option value="nashik">Nashik</option>
+                        </select>
+                        </br>
+                        <input type="button" value="Validate" id="validateButton" name="validateButton">
+                    </form>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<script>
+    $().ready(function () {
+
+        $('#submit').click(function () {
+            console.log("kasldjf;laksjdf');");
+
+            $.validator().addMethod("dateTime", function (value, elem) {
+                console.log("sakldjf");
+                return this.optional(elem) || /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01]) (00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$/.test(value);
+
+            }, "Дата неверна");
+
+            let validator = $("#form").validate({
+                rules: {
+                    name: "required",
+                    myDate: {
+                        required: true,
+                        dateTime: true
+                    }
+                },
+                messages: {
+                    name: "Please specify your name"
+                }
+            });
+
+            if(validator.form()){
+                alert('Form Submitted..');
+            }
+
+        });
+
+    });
+</script>-->
+
+<script>
+    $(document).ready(function(){
+        $("#submit").click(function(e){
+            e.preventDefault();
+            $.validator.addMethod("dataTime", function(value, element) {
+                return this.optional(element) || /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01]) (00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$/.test(value);
+            }, " Please City Option");
+
+            let validator = $("#form").validate({
+                rules: {
+                    name:{
+                        required : true
+                    },
+                    myDate: {
+                        required: true,
+                        dataTime: true
+                    }
+
+                }
+            });
+
+            if(validator.form()){
+                alert('Form Submitted..');
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>

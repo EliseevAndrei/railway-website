@@ -12,11 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -47,10 +44,10 @@ public class Train extends AbstractEntity {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
-    private Set<Carriage> carriages = new HashSet<>();
+    private List<Carriage> carriages = new ArrayList<>();
 
 
-    public Train(@NotBlank(message = "{train.name.notBlank}") @Size(min = 1, max = 5, message = "{train.name.size}")
+    public Train(@NotBlank(message = "{train.name.notBlank}")
                          String name) {
         this.name = name;
     }

@@ -39,13 +39,6 @@ public class StationStopTime extends AbstractEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="dep_time")
     private Date departureTime;
-/*    private int coupe_places_amount;
-    @Digits(integer = 4, fraction = 0, message = "Кол-во плацкарта должно быть целым числом!")
-    @Column(name="lying_places_amount")
-    private int lying_places_amount;
-    @Digits(integer = 4, fraction = 0, message = "Кол-во общих должно быть целым числом!")
-    @Column(name="common_places_amount")
-    private int common_places_amount;*/
 
     @ManyToOne
     @JoinColumn(name="train_route_piece_id")

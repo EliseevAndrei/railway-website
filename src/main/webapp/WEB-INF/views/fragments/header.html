@@ -5,187 +5,124 @@
 <head></head>
 <body>
 
-<nav th:fragment="nav" class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div sec:authorize="${not (#request.isUserInRole('USER') and #request.isUserInRole('ADMIN'))}">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">RailWay</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Page 1</a></li>
-                <li><a href="#">Page 2</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<header th:fragment="header">
+    <span hidden id="locale" th:text="${#locale}"></span>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white" sec:authorize="!isAuthenticated()">
+        <a class="navbar-brand" th:text="#{navbar.brand}" href="/">БелЖД</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-
-<!--<nav th:fragment="nav" class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" th:href="@{/}">Railway</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div sec:authorize="${not (#request.isUserInRole('USER') and #request.isUserInRole('ADMIN'))}">
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                &lt;!&ndash;<a class="nav-item nav-link" href="#">Features</a>
-                <a class="nav-item nav-link" href="#">Pricing</a>&ndash;&gt;
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login">Sign Up</a></li>
-                <li><a href="/login">Login</a></li>
-            </ul>
-            &lt;!&ndash;<div class="form-inline my-2 my-lg-0">
-                <a class="nav-item nav-link" th:href="@{/login}" href="/login">sign in</a>
-                <a class="nav-item nav-link" th:href="@{/login}" href="/register">sing up</a>
-            </div>&ndash;&gt;
-            &lt;!&ndash;<ul class="navbar-nav ml-auto">
-                <li class="nav-item d-flex flex-row">
-                    <i class="align-self-center fa fa-user-o " aria-hidden="true" style="color: white;"></i>
-                    <a class="nav-link mr-3" th:href="@{/login}" href="/login">sign in</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:text="#{navbar.home}" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item d-flex flex-row">
-                    <i class="align-self-center fa fa-sign-in " aria-hidden="true" style="color: white;"></i>
-                    <a class="nav-link" th:href="@{/login}" href="/register">sing up</a>
-                </li>
-            </ul>&ndash;&gt;
-        </div>
-    </div>-->
-
-    <!--<div sec:authorize="${isAuthenticated()}">
-        <div class="collapse navbar-collapse" id="userNavbar" sec:authorize="hasRole('ROLE_USER')">
-            <div>
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                    &lt;!&ndash;<a class="nav-item nav-link" href="#">Features</a>
-                    <a class="nav-item nav-link" href="#">Pricing</a>&ndash;&gt;
-                </div>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item d-flex flex-row">
-                        <i class="align-self-center fa fa-user-o " aria-hidden="true" style="color: white;"></i>
-                        <a class="nav-link mr-3" th:href="@{/logout}" href="/login">logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>-->
-</nav>
-
-<!--
-<nav th:fragment="nav" id="navbar-home" class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" th:href="@{/}">Railway</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent" sec:authorize="${!isAuthenticated()}">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/}" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            &lt;!&ndash;<li class="nav-item ">
-                <a class="nav-link" href="#">About us</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Services</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Prices</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Contact us</a>
-            </li>&ndash;&gt;
-        </ul>
-
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item d-flex flex-row">
-                <i class="align-self-center fa fa-user-o " aria-hidden="true" style="color: white;"></i>
-                <a class="nav-link mr-3" th:href="@{/login}" href="/login">sign in</a>
-            </li>
-            <li class="nav-item d-flex flex-row">
-                <i class="align-self-center fa fa-sign-in " aria-hidden="true" style="color: white;"></i>
-                <a class="nav-link" th:href="@{/login}" href="/register">sing up</a>
-            </li>
-        </ul>
-
-
-        <ul class="navbar-nav ml-auto" id="users-nav-item" sec:authorize="${isAuthenticated()}">
-
-            &lt;!&ndash;region For ROLE_USER display shoppingg cart icon&ndash;&gt;
-            &lt;!&ndash;======================================================================================&ndash;&gt;
-            <li class="nav-item d-flex">
-                    <span class="shopping-cart align-self-center mx-2 " sec:authorize="hasRole('ROLE_USER')">
-                        <a style="background-color: transparent!important;"
-                           data-toggle="collapse"
-                           href="#shopping-cart-collapse" aria-expanded="false"
-                           aria-controls="shopping-cart-collapse">
-                            <i class="fa fa-shopping-cart " id="shopping-cart-icon" aria-hidden="true"
-                               style="background-color: transparent!important"></i>
-                        </a>
-                        <div class="collapse" id="shopping-cart-collapse" style="position: absolute;">
-                            <div class="card card-body">
-                                <p>Total courses:</p>
-                                <a type="button" class="btn btn-primary" style="font-size: 90%" th:href="@{#}">
-                                    Go to shopping cart</a>
-                            </div>
+            </ul>
+            <ul class="navbar-nav">
+                <li>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" th:text="#{navbar.lang}">lang</button>
+                        <div class="dropdown-menu" id="lang-dropdown" aria-labelledby="adminDropdownMenuButton">
+                            <a class="dropdown-item" name="ru_RU" th:href="${#request.requestURI + ' ' + #request.queryString}"
+                               th:text="#{lang.ru}">Russian</a>
+                            <a class="dropdown-item" name="en_US" th:href="${#request.requestURI + ' ' + #request.queryString}"
+                               th:text="#{lang.en_US}">English</a>
                         </div>
-                    </span>
-            </li>
-            &lt;!&ndash;======================================================================================&ndash;&gt;
-            &lt;!&ndash;endregion&ndash;&gt;
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login" th:text="#{navbar.sign-in}">sign-in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login" th:text="#{navbar.sign-up}">sign-up</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
+    <nav class="navbar navbar-expand-lg navbar-light bg-white"  sec:authorize="hasRole('USER') and !hasRole('ADMIN')">
+        <a class="navbar-brand" href="/" th:text="#{navbar.brand}">Railway</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#userNavbarSupportedContent"
+                aria-controls="userNavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="userNavbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/" th:text="#{navbar.home}">Home <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" th:text="#{navbar.lang}">
+                            lang
+                        </button>
+                        <div class="dropdown-menu" id="lang-dropdown" aria-labelledby="adminDropdownMenuButton">
+                            <a class="dropdown-item" name="ru_RU" th:href="${#request.requestURI + ' ' + #request.queryString}"
+                               th:text="#{lang.ru}">Russian</a>
+                            <a class="dropdown-item" name="en_US" th:href="${#request.requestURI + ' ' + #request.queryString}"
+                               th:text="#{lang.en_US}">English</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout" th:text="#{navbar.logout}">logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-            &lt;!&ndash;region Displaying hello + username&ndash;&gt;
-            &lt;!&ndash;==============================================================================&ndash;&gt;
-            <li class="nav-item">
-                <span class="navbar-text">Hello <span sec:authentication="name"></span></span>
-            </li>
-            &lt;!&ndash;=============================================================================&ndash;&gt;
-            &lt;!&ndash;endregion&ndash;&gt;
+    <nav class="navbar navbar-expand-lg navbar-light bg-white" sec:authorize="hasRole('ADMIN')">
+        <a class="navbar-brand" href="#" th:text="#{navbar.brand}">Railway</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#adminNavbarSupportedContent"
+                aria-controls="adminNavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="adminNavbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/" th:text="#{navbar.home}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/trains" th:text="#{navbar.trains}">Поезда</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/stations" th:text="#{navbar.stations}">Станции</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/users" th:text="#{navbar.users}">Пользователи</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="adminDropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" th:text="#{navbar.lang}">
+                            lang
+                        </button>
+                        <div class="dropdown-menu" id="lang-dropdown" aria-labelledby="adminDropdownMenuButton">
+                            <a class="dropdown-item" name="ru_RU" th:href="${#request.requestURI + ' ' + #request.queryString}"
+                               th:text="#{lang.ru}">Russian</a>
+                            <a class="dropdown-item" name="en_US" th:href="${#request.requestURI + ' ' + #request.queryString}"
+                               th:text="#{lang.en_US}">English</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout" th:text="#{navbar.logout}">logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
 
-
-            &lt;!&ndash;region For ROLE_ADMIN display admin page&ndash;&gt;
-            &lt;!&ndash;================================================================================================&ndash;&gt;
-            <li class="nav-item d-flex">
-                <i class="align-self-center fas fa-user-cog" style="color: white;"></i>
-                <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/adminPage}" href="/adminPage">
-                    Admin Page
-                </a>
-            </li>
-            &lt;!&ndash;================================================================================================&ndash;&gt;
-            &lt;!&ndash;endregion&ndash;&gt;
-
-
-            &lt;!&ndash;region Logout button&ndash;&gt;
-            &lt;!&ndash;==================================================================================&ndash;&gt;
-            <li class="nav-item">
-                <a class="nav-link" href="javascript: document.logoutForm.submit()" role="menuitem">
-                    Logout
-                </a>
-                <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
-                    <input hidden type="submit" value="Sign Out"/>
-                </form>
-            </li>
-            &lt;!&ndash;==================================================================================&ndash;&gt;
-            &lt;!&ndash;endregion&ndash;&gt;
-        </ul>
-        &lt;!&ndash;region Login and Register menu items&ndash;&gt;
-        &lt;!&ndash;==========================================================================================&ndash;&gt;
-        &lt;!&ndash;==========================================================================================&ndash;&gt;
-        &lt;!&ndash;endregion&ndash;&gt;
-    </div>
-</nav>
--->
-
-<!--<div th:replace="fragments/jsScripts :: scripts"></div>-->
 </body>
 </html>

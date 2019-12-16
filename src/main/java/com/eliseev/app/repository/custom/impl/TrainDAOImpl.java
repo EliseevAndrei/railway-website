@@ -83,6 +83,16 @@ public class TrainDAOImpl extends AbstractDAO<Train>
         return carriages;
     }
 
+    @Override
+    public List<Carriage> getCarriages(long trainId) {
+        return super.entityManager.createQuery(
+                "select distinct carriage from Carriage carriage\n" +
+                        "left join fetch carriage.places place\n" +
+                        "where carriage.train.id = :trainId", Carriage.class)
+                .setParameter("trainId", trainId)
+                .getResultList();
+    }
+
 
 
 }

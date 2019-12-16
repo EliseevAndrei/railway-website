@@ -3,7 +3,7 @@
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -13,13 +13,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
-    <link rel="stylesheet" type="text/css" href="/resources/css/styles.css"/>
+    <script th:src="@{/resources/js/locale.js}"></script>
 </head>
-<body>
+<body class="bg-light">
 
+<div th:replace="fragments/header :: header">
+</div>
 <!-- Modal Edit n New-->
-<div class="container">
+<div class="container bg-white mt-5 py-2">
     <form th:action="@{'orderTicket'}" th:object="${ticket}" id="form" method="post">
 
         <!--<p>Станция отправления: <span th:text="*{depStation}"></span></p>

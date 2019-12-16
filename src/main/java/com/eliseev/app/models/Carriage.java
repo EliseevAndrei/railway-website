@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +35,7 @@ public class Carriage extends AbstractEntity {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToMany(mappedBy = "carriage")
+    @OneToMany(mappedBy = "carriage", cascade = CascadeType.ALL)
     private List<Place> places = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

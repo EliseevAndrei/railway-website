@@ -35,5 +35,11 @@ public class TrainRestController extends AbstractRestController<Train, TrainServ
         return carriages;
     }
 
+    @GetMapping("/{id}/carriages/list")
+    public List<Carriage> getCarriages(@PathVariable("id") long trainId) {
+        logger.info("user send request GET /trains/list/{}/carriages/list", trainId);
+        return service.getCarriages(trainId);
+    }
+
 
 }
