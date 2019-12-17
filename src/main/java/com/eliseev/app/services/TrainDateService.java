@@ -52,7 +52,7 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
 
             List<StationStopTime> stationStopTimes = stationStopTimeService.findStationsStopTimeByTrainDateId(trainDate.getId());
 
-            if (stationStopTimes.size() >= 2) {
+            if (stationStopTimes.size() >= 1) {
                 trainDateDTO = new TrainStopTimeDTO(stationStopTimes.get(0), stationStopTimes.get(stationStopTimes.size() - 1));
                 trainDateDTOS.add(trainDateDTO);
             }

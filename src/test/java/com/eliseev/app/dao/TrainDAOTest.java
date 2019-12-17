@@ -1,4 +1,4 @@
-package com.eliseev.app.db.dao;
+package com.eliseev.app.dao;
 
 import com.eliseev.app.TestConfig;
 import com.eliseev.app.models.Carriage;

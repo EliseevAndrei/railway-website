@@ -48,7 +48,7 @@ public class TrainDateDAOImpl extends AbstractDAO<TrainDate>
                         "               where td.start_station_id =  :depStationId\n" +
                         "                   or td.end_station_id = :arrStationId\n" +
                         "               group by trainId\n" +
-                        "               having count(t.id) >= 2" +
+                        "               having count(t.id) >= 1" +
                         "                       ) as trainDepStationSerialNumber on train_route_piece.train_id = trainDepStationSerialNumber.trainId\n" +
                         "       where start_station_id = :depStationId\n" +
                         "       ) as suitableTrains\n" +

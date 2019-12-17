@@ -20,7 +20,7 @@ from (
          where td.start_station_id = @ind1
             or td.end_station_id = @ind2
          group by trainId
-         having count(t.id) >= 2
+         having count(t.id) >= 1
        ) as tab on train_route_piece.train_id = tab.trainId
        where start_station_id = @ind1
      ) as ta

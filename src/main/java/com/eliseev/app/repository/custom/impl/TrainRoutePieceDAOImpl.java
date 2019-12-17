@@ -99,7 +99,6 @@ public class TrainRoutePieceDAOImpl extends AbstractDAO<TrainRoutePiece>
             return null;
         }
         return trainRoutePiece;
-
     }
 
 }

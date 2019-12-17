@@ -20,7 +20,6 @@ public class UserDAOImpl extends AbstractDAO<User>
         super(User.class);
     }
 
-
     @Override
     public User findOne(long id) {
         try {
@@ -34,26 +33,10 @@ public class UserDAOImpl extends AbstractDAO<User>
 
     @Override
     public List<User> findAll() {
-        try {
-            return super.entityManager.createQuery("select distinct u from User u left join fetch u.roles", User.class)
-                    .getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
+        return super.entityManager.createQuery("select distinct u from User u left join fetch u.roles", User.class)
+                .getResultList();
     }
 
-    @Override
-    public User findByLoginAndPass(String login, String pass) {
-
-        try {
-            return super.entityManager.createQuery("select distinct u from User u left join fetch u.roles where u.login = :login and u.pass = :pass", User.class)
-                    .setParameter("login", login)
-                    .setParameter("pass", pass)
-                    .getSingleResult();
-        } catch (NoResultException ex) {
-            return null;
-        }
-    }
 
     @Override
     public User findByUsername(String s) {

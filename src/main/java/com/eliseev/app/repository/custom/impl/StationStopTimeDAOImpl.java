@@ -35,59 +35,5 @@ public class StationStopTimeDAOImpl extends AbstractDAO<StationStopTime>
         }
     }
 
-    /*@Override
-    public void orderCoupePlace(Long trainDateId, int startRoutePieceSerialNumber, int endRoutePieceSerialNumber) {
-        super.entityManager.createNativeQuery(
-                "update station_stop_time\n" +
-                "set coupe_places_amount = coupe_places_amount - 1\n" +
-                "where id in (\n" +
-                "select tab.stopTimeId  from (\n" +
-                "                   select sst.id as stopTimeID, sst.train_route_piece_id from station_stop_time sst\n" +
-                "                   where sst.train_date_id = :trainDateId\n" +
-                "               ) as tab inner join train_route_piece trp on trp.id = tab.train_route_piece_id\n" +
-                "where trp.serial_number between :startSerialNumber and :endSerialNumber\n" +
-                ")")
-                .setParameter("trainDateId", trainDateId)
-                .setParameter("startSerialNumber", startRoutePieceSerialNumber)
-                .setParameter("endSerialNumber", endRoutePieceSerialNumber)
-                .executeUpdate();
-    }
-
-    @Override
-    public void orderLyingPlace(Long trainDateId, int startRoutePieceSerialNumber, int endRoutePieceSerialNumber) {
-        super.entityManager.createNativeQuery(
-                "update station_stop_time\n" +
-                        "set lying_places_amount = lying_places_amount - 1\n" +
-                        "where id in (\n" +
-                        "select tab.stopTimeId  from (\n" +
-                        "                   select sst.id as stopTimeID, sst.train_route_piece_id from station_stop_time sst\n" +
-                        "                   where sst.train_date_id = :trainDateId\n" +
-                        "               ) as tab inner join train_route_piece trp on trp.id = tab.train_route_piece_id\n" +
-                        "where trp.serial_number between :startSerialNumber and :endSerialNumber\n" +
-                        ")")
-                .setParameter("trainDateId", trainDateId)
-                .setParameter("startSerialNumber", startRoutePieceSerialNumber)
-                .setParameter("endSerialNumber", endRoutePieceSerialNumber)
-                .executeUpdate();
-    }
-
-    @Override
-    public void orderCommonPlace(Long trainDateId, int startRoutePieceSerialNumber, int endRoutePieceSerialNumber) {
-        super.entityManager.createNativeQuery(
-                "update station_stop_time\n" +
-                        "set common_places_amount = common_places_amount - 1\n" +
-                        "where id in (\n" +
-                        "select tab.stopTimeId  from (\n" +
-                        "                   select sst.id as stopTimeID, sst.train_route_piece_id from station_stop_time sst\n" +
-                        "                   where sst.train_date_id = :trainDateId\n" +
-                        "               ) as tab inner join train_route_piece trp on trp.id = tab.train_route_piece_id\n" +
-                        "where trp.serial_number between :startSerialNumber and :endSerialNumber\n" +
-                        ")")
-                .setParameter("trainDateId", trainDateId)
-                .setParameter("startSerialNumber", startRoutePieceSerialNumber)
-                .setParameter("endSerialNumber", endRoutePieceSerialNumber)
-                .executeUpdate();
-    }*/
-
 
 }

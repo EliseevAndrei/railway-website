@@ -1,4 +1,4 @@
-package com.eliseev.app.db.dao;
+package com.eliseev.app.dao;
 
 import com.eliseev.app.TestConfig;
 import com.eliseev.app.models.User;
@@ -14,9 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class UserDAOTest {
@@ -26,12 +23,6 @@ public class UserDAOTest {
     @Autowired
     private UserDAO userDAO;
 
-    @Test
-    @Transactional
-    public void signIn() {
-        assertNotNull(userDAO.findByLoginAndPass("admin", "admin"));
-        assertNull(userDAO.findByLoginAndPass("asdf", "asdfk"));
-    }
 
     @Test
     @Transactional

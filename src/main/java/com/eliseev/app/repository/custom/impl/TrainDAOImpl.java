@@ -39,8 +39,8 @@ public class TrainDAOImpl extends AbstractDAO<Train>
                                 "           ) as ta" +
                                 "           left join train_route_piece trp1 on trp1.id = ta.dep_train_route_piece_id\n" +
                                 "           left join train_route_piece trp2 on trp2.id = ta.arr_train_route_piece_id\n" +
-                                "       where  ta.train_date_id = :trainDateId && (trp1.serial_number between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber) \n" +
-                                "           and (trp2.serial_number between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber)\n" +
+                                "       where   (trp1.serial_number between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber) \n" +
+                                "           or (trp2.serial_number between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber)\n" +
                                 ")\n" +
                                 "group by c.type;")
                 .setParameter("trainId", trainId)
@@ -73,7 +73,7 @@ public class TrainDAOImpl extends AbstractDAO<Train>
                         "       left join TrainRoutePiece trp1 on trp1.id = t.depTrainRoutePiece.id\n" +
                         "       left join TrainRoutePiece trp2 on trp2.id = t.arrTrainRoutePiece.id\n" +
                         "   where t.trainDate.id = :trainDateId and (trp1.serialNumber between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber) \n" +
-                        "and (trp2.serialNumber between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber)\n" +
+                        "or (trp2.serialNumber between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber)\n" +
                         ")", Carriage.class)
                 .setParameter("trainDateId", trainDateId)
                 .setParameter("trainId", trainId)

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -27,9 +26,6 @@ import java.util.List;
 public class Carriage extends AbstractEntity {
 
     private Integer number;
-
-    @Column(name="places_amount")
-    private Integer placesAmount;
 
     private String type;
 
