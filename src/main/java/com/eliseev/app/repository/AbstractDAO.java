@@ -3,10 +3,11 @@ package com.eliseev.app.repository;
 import com.eliseev.app.models.AbstractEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.math.BigInteger;
 import java.util.List;
 
 public abstract class AbstractDAO<E extends AbstractEntity>
@@ -28,7 +29,14 @@ public abstract class AbstractDAO<E extends AbstractEntity>
 
     @Override
     public long count() {
-        return findAll().size();
+        try {
+            Object object =  entityManager.createNativeQuery("select count(*) from " + clazz.getSimpleName())
+                    .getSingleResult();
+            return ((BigInteger) object).longValue();
+        } catch (NoResultException e) {
+            return 0;
+        }
+
     }
 
     @Override

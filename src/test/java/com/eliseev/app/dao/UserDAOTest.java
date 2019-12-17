@@ -23,7 +23,6 @@ public class UserDAOTest {
     @Autowired
     private UserDAO userDAO;
 
-
     @Test
     @Transactional
     public void findAll() {

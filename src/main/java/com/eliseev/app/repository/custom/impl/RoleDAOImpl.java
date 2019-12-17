@@ -27,8 +27,17 @@ public class RoleDAOImpl extends AbstractDAO<Role>
                     .setParameter("roleName", name)
                     .getSingleResult();
         } catch (NoResultException e) {
-            logger.error("Some problems with role table",  e);
             return null;
         }
+    }
+
+    @Override
+    public void delete(long id) {
+        entityManager.createNativeQuery("delete from user_role where role_id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+        entityManager.createNativeQuery("delete from role where id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 }
