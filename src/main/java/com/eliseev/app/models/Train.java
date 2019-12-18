@@ -25,7 +25,6 @@ import java.util.List;
 public class Train extends AbstractEntity {
 
     @NotBlank(message = "{train.name.notBlank}")
-/*    @Size(min=1, max = 5, message = "{train.name.size}")*/
     private String name;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

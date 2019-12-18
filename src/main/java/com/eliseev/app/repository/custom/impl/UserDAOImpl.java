@@ -37,7 +37,6 @@ public class UserDAOImpl extends AbstractDAO<User>
                 .getResultList();
     }
 
-
     @Override
     public User findByUsername(String s) {
         try {
@@ -47,5 +46,14 @@ public class UserDAOImpl extends AbstractDAO<User>
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    @Override
+    public void delete(long id) {
+        entityManager.createNativeQuery("delete from user_role where user_id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+        entityManager.remove(entityManager.getReference(User.class, id));
+
     }
 }

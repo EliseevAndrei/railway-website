@@ -62,7 +62,7 @@ public abstract class AbstractDAO<E extends AbstractEntity>
 
     @Override
     public void delete(long id) {
-        entityManager.remove(findOne(id));
+        entityManager.remove(entityManager.getReference(clazz, id));
     }
 
     @Override

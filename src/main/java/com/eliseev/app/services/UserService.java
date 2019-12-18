@@ -31,4 +31,5 @@ public class UserService extends AbstractService<User, UserDAO>
         throw new UsernameNotFoundException(
                 "User '" + s + "' not found");
     }
+
 }

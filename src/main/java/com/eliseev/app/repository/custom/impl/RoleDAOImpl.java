@@ -36,8 +36,6 @@ public class RoleDAOImpl extends AbstractDAO<Role>
         entityManager.createNativeQuery("delete from user_role where role_id = :id")
                 .setParameter("id", id)
                 .executeUpdate();
-        entityManager.createNativeQuery("delete from role where id = :id")
-                .setParameter("id", id)
-                .executeUpdate();
+        entityManager.remove(entityManager.getReference(Role.class, id));
     }
 }

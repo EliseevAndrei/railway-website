@@ -11,19 +11,13 @@ import java.util.List;
 @Service
 public class TicketService extends AbstractService<Ticket, TicketDAO> {
 
-    private TrainService trainService;
-    private UserService userService;
-
     @Autowired
-    public TicketService(TrainService trainService,
-                         TicketDAO ticketDAO,
-                         UserService userService) {
+    public TicketService(TicketDAO ticketDAO) {
         super(ticketDAO);
-        this.trainService = trainService;
-        this.userService = userService;
     }
 
     public List<Ticket> listForUser(User user) {
         return dao.listByUserId(user.getId());
     }
+
 }
