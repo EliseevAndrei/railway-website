@@ -1,34 +1,17 @@
 package com.eliseev.app.service;
 
 import com.eliseev.app.TestConfig;
-import com.eliseev.app.models.TrainDate;
-import com.eliseev.app.models.TrainRoutePiece;
 import com.eliseev.app.services.StationService;
 import com.eliseev.app.services.StationStopTimeService;
 import com.eliseev.app.services.TrainDateService;
 import com.eliseev.app.services.TrainRoutePieceService;
 import com.eliseev.app.services.TrainService;
-import com.eliseev.app.services.dto.TrainRouteDTO;
-import com.eliseev.app.services.dto.StationStopTimeDTO;
-import com.eliseev.app.services.dto.TrainStopTimeDTO;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
-
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class TrainDateServiceTest {
 
@@ -49,7 +32,7 @@ public class TrainDateServiceTest {
     @Autowired
     private StationStopTimeService stationStopTimeService;
 
-    @Test
+    /*@Test
     @Transactional
     public void getDates() {
         List<TrainStopTimeDTO> trainDateDTOS = trainDateService.getDates(1);
@@ -95,6 +78,6 @@ public class TrainDateServiceTest {
         }
 
     }
-
+*/
 
 }

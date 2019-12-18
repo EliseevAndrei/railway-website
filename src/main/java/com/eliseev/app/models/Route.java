@@ -11,6 +11,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -26,7 +27,7 @@ import java.util.Date;
 @ToString
 public class Route {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="train_id")
     private Train train;
     @JsonDeserialize(using = CustomRestDateDeserializer.class)

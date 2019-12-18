@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,5 +24,17 @@ public class Station extends AbstractEntity {
 
     @NotBlank(message = "Название станции обязательно")
     private String name;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "startStation", cascade = CascadeType.ALL)
+    private List<TrainRoutePiece> startStations = new ArrayList<>();
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "endStation", cascade = CascadeType.ALL)
+    private List<TrainRoutePiece> endStations = new ArrayList<>();
 
 }

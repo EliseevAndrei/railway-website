@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -25,13 +26,12 @@ import java.util.List;
 @Table(name="train_date")
 public class TrainDate extends AbstractEntity {
 
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="train_id")
     private Train train;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "trainDate", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "trainDate", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<StationStopTime> stationStopTimes = new ArrayList<>();
@@ -39,4 +39,5 @@ public class TrainDate extends AbstractEntity {
     public TrainDate(Train train) {
         this.train = train;
     }
+
 }

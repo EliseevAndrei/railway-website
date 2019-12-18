@@ -1,22 +1,13 @@
 package com.eliseev.app.service;
 
 import com.eliseev.app.TestConfig;
-import com.eliseev.app.models.Carriage;
-import com.eliseev.app.models.Place;
-import com.eliseev.app.models.Train;
 import com.eliseev.app.services.TrainService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.ArrayList;
-import java.util.List;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class TrainServiceTest {
 
@@ -25,7 +16,7 @@ public class TrainServiceTest {
     @Autowired
     private TrainService trainService;
 
-    @Test
+    /*@Test
     public void createTrain() {
         Train train = new Train();
         List<Place> places = new ArrayList<>();
@@ -48,6 +39,6 @@ public class TrainServiceTest {
         logger.info("{}",saved);
         logger.info("{}", saved.getCarriages());
 
-    }
+    }*/
 
 }

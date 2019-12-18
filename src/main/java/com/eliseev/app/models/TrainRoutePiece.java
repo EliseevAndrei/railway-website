@@ -9,6 +9,7 @@ import lombok.ToString;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -24,15 +25,15 @@ import java.util.List;
 @Table(name="train_route_piece")
 public class TrainRoutePiece extends AbstractEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="train_id")
     private Train train;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="start_station_id")
     private Station startStation;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="end_station_id")
     private Station endStation;
 
@@ -42,10 +43,22 @@ public class TrainRoutePiece extends AbstractEntity {
     private Integer distance;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "trainRoutePiece", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "trainRoutePiece", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<StationStopTime> stationStopTimes = new ArrayList<>();
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "depTrainRoutePiece", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<Ticket> startTrainRouteTicket = new ArrayList<>();
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "arrTrainRoutePiece", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<Ticket> endTrainRouteTicket = new ArrayList<>();
 
     public TrainRoutePiece(Train train, Station startStation, Station endStation, Integer serialNumber, Integer distance) {
         this.train = train;

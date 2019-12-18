@@ -11,6 +11,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -40,11 +41,11 @@ public class StationStopTime extends AbstractEntity {
     @Column(name="dep_time")
     private Date departureTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="train_route_piece_id")
     private TrainRoutePiece trainRoutePiece;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="train_date_id")
     private TrainDate trainDate;
 

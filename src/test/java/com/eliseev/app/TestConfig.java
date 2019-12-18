@@ -56,7 +56,7 @@ public class TestConfig {
         /*properties.setProperty("hibernate.dialect","org.hibernate.dialect.MySQL8Dialect");
         properties.setProperty("hibernate.dialect.storage_engine", "InnoDB");*/
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-        properties.setProperty("hibernate.show_sql", "true");
+        /*properties.setProperty("hibernate.show_sql", "true");*/
         properties.setProperty("hibernate.hbm2ddl.import_files", "data.sql");
         return properties;
     }

@@ -1,27 +1,14 @@
 package com.eliseev.app.dao;
 
 import com.eliseev.app.TestConfig;
-import com.eliseev.app.models.Carriage;
-import com.eliseev.app.models.Train;
-import com.eliseev.app.models.TrainRoutePiece;
 import com.eliseev.app.repository.custom.TrainDAO;
 import com.eliseev.app.services.StationService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class TrainDAOTest {
 
@@ -33,13 +20,13 @@ public class TrainDAOTest {
     @Autowired
     private StationService stationService;
 
-    @Test
+    /*@Test
     @Transactional
     public void count() {
         assertEquals(2, trainDAO.count());
     }
 
-   /* @Test
+   *//* @Test
     @Transactional
     public void findOne() {
         Train train = trainDAO.findOne(1);
@@ -47,7 +34,7 @@ public class TrainDAOTest {
         assertEquals(10, train.getCountCommon());
         assertEquals(10, train.getCountCoupe());
         assertEquals(10, train.getCountLying());
-    }*/
+    }*//*
 
     @Test
     @Transactional
@@ -116,6 +103,6 @@ public class TrainDAOTest {
         for (Carriage carriage : carriages) {
             logger.info("{}", carriage.getPlaces());
         }
-    }
+    }*/
 
 }
