@@ -3,7 +3,7 @@ package com.eliseev.app.repository.custom;
 import com.eliseev.app.models.Station;
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.repository.IDAO;
-import com.eliseev.app.services.dto.TrainRouteDTO;
+import com.eliseev.app.dto.TrainRouteDTO;
 
 import java.util.List;
 

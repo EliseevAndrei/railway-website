@@ -30,19 +30,19 @@ public class TrainDAOImpl extends AbstractDAO<Train>
 
         @SuppressWarnings("unchecked")
         List<Object[]> objects = super.entityManager.createNativeQuery(
-                        "select c.type, count(1) from carriage c\n" +
-                                "left join place on place.carriage_id = c.id\n" +
-                                "where train_id = :trainId and place.id  not in (\n" +
-                                "           select place_id as placeId from(" +
-                                "               select * from ticket t\n" +
-                                "               where t.train_date_id = :trainDateId" +
-                                "           ) as ta" +
-                                "           left join train_route_piece trp1 on trp1.id = ta.dep_train_route_piece_id\n" +
-                                "           left join train_route_piece trp2 on trp2.id = ta.arr_train_route_piece_id\n" +
-                                "       where   (trp1.serial_number between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber) \n" +
-                                "           or (trp2.serial_number between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber)\n" +
-                                ")\n" +
-                                "group by c.type;")
+                "select c.type, count(1) from carriage c\n" +
+                        "left join place on place.carriage_id = c.id\n" +
+                        "where train_id = :trainId and place.id  not in (\n" +
+                        "           select place_id as placeId from(" +
+                        "               select * from ticket t\n" +
+                        "               where t.train_date_id = :trainDateId" +
+                        "           ) as ta" +
+                        "           left join train_route_piece trp1 on trp1.id = ta.dep_train_route_piece_id\n" +
+                        "           left join train_route_piece trp2 on trp2.id = ta.arr_train_route_piece_id\n" +
+                        "       where   (trp1.serial_number between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber) \n" +
+                        "           or (trp2.serial_number between :depRoutePieceSerialNumber and :arrRoutePieceSerialNumber)\n" +
+                        ")\n" +
+                        "group by c.type;")
                 .setParameter("trainId", trainId)
                 .setParameter("trainDateId", trainDateId)
                 .setParameter("depRoutePieceSerialNumber", depRoutePieceSerialNumber)
@@ -64,7 +64,6 @@ public class TrainDAOImpl extends AbstractDAO<Train>
     public List<Carriage> getCarriages(long trainId, long trainDateId,
                                        int depRoutePieceSerialNumber,
                                        int arrRoutePieceSerialNumber) {
-
         List<Carriage> carriages = super.entityManager.createQuery(
                 "select distinct carriage from Carriage carriage\n" +
                         "join fetch carriage.places place\n" +
@@ -80,6 +79,7 @@ public class TrainDAOImpl extends AbstractDAO<Train>
                 .setParameter("depRoutePieceSerialNumber", depRoutePieceSerialNumber)
                 .setParameter("arrRoutePieceSerialNumber", arrRoutePieceSerialNumber)
                 .getResultList();
+        logger.info("{}", carriages.get(0).getPlaces());
         return carriages;
     }
 
@@ -92,7 +92,6 @@ public class TrainDAOImpl extends AbstractDAO<Train>
                 .setParameter("trainId", trainId)
                 .getResultList();
     }
-
 
 
 }

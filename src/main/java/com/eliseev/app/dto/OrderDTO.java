@@ -1,4 +1,4 @@
-package com.eliseev.app.services.dto;
+package com.eliseev.app.dto;
 
 import com.eliseev.app.models.Ticket;
 import lombok.AllArgsConstructor;

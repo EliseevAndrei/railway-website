@@ -34,7 +34,7 @@ public class Carriage extends AbstractEntity {
     @OneToMany(mappedBy = "carriage", cascade = CascadeType.ALL)
     private List<Place> places = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="train_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @EqualsAndHashCode.Exclude

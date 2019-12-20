@@ -26,7 +26,7 @@ import java.util.List;
 @Table(name="train_date")
 public class TrainDate extends AbstractEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="train_id")
     private Train train;
 

@@ -2,7 +2,7 @@ package com.eliseev.app.controllers.rest;
 
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.services.TrainDateService;
-import com.eliseev.app.services.dto.StationStopTimeDTO;
+import com.eliseev.app.dto.StationStopTimeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.eliseev.app.services.dto;
+package com.eliseev.app.dto;
 
 import com.eliseev.app.models.Train;
 import lombok.AllArgsConstructor;
@@ -18,9 +18,6 @@ import java.util.Map;
 @ToString
 public class TrainRouteDTO {
 
-    /*private Long trainId;
-    private String trainName;*/
-
     private Train train;
     private Long trainDateId;
 
@@ -31,10 +28,6 @@ public class TrainRouteDTO {
     private Long endRoutePieceId;
     private int startRoutePieceSerialNumber;
     private int endRoutePieceSerialNumber;
-
-    /*private int commonPlacesAmount;
-    private int lyingPlacesAmount;
-    private int coupePlacesAmount;*/
 
     private Map<String, Integer> freePlaces = new LinkedHashMap<>();
 

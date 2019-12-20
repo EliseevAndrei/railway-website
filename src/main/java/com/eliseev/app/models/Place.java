@@ -23,7 +23,7 @@ public class Place extends AbstractEntity {
     private Integer number;
     private String type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="carriage_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @EqualsAndHashCode.Exclude

@@ -41,11 +41,11 @@ public class StationStopTime extends AbstractEntity {
     @Column(name="dep_time")
     private Date departureTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="train_route_piece_id")
     private TrainRoutePiece trainRoutePiece;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="train_date_id")
     private TrainDate trainDate;
 

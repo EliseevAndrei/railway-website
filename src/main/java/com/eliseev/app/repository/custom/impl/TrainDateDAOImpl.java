@@ -5,7 +5,7 @@ import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.repository.AbstractDAO;
 import com.eliseev.app.repository.custom.TrainDateDAO;
-import com.eliseev.app.services.dto.TrainRouteDTO;
+import com.eliseev.app.dto.TrainRouteDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -59,8 +59,6 @@ public class TrainDateDAOImpl extends AbstractDAO<TrainDate>
                 .setParameter("depDateLeftBorder", depDateLeftBorder)
                 .setParameter("depDateRightBorder", depDateRightBorder)
                 .getResultList();
-
-
 
         TrainRouteDTO trainRouteDTO;
         List<TrainRouteDTO> trainRouteDTOS = new ArrayList<>();

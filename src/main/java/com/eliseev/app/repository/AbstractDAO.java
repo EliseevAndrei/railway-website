@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import java.math.BigInteger;
 import java.util.List;
 
 public abstract class AbstractDAO<E extends AbstractEntity>
@@ -30,9 +29,9 @@ public abstract class AbstractDAO<E extends AbstractEntity>
     @Override
     public long count() {
         try {
-            Object object =  entityManager.createNativeQuery("select count(*) from " + clazz.getSimpleName())
+            Long object = (Long) entityManager.createQuery("select count(e.id) from " + clazz.getSimpleName() + " e")
                     .getSingleResult();
-            return ((BigInteger) object).longValue();
+            return object;
         } catch (NoResultException e) {
             return 0;
         }

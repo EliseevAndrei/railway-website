@@ -1,15 +1,20 @@
 package com.eliseev.app.dao;
 
 import com.eliseev.app.TestConfig;
-import com.eliseev.app.repository.custom.StationDAO;
-import com.eliseev.app.repository.custom.TrainDAO;
 import com.eliseev.app.repository.custom.TrainRoutePieceDAO;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class TrainRoutePieceDAOTest {
 
@@ -18,11 +23,42 @@ public class TrainRoutePieceDAOTest {
     @Autowired
     private TrainRoutePieceDAO trainRoutePieceDAO;
 
-    @Autowired
-    private TrainDAO trainDAO;
+    @Test
+    @Transactional
+    public void findOne() {
+        assertNotNull(trainRoutePieceDAO.findOne(31));
+        assertNotNull(trainRoutePieceDAO.findOne(37));
+    }
 
-    @Autowired
-    private StationDAO stationDAO;
+    @Test
+    @Transactional
+    public void delete() {
+        assertEquals(8, trainRoutePieceDAO.count());
+        trainRoutePieceDAO.delete(31);
+        assertEquals(7, trainRoutePieceDAO.count());
+    }
+
+    @Test
+    @Transactional
+    public void findByTrainId() {
+        assertEquals(2, trainRoutePieceDAO.findByTrainId(23L).size());
+        assertEquals(6, trainRoutePieceDAO.findByTrainId(25L).size());
+    }
+
+    @Test
+    @Transactional
+    public void findByTrainIdAndStartStationId() {
+        assertEquals(31, (long) trainRoutePieceDAO.findByTrainIdAndStartStationId(23, 4).getId());
+        assertEquals(38, (long) trainRoutePieceDAO.findByTrainIdAndStartStationId(25, 8).getId());
+    }
+
+    @Test
+    @Transactional
+    public void findByTrainIdAndEndStationId() {
+        assertEquals(31, (long) trainRoutePieceDAO.findByTrainIdAndEndStationId(23, 13).getId());
+        assertEquals(38, (long) trainRoutePieceDAO.findByTrainIdAndEndStationId(25, 11).getId());
+    }
+
 
     /*@Test
     @Transactional

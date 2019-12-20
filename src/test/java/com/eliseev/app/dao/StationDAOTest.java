@@ -1,6 +1,7 @@
 package com.eliseev.app.dao;
 
 import com.eliseev.app.TestConfig;
+import com.eliseev.app.models.Station;
 import com.eliseev.app.repository.custom.StationDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +33,16 @@ public class StationDAOTest {
         assertEquals(21, stationDAO.count());
         stationDAO.delete(1);
         assertEquals(20, stationDAO.count());
+    }
+
+    @Test
+    @Transactional
+    public void create() {
+        assertEquals(21, stationDAO.count());
+        Station station = new Station();
+        station.setName("Крычев");
+        stationDAO.save(station);
+        assertEquals(22, stationDAO.count());
     }
 
 }

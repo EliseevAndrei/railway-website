@@ -52,7 +52,8 @@ public class Train extends AbstractEntity {
         this.name = name;
     }
 
-    public Train(long id) {
+    public Train(long id, String name) {
         super.id = id;
+        this.name = name;
     }
 }

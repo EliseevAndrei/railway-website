@@ -27,7 +27,6 @@ public class StationStopTimeDAOTest {
     public void findStationsStopTimeByTrainDateId() {
 
         List<StationStopTime> stationsStopTime = stationStopTimeDAO.findStationsStopTimeByTrainDateId(31L);
-        System.out.println();
         assertEquals(6, stationsStopTime.size());
         assertEquals(2, stationStopTimeDAO.findStationsStopTimeByTrainDateId(34L).size());
 
@@ -48,6 +47,14 @@ public class StationStopTimeDAOTest {
     public void findOne() {
         StationStopTime stationStopTime = stationStopTimeDAO.findOne(73);
         assertNotNull(stationStopTime);
+    }
+
+    @Test
+    @Transactional
+    public void delete() {
+        assertEquals(16, stationStopTimeDAO.count());
+        stationStopTimeDAO.delete(73);
+        assertEquals(15, stationStopTimeDAO.count());
     }
 
 }

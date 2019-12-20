@@ -16,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import java.util.Date;
 
 @Embeddable
@@ -27,7 +26,7 @@ import java.util.Date;
 @ToString
 public class Route {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="train_id")
     private Train train;
     @JsonDeserialize(using = CustomRestDateDeserializer.class)
