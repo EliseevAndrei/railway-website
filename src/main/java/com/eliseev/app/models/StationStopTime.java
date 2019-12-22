@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,6 +29,11 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Table(name="station_stop_time")
+@NamedEntityGraph(name="fullStationStopTime",
+        attributeNodes = {
+                @NamedAttributeNode("trainRoutePiece"),
+                @NamedAttributeNode("trainDate")
+        })
 public class StationStopTime extends AbstractEntity {
 
     @JsonDeserialize(using = CustomRestDateDeserializer.class)

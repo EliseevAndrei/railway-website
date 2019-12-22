@@ -1,6 +1,6 @@
 package com.eliseev.app.service;
 
-import com.eliseev.app.TestConfig;
+import com.eliseev.app.dao.DaoTestConfig;
 import com.eliseev.app.services.RouteService;
 import com.eliseev.app.services.StationService;
 import org.slf4j.Logger;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = DaoTestConfig.class)
 public class RouteServiceTest {
 
     private Logger logger = LoggerFactory.getLogger(RouteServiceTest.class);

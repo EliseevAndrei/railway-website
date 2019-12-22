@@ -1,6 +1,6 @@
 package com.eliseev.app.service;
 
-import com.eliseev.app.TestConfig;
+import com.eliseev.app.dao.DaoTestConfig;
 import com.eliseev.app.services.StationService;
 import com.eliseev.app.services.StationStopTimeService;
 import com.eliseev.app.services.TrainDateService;
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = DaoTestConfig.class)
 public class TrainDateServiceTest {
 
     Logger logger = LoggerFactory.getLogger(TrainDateServiceTest.class);

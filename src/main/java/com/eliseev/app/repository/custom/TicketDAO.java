@@ -6,5 +6,5 @@ import com.eliseev.app.repository.IDAO;
 import java.util.List;
 
 public interface TicketDAO extends IDAO<Ticket> {
-    List<Ticket> listByUserId(Long id);
+    List<Ticket> listByUserId(Long id, String graphName);
 }

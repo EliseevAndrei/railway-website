@@ -15,6 +15,7 @@ public interface TrainDAO extends IDAO<Train> {
                                                           int arrRoutePieceSerialNumber);
     List<Carriage> getCarriages(long trainId, long trainDateId,
                                 int depRoutePieceSerialNumber,
-                                int arrRoutePieceSerialNumber);
-    List<Carriage> getCarriages(long trainId);
+                                int arrRoutePieceSerialNumber,
+                                String graphName);
+    List<Carriage> getCarriages(long trainId, String graphName);
 }

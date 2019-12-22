@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TrainRoutePieceDAO extends IDAO<TrainRoutePiece> {
 
-    List<TrainRoutePiece> findByTrainId(Long trainId);
-    TrainRoutePiece findByTrainIdAndStartStationId(long trainId, long startStationId);
-    TrainRoutePiece findByTrainIdAndEndStationId(long trainId, long endStationId);
+    List<TrainRoutePiece> findByTrainId(Long trainId, String graphName);
+    TrainRoutePiece findByTrainIdAndStartStationId(long trainId, long startStationId, String graphName);
+    TrainRoutePiece findByTrainIdAndEndStationId(long trainId, long endStationId, String graphName);
 }

@@ -5,7 +5,9 @@ import com.eliseev.app.repository.AbstractDAO;
 import com.eliseev.app.repository.custom.TrainRoutePieceDAO;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityGraph;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -66,39 +68,48 @@ public class TrainRoutePieceDAOImpl extends AbstractDAO<TrainRoutePiece>
     }*/
 
     @Override
-    public List<TrainRoutePiece> findByTrainId(Long trainId) {
-        return super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId order by s.serialNumber", TrainRoutePiece.class)
-                .setParameter("trainId", trainId)
-                .getResultList();
+    public List<TrainRoutePiece> findByTrainId(Long trainId, String graphName) {
+        Query query = super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId order by s.serialNumber", TrainRoutePiece.class)
+                .setParameter("trainId", trainId);
+        if (graphName.length() != 0) {
+            EntityGraph entityGraph = entityManager.getEntityGraph(graphName);
+            query.setHint("javax.persistence.fetchgraph", entityGraph);
+        }
+        return query.getResultList();
     }
 
     @Override
-    public TrainRoutePiece findByTrainIdAndStartStationId(long trainId, long startStationId) {
-        TrainRoutePiece trainRoutePiece;
+    public TrainRoutePiece findByTrainIdAndStartStationId(long trainId, long startStationId, String graphName) {
         try {
-            trainRoutePiece = super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId and s.startStation.id = :startStationId", TrainRoutePiece.class)
+            Query query = super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId and s.startStation.id = :startStationId", TrainRoutePiece.class)
                     .setParameter("trainId", trainId)
-                    .setParameter("startStationId", startStationId)
-                    .getSingleResult();
+                    .setParameter("startStationId", startStationId);
+            if (graphName.length() != 0) {
+                EntityGraph entityGraph = entityManager.getEntityGraph(graphName);
+                query.setHint("javax.persistence.fetchgraph", entityGraph);
+            }
+            return (TrainRoutePiece) query.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
-        return trainRoutePiece;
 
     }
 
     @Override
-    public TrainRoutePiece findByTrainIdAndEndStationId(long trainId, long endStationId) {
+    public TrainRoutePiece findByTrainIdAndEndStationId(long trainId, long endStationId, String graphName) {
         TrainRoutePiece trainRoutePiece;
         try {
-            trainRoutePiece = super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId and s.endStation.id = :endStationId", TrainRoutePiece.class)
+            Query query = super.entityManager.createQuery("select s from TrainRoutePiece s where s.train.id = :trainId and s.endStation.id = :endStationId", TrainRoutePiece.class)
                     .setParameter("trainId", trainId)
-                    .setParameter("endStationId", endStationId)
-                    .getSingleResult();
+                    .setParameter("endStationId", endStationId);
+            if (graphName.length() != 0) {
+                EntityGraph entityGraph = entityManager.getEntityGraph(graphName);
+                query.setHint("javax.persistence.fetchgraph", entityGraph);
+            }
+            return (TrainRoutePiece) query.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
-        return trainRoutePiece;
     }
 
 }

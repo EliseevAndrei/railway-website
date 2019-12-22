@@ -5,6 +5,8 @@ import com.eliseev.app.repository.AbstractDAO;
 import com.eliseev.app.repository.custom.TicketDAO;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityGraph;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -16,10 +18,15 @@ public class TicketDAOImpl extends AbstractDAO<Ticket>
     }
 
     @Override
-    public List<Ticket> listByUserId(Long id) {
-        return super.entityManager.createQuery("select t from Ticket t where t.user.id = :id", Ticket.class)
-                .setParameter("id", id)
-                .getResultList();
+    public List<Ticket> listByUserId(Long id, String graphName) {
+        Query query = entityManager.createQuery("select t from Ticket t where t.user.id = :id", Ticket.class)
+                .setParameter("id", id);
+        if (graphName.length() != 0) {
+            EntityGraph entityGraph = entityManager.getEntityGraph(graphName);
+            query.setHint("javax.persistence.fetchgraph", entityGraph);
+        }
+        return query.getResultList();
+
     }
     
 }

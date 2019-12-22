@@ -1,18 +1,18 @@
 package com.eliseev.app.services;
 
-import com.eliseev.app.models.AbstractEntity;
+import com.eliseev.app.dto.AbstractDto;
 
 import java.util.List;
 
-public interface IService<E extends AbstractEntity> {
+public interface IService<D extends AbstractDto> {
 
-    List<E> list();
+    List<D> list();
 
-    E create(E entity);
+    D create(D entity);
 
-    E get(long id);
+    D get(long id);
 
-    E update(long id, E entity);
+    D update(long id, D entity);
 
     void delete(long id);
 

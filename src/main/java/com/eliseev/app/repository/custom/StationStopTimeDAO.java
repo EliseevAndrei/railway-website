@@ -7,13 +7,8 @@ import java.util.List;
 
 public interface StationStopTimeDAO extends IDAO<StationStopTime> {
 
-    List<StationStopTime> findStationsStopTimeByTrainDateId(Long id);
+    List<StationStopTime> findStationsStopTimeByTrainDateId(Long id, String graphName);
 
-    StationStopTime getStopTimeByTrainRouteIdAndTrainDateId(long trainRouteId, long trainDateId);
+    StationStopTime getStopTimeByTrainRouteIdAndTrainDateId(long trainRouteId, long trainDateId, String graphName);
 
-    /*void orderCoupePlace(Long trainDateId, int startRoutePieceSerialNumber, int endRoutePieceSerialNumber);
-
-    void orderLyingPlace(Long trainDateId, int startRoutePieceSerialNumber, int endRoutePieceSerialNumber);
-
-    void orderCommonPlace(Long trainDateId, int startRoutePieceSerialNumber, int endRoutePieceSerialNumber);*/
 }

@@ -1,6 +1,5 @@
 package com.eliseev.app.dao;
 
-import com.eliseev.app.TestConfig;
 import com.eliseev.app.models.Role;
 import com.eliseev.app.models.UserRoleEnum;
 import com.eliseev.app.repository.custom.RoleDAO;
@@ -20,7 +19,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = DaoTestConfig.class)
 public class RoleDAOTest {
 
     private Logger logger = LoggerFactory.getLogger(RoleDAOTest.class);

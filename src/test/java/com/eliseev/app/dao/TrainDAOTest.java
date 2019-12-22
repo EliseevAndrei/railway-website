@@ -1,6 +1,5 @@
 package com.eliseev.app.dao;
 
-import com.eliseev.app.TestConfig;
 import com.eliseev.app.models.Carriage;
 import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainRoutePiece;
@@ -25,7 +24,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = DaoTestConfig.class)
 @Slf4j
 public class TrainDAOTest {
 
@@ -130,7 +129,7 @@ public class TrainDAOTest {
     @Test
     @Transactional
     public void getCarriagesByTrainId() {
-        List<Carriage> carriages = trainDAO.getCarriages(25);
+        List<Carriage> carriages = trainDAO.getCarriages(25, "fullCarriage");
         assertEquals(2, carriages.size());
         assertEquals(4, carriages.get(0).getPlaces().size());
         assertEquals(4, carriages.get(1).getPlaces().size());
@@ -140,7 +139,7 @@ public class TrainDAOTest {
     @Transactional
     public void getCarriagesWithFreePlaces() {
 
-        List<Carriage> carriages = trainDAO.getCarriages(25, 32, 1,6);
+        List<Carriage> carriages = trainDAO.getCarriages(25, 32, 1,6, "fullCarriage");
 
         assertEquals(2,  carriages.get(0).getPlaces().size());
         assertTrue(carriages.get(0).getPlaces().stream()
@@ -148,7 +147,7 @@ public class TrainDAOTest {
 
         entityManager.clear();
 
-        carriages = trainDAO.getCarriages(25, 32, 1,3);
+        carriages = trainDAO.getCarriages(25, 32, 1,3, "fullCarriage");
 
         assertEquals(3,  carriages.get(0).getPlaces().size());
         assertTrue(carriages.get(0).getPlaces().stream()
@@ -156,7 +155,7 @@ public class TrainDAOTest {
 
         entityManager.clear();
 
-        carriages = trainDAO.getCarriages(25, 32, 1,4);
+        carriages = trainDAO.getCarriages(25, 32, 1,4, "fullCarriage");
 
         assertEquals(2,  carriages.get(0).getPlaces().size());
         assertTrue(carriages.get(0).getPlaces().stream()
@@ -164,7 +163,7 @@ public class TrainDAOTest {
 
         entityManager.clear();
 
-        carriages = trainDAO.getCarriages(25, 32, 4,6);
+        carriages = trainDAO.getCarriages(25, 32, 4,6, "fullCarriage");
 
         assertEquals(2,  carriages.get(0).getPlaces().size());
         assertTrue(carriages.get(0).getPlaces().stream()
@@ -172,7 +171,7 @@ public class TrainDAOTest {
 
         entityManager.clear();
 
-        carriages = trainDAO.getCarriages(25, 32, 5,6);
+        carriages = trainDAO.getCarriages(25, 32, 5,6, "fullCarriage");
 
         assertEquals(3,  carriages.get(0).getPlaces().size());
         assertTrue(carriages.get(0).getPlaces().stream()

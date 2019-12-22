@@ -1,6 +1,6 @@
 package com.eliseev.app.controllers.controller;
 
-import com.eliseev.app.models.User;
+import com.eliseev.app.dto.UserDto;
 import com.eliseev.app.models.UserRoleEnum;
 import com.eliseev.app.services.RoleService;
 import com.eliseev.app.services.UserService;
@@ -28,7 +28,7 @@ public class RegistrationController {
 
 
     @PostMapping
-    public String processRegistration(@ModelAttribute  User user) {
+    public String processRegistration(@ModelAttribute UserDto user) {
         user.setPass(passwordEncoder.encode(user.getPass()));
         user.getRoles().add(roleService.findByName(UserRoleEnum.USER));
         userService.create(user);

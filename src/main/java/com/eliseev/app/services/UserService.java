@@ -1,5 +1,7 @@
 package com.eliseev.app.services;
 
+import com.eliseev.app.dto.UserDto;
+import com.eliseev.app.dto.mapper.UserMapper;
 import com.eliseev.app.models.User;
 import com.eliseev.app.repository.custom.UserDAO;
 import org.slf4j.Logger;
@@ -11,12 +13,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService extends AbstractService<User, UserDAO>
+public class UserService extends AbstractService<User, UserDto, UserDAO>
             implements UserDetailsService {
 
+    private UserMapper userMapper;
+
     @Autowired
-    public UserService(UserDAO dao) {
-        super(dao);
+    public UserService(UserDAO dao, UserMapper userMapper) {
+        super(dao, userMapper);
+        this.userMapper = userMapper;
     }
 
     private Logger logger = LoggerFactory.getLogger(TrainService.class);

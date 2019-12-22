@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
@@ -23,6 +25,12 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Table(name="train_route_piece")
+@NamedEntityGraph(name="fullTrainRoutePiece",
+        attributeNodes = {
+                @NamedAttributeNode("startStation"),
+                @NamedAttributeNode("endStation"),
+                @NamedAttributeNode("train")
+        })
 public class TrainRoutePiece extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

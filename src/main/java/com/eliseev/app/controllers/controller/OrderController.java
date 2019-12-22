@@ -1,5 +1,6 @@
 package com.eliseev.app.controllers.controller;
 
+import com.eliseev.app.dto.TicketDto;
 import com.eliseev.app.models.Route;
 import com.eliseev.app.models.Ticket;
 import com.eliseev.app.services.TicketService;
@@ -56,7 +57,7 @@ public class OrderController {
     }
 
     @PostMapping(path = "/{userId}/orderTicket")
-    public String setOrder(@Valid Ticket ticket, @SessionAttribute("route") Route route,
+    public String setOrder(@Valid TicketDto ticket, @SessionAttribute("route") Route route,
                            Errors errors,
                            SessionStatus sessionStatus) {
         if (errors.hasErrors()) {
@@ -70,7 +71,7 @@ public class OrderController {
 
         service.create(ticket);
 
-        return "redirect:/users/" + ticket.getUser().getId() + "/tickets";
+        return "redirect:/users/" + ticket.getUserId() + "/tickets";
     }
 
 }

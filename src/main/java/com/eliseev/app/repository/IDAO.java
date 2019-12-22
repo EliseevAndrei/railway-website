@@ -11,10 +11,14 @@ public interface IDAO<E extends AbstractEntity> {
 
     E findOne(long id);
 
+    E findOne(long id, String graphName);
+
     E save(E entity);
 
     void delete(long id);
 
     List<E> findAll();
+
+    List<E> findAll(String graphName);
 
 }

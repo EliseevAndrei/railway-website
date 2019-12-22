@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,11 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@NamedEntityGraph(name="fullCarriage",
+        attributeNodes = {
+            @NamedAttributeNode("places"),
+            @NamedAttributeNode("train")
+        })
 public class Carriage extends AbstractEntity {
 
     private Integer number;

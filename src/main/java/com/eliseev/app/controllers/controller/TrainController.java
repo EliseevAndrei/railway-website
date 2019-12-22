@@ -1,11 +1,11 @@
 package com.eliseev.app.controllers.controller;
 
-import com.eliseev.app.models.Station;
+import com.eliseev.app.dto.StationDto;
+import com.eliseev.app.dto.additional.TrainRouteDTO;
 import com.eliseev.app.models.Train;
 import com.eliseev.app.services.RouteService;
 import com.eliseev.app.services.StationService;
 import com.eliseev.app.services.TrainService;
-import com.eliseev.app.dto.TrainRouteDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +55,8 @@ public class TrainController {
                                        @RequestParam("dep_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") @Valid Date date,
                                        Model model) {
         logger.info("user send GET /trains/onRoute with model attributes {}, {}, {}", dep_station_id, arr_station_id, date);
-        Station depStation = stationService.get(dep_station_id);
-        Station arrStation = stationService.get(arr_station_id);
+        StationDto depStation = stationService.get(dep_station_id);
+        StationDto arrStation = stationService.get(arr_station_id);
         model.addAttribute("dep_station", depStation);
         model.addAttribute("arr_station", arrStation);
         model.addAttribute("dep_date", date);

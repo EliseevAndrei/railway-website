@@ -14,6 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
@@ -25,6 +28,18 @@ import java.util.Date;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@NamedEntityGraph(name="fullTicket",
+        attributeNodes = {
+                @NamedAttributeNode("user"),
+                @NamedAttributeNode("trainDate"),
+                @NamedAttributeNode(value="depTrainRoutePiece", subgraph = "depStation"),
+                @NamedAttributeNode(value="arrTrainRoutePiece", subgraph = "endStation"),
+                @NamedAttributeNode(value="place", subgraph = "carriage")},
+        subgraphs = {
+                @NamedSubgraph(name="depStation", attributeNodes = @NamedAttributeNode("startStation")),
+                @NamedSubgraph(name="arrStation", attributeNodes = @NamedAttributeNode("endStation")),
+                @NamedSubgraph(name="carriage", attributeNodes = @NamedAttributeNode("carriage"))
+        })
 public class Ticket extends AbstractEntity {
 
     @NotBlank(message = "surname is required")
@@ -50,9 +65,9 @@ public class Ticket extends AbstractEntity {
     @JoinColumn(name="user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    /*@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="train_id")
-    private Train train;
+    private Train train;*/
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="train_date_id")
@@ -70,8 +85,8 @@ public class Ticket extends AbstractEntity {
     @JoinColumn(name="place_id")
     private Place place;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    /*@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="carriage_id")
-    private Carriage carriage;
+    private Carriage carriage;*/
 
 }

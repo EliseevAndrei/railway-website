@@ -1,14 +1,20 @@
 package com.eliseev.app.services;
 
-import com.eliseev.app.models.Station;
+import com.eliseev.app.dto.StationDto;
+import com.eliseev.app.dto.StationStopTimeDto;
+import com.eliseev.app.dto.TrainDateDto;
+import com.eliseev.app.dto.TrainRoutePieceDto;
+import com.eliseev.app.dto.additional.StationStopTimeDTO;
+import com.eliseev.app.dto.additional.TrainRouteDTO;
+import com.eliseev.app.dto.additional.TrainStopTimeDTO;
+import com.eliseev.app.dto.mapper.StationMapper;
+import com.eliseev.app.dto.mapper.TrainDateMapper;
 import com.eliseev.app.models.StationStopTime;
 import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainDate;
-import com.eliseev.app.models.TrainRoutePiece;
+import com.eliseev.app.repository.custom.TrainDAO;
 import com.eliseev.app.repository.custom.TrainDateDAO;
-import com.eliseev.app.dto.StationStopTimeDTO;
-import com.eliseev.app.dto.TrainRouteDTO;
-import com.eliseev.app.dto.TrainStopTimeDTO;
+import com.eliseev.app.repository.custom.TrainRoutePieceDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,41 +25,54 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
-public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
+public class TrainDateService extends AbstractService<TrainDate, TrainDateDto, TrainDateDAO> {
 
     private StationStopTimeService stationStopTimeService;
     private TrainService trainService;
     private TrainRoutePieceService trainRoutePieceService;
-    private StationService stationService;
+    private TrainDAO trainDAO;
+    private TrainRoutePieceDAO trainRoutePieceDAO;
+    private TrainDateMapper trainDateMapper;
+    private StationMapper stationMapper;
 
     @Autowired
     public TrainDateService(TrainDateDAO dao,
                             StationStopTimeService stationStopTimeService,
                             TrainService trainService,
                             TrainRoutePieceService trainRoutePieceService,
-                            StationService stationService) {
-        super(dao);
+                            TrainDAO trainDAO,
+                            TrainRoutePieceDAO trainRoutePieceDAO,
+                            TrainDateMapper trainDateMapper,
+                            StationMapper stationMapper) {
+        super(dao, trainDateMapper);
         this.stationStopTimeService = stationStopTimeService;
         this.trainService = trainService;
         this.trainRoutePieceService = trainRoutePieceService;
-        this.stationService = stationService;
+        this.trainDAO = trainDAO;
+        this.trainRoutePieceDAO = trainRoutePieceDAO;
+        this.trainDateMapper = trainDateMapper;
+        this.stationMapper = stationMapper;
     }
 
     @Transactional
     public List<TrainStopTimeDTO> getDates(long trainId) {
 
         List<TrainStopTimeDTO> trainDateDTOS = new ArrayList<>();
-        List<TrainDate> trainDates = dao.findDatesByTrainId(trainId);
+        List<TrainDate> trainDates = dao.findDatesByTrainId(trainId, "fullTrainDate");
         TrainStopTimeDTO trainDateDTO;
 
         for (TrainDate trainDate : trainDates) {
 
-            List<StationStopTime> stationStopTimes = stationStopTimeService.findStationsStopTimeByTrainDateId(trainDate.getId());
+            List<StationStopTimeDto> stationStopTimes = stationStopTimeService.findStationsStopTimeByTrainDateId(trainDate.getId());
 
             if (stationStopTimes.size() >= 1) {
-                trainDateDTO = new TrainStopTimeDTO(stationStopTimes.get(0), stationStopTimes.get(stationStopTimes.size() - 1));
+                trainDateDTO = new TrainStopTimeDTO(
+                        stationStopTimes.get(0),
+                        stationStopTimes.get(stationStopTimes.size() - 1)
+                );
                 trainDateDTOS.add(trainDateDTO);
             }
         }
@@ -62,9 +81,10 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
     }
 
     @Transactional
-    public TrainDate create(List<StationStopTimeDTO> stationStopTimeDTOs, long trainId) {
+    public TrainDateDto create(List<StationStopTimeDTO> stationStopTimeDTOs, long trainId) {
 
-        Train train = trainService.get(trainId);
+
+        Train train = trainDAO.findOne(trainId);
         TrainDate trainDate = new TrainDate(train);
 
 
@@ -72,20 +92,22 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
         List<StationStopTime> stationStopTimes = new ArrayList<>();
         for (StationStopTimeDTO stationStopTimeDTO : stationStopTimeDTOs) {
             stationStopTime = new StationStopTime(stationStopTimeDTO.getArriveTime(), stationStopTimeDTO.getDepartureTime(),
-                    trainRoutePieceService.get(stationStopTimeDTO.getTrainStationId()), trainDate);
+                    trainRoutePieceDAO.findOne(stationStopTimeDTO.getTrainStationId()), trainDate);
             stationStopTimes.add(stationStopTime);
         }
 
         trainDate.getStationStopTimes().addAll(stationStopTimes);
-        return dao.save(trainDate);
+        return trainDateMapper.toDto(dao.save(trainDate));
     }
 
-    public List<TrainDate> list(long trainId) {
-        return dao.findDatesByTrainId(trainId);
+    public List<TrainDateDto> list(long trainId) {
+        return dao.findDatesByTrainId(trainId, "fullTraindate").stream()
+                .map(e -> trainDateMapper.toDto(e))
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<TrainRouteDTO> getTrainDates(Station depStation, Station arrStation, Date date) {
+    public List<TrainRouteDTO> getTrainDates(StationDto depStation, StationDto arrStation, Date date) {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String depDate = dateFormat.format(date);
@@ -94,14 +116,15 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
 
         logger.info("{} {}", depDateLeftBorder, depDateRightBorder);
 
-        return super.dao.getTrainDates(depStation, arrStation, depDateLeftBorder, depDateRightBorder);
+        return super.dao.getTrainDates(stationMapper.toEntity(depStation), stationMapper.toEntity(arrStation),
+                depDateLeftBorder, depDateRightBorder);
     }
 
     @Transactional(readOnly = true)
-    public List<TrainRouteDTO> setFreePlacesForTrainDates(List<TrainRouteDTO> routesWithTrainDate, Station depStationObj, Station arrStationObj) {
+    public List<TrainRouteDTO> setFreePlacesForTrainDates(List<TrainRouteDTO> routesWithTrainDate, StationDto depStationObj, StationDto arrStationObj) {
 
-        TrainRoutePiece depTrainRoutePiece, arrTrainRoutePiece;
-        StationStopTime depStationStopTime, arrStationStopTime;
+        TrainRoutePieceDto depTrainRoutePiece, arrTrainRoutePiece;
+        StationStopTimeDto depStationStopTime, arrStationStopTime;
 
         for (TrainRouteDTO trainRouteDTO : routesWithTrainDate) {
 
@@ -135,5 +158,16 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDAO> {
         return routesWithTrainDate;
     }
 
+    @Override
+    public List<TrainDateDto> list() {
+        return super.dao.findAll("fullTrainDate")
+                .stream()
+                .map(e -> trainDateMapper.toDto(e))
+                .collect(Collectors.toList());
+    }
 
+    @Override
+    public TrainDateDto get(long id) {
+        return trainDateMapper.toDto(super.dao.findOne(id, "fullTrainDate"));
+    }
 }

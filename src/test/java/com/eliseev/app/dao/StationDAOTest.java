@@ -1,6 +1,5 @@
 package com.eliseev.app.dao;
 
-import com.eliseev.app.TestConfig;
 import com.eliseev.app.models.Station;
 import com.eliseev.app.repository.custom.StationDAO;
 import org.junit.Test;
@@ -14,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = DaoTestConfig.class)
 public class StationDAOTest {
 
     @Autowired
@@ -43,6 +42,12 @@ public class StationDAOTest {
         station.setName("Крычев");
         stationDAO.save(station);
         assertEquals(22, stationDAO.count());
+    }
+
+    @Test
+    @Transactional
+    public void findAll() {
+        assertEquals(21, stationDAO.findAll().size());
     }
 
 }

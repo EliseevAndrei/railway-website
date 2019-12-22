@@ -1,4 +1,4 @@
-package com.eliseev.app.dto;
+package com.eliseev.app.dto.additional;
 
 import com.eliseev.app.models.Train;
 import lombok.AllArgsConstructor;

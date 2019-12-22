@@ -1,4 +1,4 @@
-package com.eliseev.app.dto;
+package com.eliseev.app.dto.additional;
 
 import com.eliseev.app.utils.CustomRestDateDeserializer;
 import com.fasterxml.jackson.annotation.JsonFormat;

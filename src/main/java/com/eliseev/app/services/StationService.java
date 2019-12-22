@@ -1,21 +1,22 @@
 package com.eliseev.app.services;
 
+import com.eliseev.app.dto.StationDto;
+import com.eliseev.app.dto.mapper.StationMapper;
 import com.eliseev.app.models.Station;
 import com.eliseev.app.repository.custom.StationDAO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StationService extends AbstractService<Station, StationDAO> {
+public class StationService extends AbstractService<Station, StationDto, StationDAO> {
+
+    private StationMapper stationMapper;
 
     @Autowired
-    public StationService(StationDAO dao) {
-        super(dao);
+    public StationService(StationDAO dao, StationMapper stationMapper) {
+        super(dao, stationMapper);
+        this.stationMapper = stationMapper;
     }
-
-    private Logger logger = LoggerFactory.getLogger(StationService.class);
 
 
 }

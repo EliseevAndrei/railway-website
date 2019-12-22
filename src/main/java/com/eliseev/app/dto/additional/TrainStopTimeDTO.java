@@ -1,6 +1,6 @@
-package com.eliseev.app.dto;
+package com.eliseev.app.dto.additional;
 
-import com.eliseev.app.models.StationStopTime;
+import com.eliseev.app.dto.StationStopTimeDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ import java.io.Serializable;
 @ToString
 public class TrainStopTimeDTO implements Serializable {
 
-    private StationStopTime firstStation;
-    private StationStopTime lastStation;
+    private StationStopTimeDto firstStation;
+    private StationStopTimeDto lastStation;
 
 }

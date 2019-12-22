@@ -5,11 +5,13 @@ import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.repository.AbstractDAO;
 import com.eliseev.app.repository.custom.TrainDateDAO;
-import com.eliseev.app.dto.TrainRouteDTO;
+import com.eliseev.app.dto.additional.TrainRouteDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityGraph;
+import javax.persistence.Query;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +27,14 @@ public class TrainDateDAOImpl extends AbstractDAO<TrainDate>
     }
 
     @Override
-    public List<TrainDate> findDatesByTrainId(long trainId) {
-        return super.entityManager.createQuery("select s from TrainDate s where s.train.id = :id", TrainDate.class)
-                .setParameter("id", trainId)
-                .getResultList();
+    public List<TrainDate> findDatesByTrainId(long trainId, String graphName) {
+        Query query = super.entityManager.createQuery("select s from TrainDate s where s.train.id = :id", TrainDate.class)
+                .setParameter("id", trainId);
+        if (graphName.length() != 0) {
+            EntityGraph entityGraph = entityManager.getEntityGraph(graphName);
+            query.setHint("javax.persistence.fetchgraph", entityGraph);
+        }
+        return query.getResultList();
     }
 
     @Override

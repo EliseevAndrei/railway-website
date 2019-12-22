@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityGraph;
+import javax.persistence.Query;
 import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -63,8 +65,9 @@ public class TrainDAOImpl extends AbstractDAO<Train>
     @Override
     public List<Carriage> getCarriages(long trainId, long trainDateId,
                                        int depRoutePieceSerialNumber,
-                                       int arrRoutePieceSerialNumber) {
-        List<Carriage> carriages = super.entityManager.createQuery(
+                                       int arrRoutePieceSerialNumber,
+                                       String graphName) {
+        Query query = super.entityManager.createQuery(
                 "select distinct carriage from Carriage carriage\n" +
                         "join fetch carriage.places place\n" +
                         "where carriage.train.id = :trainId and place.id not in (" +
@@ -77,20 +80,29 @@ public class TrainDAOImpl extends AbstractDAO<Train>
                 .setParameter("trainDateId", trainDateId)
                 .setParameter("trainId", trainId)
                 .setParameter("depRoutePieceSerialNumber", depRoutePieceSerialNumber)
-                .setParameter("arrRoutePieceSerialNumber", arrRoutePieceSerialNumber)
-                .getResultList();
+                .setParameter("arrRoutePieceSerialNumber", arrRoutePieceSerialNumber);
+        if (graphName.length() != 0) {
+            EntityGraph entityGraph = entityManager.getEntityGraph(graphName);
+            query.setHint("javax.persistence.fetchgraph", entityGraph);
+        }
+        List<Carriage> carriages = query.getResultList();
         logger.info("{}", carriages.get(0).getPlaces());
         return carriages;
     }
 
     @Override
-    public List<Carriage> getCarriages(long trainId) {
-        return super.entityManager.createQuery(
+    public List<Carriage> getCarriages(long trainId, String graphName) {
+        Query query = super.entityManager.createQuery(
                 "select distinct carriage from Carriage carriage\n" +
                         "left join fetch carriage.places place\n" +
                         "where carriage.train.id = :trainId", Carriage.class)
-                .setParameter("trainId", trainId)
-                .getResultList();
+                .setParameter("trainId", trainId);
+        if (graphName.length() != 0) {
+            EntityGraph entityGraph = entityManager.getEntityGraph(graphName);
+            query.setHint("javax.persistence.fetchgraph", entityGraph);
+        }
+        return query.getResultList();
+
     }
 
 

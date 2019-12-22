@@ -1,9 +1,9 @@
 package com.eliseev.app.dao;
 
-import com.eliseev.app.TestConfig;
+import com.eliseev.app.dto.additional.TrainRouteDTO;
+import com.eliseev.app.models.TrainDate;
+import com.eliseev.app.repository.custom.StationDAO;
 import com.eliseev.app.repository.custom.TrainDateDAO;
-import com.eliseev.app.services.StationService;
-import com.eliseev.app.dto.TrainRouteDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,14 +19,14 @@ import static org.junit.Assert.assertNotNull;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = DaoTestConfig.class)
 public class TrainDateDAOTest {
 
     @Autowired
     private TrainDateDAO trainDateDAO;
 
     @Autowired
-    private StationService stationService;
+    private StationDAO stationDAO;
 
     @Test
     @Transactional
@@ -39,21 +39,27 @@ public class TrainDateDAOTest {
     @Test
     @Transactional
     public void findOne() {
-        assertNotNull(trainDateDAO.findOne(31));
-        assertNotNull(trainDateDAO.findOne(33));
+        TrainDate trainDate;
+        trainDate = trainDateDAO.findOne(31, "fullTrainDate");
+        assertNotNull(trainDate);
+        assertNotNull(trainDate.getTrain());
+
+        trainDate = trainDateDAO.findOne(33, "fullTrainDate");
+        assertNotNull(trainDate);
+        assertNotNull(trainDate.getTrain());
     }
 
     @Test
     @Transactional
     public void findTrainDateByTrainId() {
-        assertEquals(2, trainDateDAO.findDatesByTrainId(25).size());
-        assertEquals(3, trainDateDAO.findDatesByTrainId(23).size());
+        assertEquals(2, trainDateDAO.findDatesByTrainId(25, "fullTrainDate").size());
+        assertEquals(3, trainDateDAO.findDatesByTrainId(23, "fullTrainDate").size());
     }
 
     @Test
     @Transactional
     public void findTrainDates() {
-        List<TrainRouteDTO> trainRouteDTOs = trainDateDAO.getTrainDates(stationService.get(4), stationService.get(22),
+        List<TrainRouteDTO> trainRouteDTOs = trainDateDAO.getTrainDates(stationDAO.findOne(4), stationDAO.findOne(22),
                 "2019-11-11 00:00:00", "2019-11-11 23:59:59");
         assertEquals(2, trainRouteDTOs.size());
         assertNotNull(trainRouteDTOs.stream()
@@ -65,7 +71,7 @@ public class TrainDateDAOTest {
                 .findAny()
                 .orElse(null));
 
-        trainRouteDTOs = trainDateDAO.getTrainDates(stationService.get(4), stationService.get(22),
+        trainRouteDTOs = trainDateDAO.getTrainDates(stationDAO.findOne(4), stationDAO.findOne(22),
                 "2019-12-11 00:00:00", "2019-12-11 23:59:59");
         assertEquals(1, trainRouteDTOs.size());
         assertEquals(23, (long) trainRouteDTOs.get(0).getTrain().getId());

@@ -1,4 +1,4 @@
-package com.eliseev.app;
+package com.eliseev.app.dao;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,10 +18,9 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScans(value = { @ComponentScan("com.eliseev.app.repository"),
-        @ComponentScan("com.eliseev.app.services") })
+@ComponentScans(value = @ComponentScan("com.eliseev.app.repository"))
 @EnableTransactionManagement(proxyTargetClass = true)
-public class TestConfig {
+public class DaoTestConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {

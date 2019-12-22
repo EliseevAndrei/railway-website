@@ -1,6 +1,6 @@
 package com.eliseev.app.controllers.rest;
 
-import com.eliseev.app.models.AbstractEntity;
+import com.eliseev.app.dto.AbstractDto;
 import com.eliseev.app.services.IService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.validation.Valid;
 import java.util.List;
 
-public abstract class AbstractRestController<E extends AbstractEntity,
+public abstract class AbstractRestController<E extends AbstractDto,
         S extends IService<E>> implements IRestController<E> {
 
     private Logger logger = LoggerFactory.getLogger(AbstractRestController.class);

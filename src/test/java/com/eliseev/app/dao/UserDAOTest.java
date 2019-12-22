@@ -1,6 +1,5 @@
 package com.eliseev.app.dao;
 
-import com.eliseev.app.TestConfig;
 import com.eliseev.app.models.User;
 import com.eliseev.app.repository.custom.RoleDAO;
 import com.eliseev.app.repository.custom.UserDAO;
@@ -16,9 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = DaoTestConfig.class)
 public class UserDAOTest {
 
     private Logger logger = LoggerFactory.getLogger(UserDAOTest.class);
@@ -53,6 +53,18 @@ public class UserDAOTest {
         User foundByName = userDAO.findByUsername("dron");
         User foundById = userDAO.findOne(9);
         assertEquals(foundById, foundByName);
+    }
+
+    @Test
+    @Transactional
+    public void findOne() {
+        User user = userDAO.findOne(9);
+        assertNotNull(user);
+        assertEquals(2, user.getRoles().size());
+
+        user = userDAO.findOne(6);
+        assertNotNull(user);
+        assertEquals(1, user.getRoles().size());
     }
 
 }

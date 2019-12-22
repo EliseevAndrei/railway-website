@@ -1,8 +1,7 @@
 package com.eliseev.app.controllers.rest;
 
-import com.eliseev.app.models.Ticket;
+import com.eliseev.app.dto.TicketDto;
 import com.eliseev.app.models.User;
-import com.eliseev.app.services.OrderService;
 import com.eliseev.app.services.TicketService;
 import com.eliseev.app.services.UserService;
 import org.slf4j.Logger;
@@ -24,17 +23,16 @@ public class TicketRestController {
     private TicketService ticketService;
 
     @Autowired
-    public TicketRestController(TicketService service,
-                                OrderService orderService) {
+    public TicketRestController(TicketService service) {
         this.ticketService = service;
     }
 
 
     @PostMapping("/order")
-    public Ticket orderTicket(Authentication authentication,
-                              @RequestBody Ticket ticket) {
+    public TicketDto orderTicket(Authentication authentication,
+                              @RequestBody TicketDto ticket) {
         logger.info("{}", ticket);
-        ticket.setUser((User) authentication.getPrincipal());
+        ticket.setUserId(((User) authentication.getPrincipal()).getId());
         return ticketService.create(ticket);
     }
 
