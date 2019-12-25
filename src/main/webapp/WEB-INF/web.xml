@@ -10,9 +10,16 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            /WEB-INF/dispatcher-servlet-context.xml
-            /WEB-INF/jpa-configuration.xml
+            classpath:dispatcher-servlet-context.xml,
+            classpath:jpa-configuration.xml
+            <!--/WEB-INF/dispatcher-servlet-context.xml
+            /WEB-INF/jpa-configuration.xml-->
         </param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>default</param-value>
     </context-param>
 
     <servlet>

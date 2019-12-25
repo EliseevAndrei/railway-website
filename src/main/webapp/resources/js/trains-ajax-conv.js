@@ -266,7 +266,7 @@ $(document).ready(function () {
 
 
         $.ajax({
-            url: '/trains/list',
+            url: '/trains/list/full',
             type: "POST",
             dataType: "json",
             contentType: "application/json",

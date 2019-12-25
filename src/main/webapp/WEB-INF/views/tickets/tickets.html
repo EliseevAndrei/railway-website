@@ -52,9 +52,9 @@
 
                 <tr th:each="ticket : ${tickets}">
                     <td th:text="${ticket.train.name}"></td>
-                    <td th:text="${ticket.depTrainRoutePiece.startStation.name}"></td>
+                    <td th:text="${ticket.depStation.name}"></td>
                     <td th:text="${#dates.format(ticket.depTime, 'yyyy-MM-dd HH:mm')}"></td>
-                    <td th:text="${ticket.arrTrainRoutePiece.endStation.name}"></td>
+                    <td th:text="${ticket.arrStation.name}"></td>
                     <td th:text="${#dates.format(ticket.arrTime, 'yyyy-MM-dd HH:mm')}"></td>
                     <!--<td th:text="${#dates.format(ticket.date, 'dd-MM-yyyy')}"></td>-->
                     <td th:text="${ticket.carriage.number}"></td>

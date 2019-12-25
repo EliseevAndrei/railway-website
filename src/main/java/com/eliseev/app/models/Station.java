@@ -37,4 +37,8 @@ public class Station extends AbstractEntity {
     @OneToMany(mappedBy = "endStation", cascade = CascadeType.ALL)
     private List<TrainRoutePiece> endStations = new ArrayList<>();
 
+    public Station(long id, @NotBlank(message = "Название станции обязательно") String name) {
+        super.id = id;
+        this.name = name;
+    }
 }

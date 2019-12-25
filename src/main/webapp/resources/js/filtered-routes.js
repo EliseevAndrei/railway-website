@@ -10,26 +10,21 @@ $(document).ready(function () {
         event.preventDefault();
 
         let selectedTrHtml = $(this).parent();
+        let depTrainRouteSerialNumber = selectedTrHtml.siblings("#startRoutePieceSerialNumber").text();
+        let arrTrainRouteSerialNumber = selectedTrHtml.siblings("#endRoutePieceSerialNumber").text();
+
         let ticket = {
             train: {
                 id: selectedTrHtml.siblings('#trainId').text()
             },
             depTime: selectedTrHtml.siblings('#depTime').text().replace("@", " "),
             arrTime: selectedTrHtml.siblings('#arrTime').text().replace("@", " "),
-            trainDate: {
-                id: selectedTrHtml.siblings("#trainDateId").text()
-            },
-            depTrainRoutePiece: {
-                id: selectedTrHtml.siblings("#startRoutePieceId").text(),
-                serialNumber: selectedTrHtml.siblings("#startRoutePieceSerialNumber").text()
-            },
-            arrTrainRoutePiece:{
-                id: selectedTrHtml.siblings("#endRoutePieceId").text(),
-                serialNumber: selectedTrHtml.siblings("#endRoutePieceSerialNumber").text()
-            }
+            trainDateId: selectedTrHtml.siblings("#trainDateId").text(),
+            depTrainRoutePieceId: selectedTrHtml.siblings("#startRoutePieceId").text(),
+            arrTrainRoutePieceId: selectedTrHtml.siblings("#endRoutePieceId").text()
         };
 
-        let href = `/trains/list/${ticket.train.id}/carriages/onDate/${ticket.trainDate.id}?depRoutePieceNumber=${ticket.depTrainRoutePiece.serialNumber}&arrRoutePieceNumber=${ticket.arrTrainRoutePiece.serialNumber}`;
+        let href = `/trains/list/${ticket.train.id}/carriages/onDate/${ticket.trainDateId}?depRoutePieceNumber=${depTrainRouteSerialNumber}&arrRoutePieceNumber=${arrTrainRouteSerialNumber}`;
         console.log(`href ${href}`);
         $.getJSON(href, function (response) {
             let carriages = response;

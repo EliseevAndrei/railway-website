@@ -32,11 +32,13 @@ public class TrainRestController extends AbstractRestController<SimpleTrainDto, 
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(path = "/full-trains/list",consumes = "application/json")
+    @PostMapping(path = "/full",consumes = "application/json")
     public TrainDto create(@Valid @RequestBody TrainDto dto) {
         logger.info("User send POST /<entities>/list with body {}", dto);
         return service.create(dto);
     }
+
+
 
     @GetMapping("/{id}/carriages/onDate/{trainDateId}")
     public List<CarriageDto> getCarriages(@PathVariable("id") long trainId,

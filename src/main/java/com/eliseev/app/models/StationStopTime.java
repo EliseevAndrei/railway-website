@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,8 +32,14 @@ import java.util.Date;
 @Table(name="station_stop_time")
 @NamedEntityGraph(name="fullStationStopTime",
         attributeNodes = {
-                @NamedAttributeNode("trainRoutePiece"),
+                @NamedAttributeNode(value="trainRoutePiece", subgraph = "stations"),
                 @NamedAttributeNode("trainDate")
+        },
+        subgraphs = {
+                @NamedSubgraph(name="stations", attributeNodes = {
+                        @NamedAttributeNode("startStation"),
+                        @NamedAttributeNode("endStation")
+                })
         })
 public class StationStopTime extends AbstractEntity {
 

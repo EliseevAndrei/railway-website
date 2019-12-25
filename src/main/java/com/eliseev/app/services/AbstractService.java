@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class AbstractService<E extends AbstractEntity, D extends AbstractDto,
         R extends IDAO<E>> implements IService<D> {
@@ -28,9 +28,8 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
     @Override
     public List<D> list() {
         List<E> entities = dao.findAll( "");
-        return entities.stream()
-                .map(e -> mapper.toDto(e))
-                .collect(Collectors.toList());
+        return mapper.toDto(entities, new ArrayList<>());
+
     }
 
     @Transactional

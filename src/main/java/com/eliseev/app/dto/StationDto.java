@@ -15,4 +15,9 @@ public class StationDto extends AbstractDto {
 
     private String name;
 
+    public StationDto(Long id, String name) {
+        super(id);
+        this.name = name;
+
+    }
 }

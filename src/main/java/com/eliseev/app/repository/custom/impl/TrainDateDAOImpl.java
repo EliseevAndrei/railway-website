@@ -1,13 +1,15 @@
 package com.eliseev.app.repository.custom.impl;
 
+import com.eliseev.app.dto.mapper.TrainMapper;
 import com.eliseev.app.models.Station;
 import com.eliseev.app.models.Train;
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.repository.AbstractDAO;
 import com.eliseev.app.repository.custom.TrainDateDAO;
-import com.eliseev.app.dto.additional.TrainRouteDTO;
+import com.eliseev.app.dto.TrainRouteDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityGraph;
@@ -22,8 +24,12 @@ public class TrainDateDAOImpl extends AbstractDAO<TrainDate>
 
     private Logger logger = LoggerFactory.getLogger(TrainDAOImpl.class);
 
-    public TrainDateDAOImpl() {
+    private TrainMapper trainMapper;
+
+    @Autowired
+    public TrainDateDAOImpl(TrainMapper trainMapper) {
         super(TrainDate.class);
+        this.trainMapper = trainMapper;
     }
 
     @Override
@@ -76,7 +82,7 @@ public class TrainDateDAOImpl extends AbstractDAO<TrainDate>
             train.setName((String) q[2]);
             trainRouteDTO = new TrainRouteDTO();
             trainRouteDTO.setTrainDateId(((BigInteger) q[1]).longValue());
-            trainRouteDTO.setTrain(train);
+            trainRouteDTO.setTrain(trainMapper.toDto(train));
             trainRouteDTOS.add(trainRouteDTO);
         }
 

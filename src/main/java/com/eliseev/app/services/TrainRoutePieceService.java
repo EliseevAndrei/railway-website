@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TrainRoutePieceService extends AbstractService<TrainRoutePiece, TrainRoutePieceDto, TrainRoutePieceDAO> {
@@ -29,9 +29,10 @@ public class TrainRoutePieceService extends AbstractService<TrainRoutePiece, Tra
 
     @Transactional
     public List<TrainRoutePieceDto> list(long trainId) {
-        return super.dao.findByTrainId(trainId, "fullTrainRoutePiece").stream()
-                .map(e -> trainRoutePieceMapper.toDto(e))
-                .collect(Collectors.toList());
+        return trainRoutePieceMapper.toDto(
+                super.dao.findByTrainId(trainId, "fullTrainRoutePiece"),
+                new ArrayList<>()
+        );
     }
 
     @Transactional(readOnly = true)
@@ -48,10 +49,10 @@ public class TrainRoutePieceService extends AbstractService<TrainRoutePiece, Tra
 
     @Override
     public List<TrainRoutePieceDto> list() {
-        return dao.findAll("fullTrainRoutePiece")
-                .stream()
-                .map(e -> trainRoutePieceMapper.toDto(e))
-                .collect(Collectors.toList());
+        return trainRoutePieceMapper.toDto(
+                dao.findAll("fullTrainRoutePiece"),
+                new ArrayList<>()
+        );
     }
 
     @Override

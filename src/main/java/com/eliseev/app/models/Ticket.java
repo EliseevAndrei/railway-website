@@ -31,14 +31,15 @@ import java.util.Date;
 @NamedEntityGraph(name="fullTicket",
         attributeNodes = {
                 @NamedAttributeNode("user"),
-                @NamedAttributeNode("trainDate"),
+                @NamedAttributeNode(value="trainDate", subgraph = "train"),
                 @NamedAttributeNode(value="depTrainRoutePiece", subgraph = "depStation"),
-                @NamedAttributeNode(value="arrTrainRoutePiece", subgraph = "endStation"),
+                @NamedAttributeNode(value="arrTrainRoutePiece", subgraph = "arrStation"),
                 @NamedAttributeNode(value="place", subgraph = "carriage")},
         subgraphs = {
                 @NamedSubgraph(name="depStation", attributeNodes = @NamedAttributeNode("startStation")),
                 @NamedSubgraph(name="arrStation", attributeNodes = @NamedAttributeNode("endStation")),
-                @NamedSubgraph(name="carriage", attributeNodes = @NamedAttributeNode("carriage"))
+                @NamedSubgraph(name="carriage", attributeNodes = @NamedAttributeNode("carriage")),
+                @NamedSubgraph(name="train", attributeNodes = @NamedAttributeNode("train"))
         })
 public class Ticket extends AbstractEntity {
 

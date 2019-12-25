@@ -7,8 +7,8 @@ import com.eliseev.app.repository.custom.StationStopTimeDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class StationStopTimeService extends AbstractService<StationStopTime, StationStopTimeDto, StationStopTimeDAO> {
@@ -24,11 +24,10 @@ public class StationStopTimeService extends AbstractService<StationStopTime, Sta
 
 
     public List<StationStopTimeDto> findStationsStopTimeByTrainDateId(Long id) {
-
-        return dao.findStationsStopTimeByTrainDateId(id, "fullStationStopTime")
-                .stream()
-                .map(e -> stationStopTimeMapper.toDto(e))
-                .collect(Collectors.toList());
+        return stationStopTimeMapper.toDto(
+                dao.findStationsStopTimeByTrainDateId(id, "fullStationStopTime"),
+                new ArrayList<>()
+        );
     }
 
     public StationStopTimeDto getStopTimeByTrainRouteIdAndTrainDateId(long trainRoutePieceId, long trainDateId) {
@@ -38,9 +37,10 @@ public class StationStopTimeService extends AbstractService<StationStopTime, Sta
 
     @Override
     public List<StationStopTimeDto> list() {
-        return super.dao.findAll("fullStationStopTime").stream()
-                .map(e -> stationStopTimeMapper.toDto(e))
-                .collect(Collectors.toList());
+        return stationStopTimeMapper.toDto(
+                super.dao.findAll("fullStationStopTime"),
+                new ArrayList<>()
+        );
     }
 
     @Override

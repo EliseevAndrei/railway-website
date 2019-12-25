@@ -1,20 +1,15 @@
 package com.eliseev.app.service;
 
-import com.eliseev.app.dao.DaoTestConfig;
-import com.eliseev.app.services.TrainService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 
-@ContextConfiguration(classes = DaoTestConfig.class)
 public class TrainServiceTest {
 
     private Logger logger = LoggerFactory.getLogger(TrainServiceTest.class);
 
-    @Autowired
-    private TrainService trainService;
+    /*@Autowired
+    private TrainService trainService;*/
 
     /*@Test
     public void createTrain() {

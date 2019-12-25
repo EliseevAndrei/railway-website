@@ -30,8 +30,8 @@
         <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>
     </form><br>
 
-    <p>Станция отправления: <span th:text="${dates[0].firstStation.trainRoutePiece.startStation.name}"></span></p>
-    <p>Станция прибытия: <span th:text="${dates[0].lastStation.trainRoutePiece.endStation.name}"></span></p>
+    <p>Станция отправления: <span th:text="${dates[0][0].trainRoutePiece.startStation.name}"></span></p>
+    <p>Станция прибытия: <span th:text="${dates[0][1].trainRoutePiece.endStation.name}"></span></p>
 
     <table class="table table-striped customDataTable">
         <thead>
@@ -50,9 +50,9 @@
             <!--<td th:text="${train.id}"></td>-->
             <td th:text="${iStat.index} + 1 + '.'"></td>
             <!--<td th:text="${date.firstStation.trainRoutePiece.startStation.name}"></td>-->
-            <td th:text="${#dates.format(date.firstStation.departureTime, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="${#dates.format(date[0].departureTime, 'dd-MM-yyyy HH:mm')}"></td>
             <!--<td th:text="${date.lastStation.trainRoutePiece.endStation.name}"></td>-->
-            <td th:text="${#dates.format(date.lastStation.arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="${#dates.format(date[1].arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
             <td></td>
         </tr>
         </tbody>

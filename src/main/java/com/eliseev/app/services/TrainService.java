@@ -1,14 +1,15 @@
 package com.eliseev.app.services;
 
 import com.eliseev.app.dto.CarriageDto;
-import com.eliseev.app.dto.PlaceDto;
 import com.eliseev.app.dto.SimpleTrainDto;
 import com.eliseev.app.dto.TrainDto;
-import com.eliseev.app.dto.TrainRoutePieceDto;
 import com.eliseev.app.dto.mapper.CarriageMapper;
 import com.eliseev.app.dto.mapper.SimpleTrainMapper;
 import com.eliseev.app.dto.mapper.TrainMapper;
+import com.eliseev.app.models.Carriage;
+import com.eliseev.app.models.Place;
 import com.eliseev.app.models.Train;
+import com.eliseev.app.models.TrainRoutePiece;
 import com.eliseev.app.repository.custom.TrainDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -42,18 +43,22 @@ public class TrainService extends AbstractService<Train, SimpleTrainDto, TrainDA
 
     @Transactional
     public TrainDto create(TrainDto train) {
-        if (train.getTrainRoutePieceList().size() > 0) {
-            for (TrainRoutePieceDto trainRoutePiece : train.getTrainRoutePieceList()) {
-                trainRoutePiece.setTrainId(train.getId());
+        Train trainEntity = trainMapper.toEntity(train);
+
+
+        if (trainEntity.getTrainRoutePieceList().size() > 0) {
+            for (TrainRoutePiece trainRoutePiece : trainEntity.getTrainRoutePieceList()) {
+                trainRoutePiece.setTrain(trainEntity);
             }
         }
-        for(CarriageDto carriage : train.getCarriages()) {
-            carriage.setTrainId(train.getId());
-            for (PlaceDto place : carriage.getPlaces()) {
-                place.setCarriageId(carriage.getId());
+        for(Carriage carriage : trainEntity.getCarriages()) {
+            carriage.setTrain(trainEntity);
+            for (Place place : carriage.getPlaces()) {
+                place.setCarriage(carriage);
             }
         }
-        return trainMapper.toDto(super.dao.save(trainMapper.toEntity(train)));
+
+        return trainMapper.toDto(super.dao.save(trainEntity));
     }
 
     /*@Transactional
@@ -89,18 +94,20 @@ public class TrainService extends AbstractService<Train, SimpleTrainDto, TrainDA
     public List<CarriageDto> getCarriages(long trainId, long trainDateId,
                                 int depRoutePieceSerialNumber,
                                 int arrRoutePieceSerialNumber) {
-        return super.dao.getCarriages(trainId, trainDateId, depRoutePieceSerialNumber, arrRoutePieceSerialNumber, "fullCarriage")
-                .stream()
-                .map(e -> carriageMapper.toDto(e))
-                .collect(Collectors.toList());
+
+        return carriageMapper.toDto(
+                super.dao.getCarriages(trainId, trainDateId, depRoutePieceSerialNumber, arrRoutePieceSerialNumber, "fullCarriage"),
+                new ArrayList<>()
+        );
     }
 
     @Transactional(readOnly = true)
     public List<CarriageDto> getCarriages(long trainId) {
-        return super.dao.getCarriages(trainId, "fullCarriage")
-                .stream()
-                .map(e -> carriageMapper.toDto(e))
-                .collect(Collectors.toList());
+        return carriageMapper.toDto(
+                super.dao.getCarriages(trainId, "fullCarriage"),
+                new ArrayList<>()
+        );
+
     }
 
 

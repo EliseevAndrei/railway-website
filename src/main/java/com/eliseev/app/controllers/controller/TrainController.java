@@ -1,7 +1,7 @@
 package com.eliseev.app.controllers.controller;
 
 import com.eliseev.app.dto.StationDto;
-import com.eliseev.app.dto.additional.TrainRouteDTO;
+import com.eliseev.app.dto.TrainRouteDTO;
 import com.eliseev.app.models.Train;
 import com.eliseev.app.services.RouteService;
 import com.eliseev.app.services.StationService;

@@ -1,6 +1,6 @@
 package com.eliseev.app.dao;
 
-import com.eliseev.app.dto.additional.TrainRouteDTO;
+import com.eliseev.app.dto.TrainRouteDTO;
 import com.eliseev.app.models.TrainDate;
 import com.eliseev.app.repository.custom.StationDAO;
 import com.eliseev.app.repository.custom.TrainDateDAO;

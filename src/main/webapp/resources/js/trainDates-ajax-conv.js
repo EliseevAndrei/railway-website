@@ -64,7 +64,9 @@ $(document).ready(function () {
                     arriveTime = $(this).children(".td-arriveTime").first().children(".arriveTime").first().val();
                     console.log(arriveTime);
                     object = {
-                        trainStationId: trainStationId,
+                        trainRoutePiece: {
+                            id: trainStationId
+                        },
                         arriveTime: arriveTime,
                         departureTime: departureTime
                     };

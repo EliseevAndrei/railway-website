@@ -8,8 +8,8 @@ import com.eliseev.app.repository.custom.TicketDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TicketService extends AbstractService<Ticket, TicketDto, TicketDAO> {
@@ -24,17 +24,18 @@ public class TicketService extends AbstractService<Ticket, TicketDto, TicketDAO>
     }
 
     public List<TicketDto> listForUser(User user) {
-        return dao.listByUserId(user.getId(), "fullTicket")
-                .stream()
-                .map(e -> ticketMapper.toDto(e))
-                .collect(Collectors.toList());
+        return ticketMapper.toDto(
+                dao.listByUserId(user.getId(), "fullTicket"),
+                new ArrayList<>()
+        );
     }
 
     @Override
     public List<TicketDto> list() {
-        return super.dao.findAll("fullTicket").stream()
-                .map(e -> ticketMapper.toDto(e))
-                .collect(Collectors.toList());
+        return ticketMapper.toDto(
+                super.dao.findAll("fullTicket"),
+                new ArrayList<>()
+        );
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.eliseev.app.services;
 
 import com.eliseev.app.dto.StationDto;
-import com.eliseev.app.dto.additional.TrainRouteDTO;
+import com.eliseev.app.dto.TrainRouteDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

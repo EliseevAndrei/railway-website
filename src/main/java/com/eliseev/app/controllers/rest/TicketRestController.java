@@ -36,7 +36,4 @@ public class TicketRestController {
         return ticketService.create(ticket);
     }
 
-
-
-
 }

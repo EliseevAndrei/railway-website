@@ -6,6 +6,7 @@ import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
 import java.util.Objects;
 
 public abstract class AbstractMapper<E extends AbstractEntity, D extends AbstractDto>
@@ -36,6 +37,23 @@ public abstract class AbstractMapper<E extends AbstractEntity, D extends Abstrac
                 : mapper.map(entity, dtoClass);
     }
 
+
+    @Override
+    public <S extends Collection<D>, V extends Collection<E>> V toEntity(S source, V destination) {
+        source.forEach(e -> {
+            destination.add(toEntity(e));
+        });
+        return destination;
+    }
+
+    @Override
+    public <S extends Collection<E>, V extends Collection<D>> V toDto(S source, V destination) {
+        source.forEach(e -> {
+            destination.add(toDto(e));
+        });
+        return destination;
+    }
+
     Converter<E, D> toDtoConverter() {
         return context -> {
             E source = context.getSource();
@@ -54,7 +72,10 @@ public abstract class AbstractMapper<E extends AbstractEntity, D extends Abstrac
         };
     }
 
+
     void mapSpecificFields(E source, D destination) { }
 
     void mapSpecificFields(D source, E destination){ }
+
+
 }

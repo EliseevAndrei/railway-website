@@ -1,23 +1,14 @@
 package com.eliseev.app.service;
 
-import com.eliseev.app.dao.DaoTestConfig;
-import com.eliseev.app.services.StationService;
-import com.eliseev.app.services.StationStopTimeService;
-import com.eliseev.app.services.TrainDateService;
-import com.eliseev.app.services.TrainRoutePieceService;
-import com.eliseev.app.services.TrainService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 
-@ContextConfiguration(classes = DaoTestConfig.class)
 public class TrainDateServiceTest {
 
     Logger logger = LoggerFactory.getLogger(TrainDateServiceTest.class);
 
-    @Autowired
+    /*@Autowired
     private TrainDateService trainDateService;
 
     @Autowired
@@ -30,7 +21,7 @@ public class TrainDateServiceTest {
     private TrainRoutePieceService trainRoutePieceService;
 
     @Autowired
-    private StationStopTimeService stationStopTimeService;
+    private StationStopTimeService stationStopTimeService;*/
 
     /*@Test
     @Transactional

@@ -24,10 +24,10 @@ public class StationStopTimeDto extends AbstractDto {
     @NotNull(message = "arrive date  is wrong")
     private Date arriveTime;
     @JsonDeserialize(using = CustomRestDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ", timezone = "Europe/Moscow")
     @NotNull(message = "departure date  is wrong")
     private Date departureTime;
-    private Long trainRoutePieceId;
+    private TrainRoutePieceDto trainRoutePiece;
     private Long trainDateId;
-
 
 }

@@ -1,7 +1,7 @@
 package com.eliseev.app.controllers.rest;
 
+import com.eliseev.app.dto.StationStopTimeDto;
 import com.eliseev.app.dto.TrainDateDto;
-import com.eliseev.app.dto.additional.StationStopTimeDTO;
 import com.eliseev.app.services.TrainDateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class TrainDateRestController extends AbstractRestController<TrainDateDto
     }
 
     @PostMapping("/stations-sequence")
-    public TrainDateDto create(@RequestBody List<StationStopTimeDTO> stationStopTimeDTO, @PathVariable(required = false) long ...id) {
+    public TrainDateDto create(@RequestBody List<StationStopTimeDto> stationStopTimeDTO, @PathVariable(required = false) long ...id) {
         logger.info("User send POST /trains/list/{}/stations/list with body {}", id[0], stationStopTimeDTO);
         return service.create(stationStopTimeDTO, id[0]);
     }
