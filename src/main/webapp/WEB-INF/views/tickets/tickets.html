@@ -29,23 +29,23 @@
             <table class="table table-striped customDataTable">
                 <thead>
                 <tr>
-                    <th rowspan="2">Поезд</th>
-                    <th rowspan="2">Станция отправления</th>
-                    <th rowspan="2">Время отправления</th>
-                    <th rowspan="2">Станция прибытия</th>
-                    <th rowspan="2">Время прибытия</th>
-                    <th colspan="2">Вагон</th>
-                    <th colspan="2">Место</th>
-                    <th colspan="3">Данные пассажира</th>
+                    <th rowspan="2" th:text="#{label.train}">Поезд</th>
+                    <th rowspan="2" th:text="#{trainRoute.depStation}">Станция отправления</th>
+                    <th rowspan="2" th:text="#{stationStopTime.depTime}">Время отправления</th>
+                    <th rowspan="2" th:text="#{trainRoute.arrStation}">Станция прибытия</th>
+                    <th rowspan="2" th:text="#{stationStopTime.arrTime}">Время прибытия</th>
+                    <th colspan="2" th:text="#{label.carriage}">Вагон</th>
+                    <th colspan="2" th:text="#{label.place}">Место</th>
+                    <th colspan="3" th:text="#{label.userData}">Данные пассажира</th>
                 </tr>
                 <tr>
-                    <th>Номер</th>
-                    <th>Тип</th>
-                    <th>Номер</th>
-                    <th>Тип</th>
-                    <th>Фамилия пассажира</th>
-                    <th>Имя</th>
-                    <th>Паспорт</th>
+                    <th th:text="#{label.number}">Номер</th>
+                    <th th:text="#{label.type}">Тип</th>
+                    <th th:text="#{label.number}">Номер</th>
+                    <th th:text="#{label.type}">Тип</th>
+                    <th th:text="#{label.user.surname}">Фамилия пассажира</th>
+                    <th th:text="#{user.name}">Имя</th>
+                    <th th:text="#{user.passportNumber}">Паспорт</th>
                 </tr>
                 </thead>
                 <tbody>

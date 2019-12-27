@@ -8,7 +8,7 @@ $(document).ready(function () {
         errorsDOMElement.empty();
 
         $.validator.addMethod("dataTime", function (value, element) {
-            return this.optional(element) || /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01]) (00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$/.test(value);
+            return this.optional(element) || /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01]) ([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(value);
         }, "Формат даты неверн!");
 
         let validator = $("#form").validate({
@@ -84,7 +84,8 @@ $(document).ready(function () {
                     contentType: "application/json",
                     data: JSON.stringify(objects),
                     success: function (data, textStatus, xhr) {
-                        $(location).attr('href', $('#form .reload').attr('href'));
+                        let back = $('#form .reload').attr('href');
+                        $(location).attr('href', back.slice(0, back.length - 8));
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         let errorBlock = $('#form #errors');

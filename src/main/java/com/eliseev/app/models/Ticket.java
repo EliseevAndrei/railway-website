@@ -66,10 +66,6 @@ public class Ticket extends AbstractEntity {
     @JoinColumn(name="user_id")
     private User user;
 
-    /*@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="train_id")
-    private Train train;*/
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="train_date_id")
     private TrainDate trainDate;
@@ -85,9 +81,5 @@ public class Ticket extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="place_id")
     private Place place;
-
-    /*@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="carriage_id")
-    private Carriage carriage;*/
 
 }

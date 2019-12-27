@@ -6,6 +6,7 @@ import com.eliseev.app.models.StationStopTime;
 import com.eliseev.app.repository.custom.StationStopTimeDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class StationStopTimeService extends AbstractService<StationStopTime, Sta
     }
 
 
+    @Transactional(readOnly = true)
     public List<StationStopTimeDto> findStationsStopTimeByTrainDateId(Long id) {
         return stationStopTimeMapper.toDto(
                 dao.findStationsStopTimeByTrainDateId(id, "fullStationStopTime"),
@@ -30,12 +32,14 @@ public class StationStopTimeService extends AbstractService<StationStopTime, Sta
         );
     }
 
+    @Transactional(readOnly = true)
     public StationStopTimeDto getStopTimeByTrainRouteIdAndTrainDateId(long trainRoutePieceId, long trainDateId) {
         return stationStopTimeMapper.toDto(
                 super.dao.getStopTimeByTrainRouteIdAndTrainDateId(trainRoutePieceId, trainDateId, "fullStationStopTime"));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<StationStopTimeDto> list() {
         return stationStopTimeMapper.toDto(
                 super.dao.findAll("fullStationStopTime"),
@@ -44,6 +48,7 @@ public class StationStopTimeService extends AbstractService<StationStopTime, Sta
     }
 
     @Override
+    @Transactional(readOnly = true)
     public StationStopTimeDto get(long id) {
         return stationStopTimeMapper.toDto(super.dao.findOne(id, "fullStationStopTime"));
     }

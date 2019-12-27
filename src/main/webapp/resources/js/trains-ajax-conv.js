@@ -19,12 +19,6 @@ $(document).ready(function () {
                     $(this).val(response[$(this).attr('id')]);
 
                 });
-                /*$(".myForm #arriveTime, .myForm #departureTime").each(function () {
-                    let str = response[$(this).attr('id')].replace("@", " ");
-                    str = str.slice(0, 16);
-
-                    $(this).val(str);
-                });*/
             });
             $('.train-edit-form #exampleModal').modal();
         } else {
@@ -50,7 +44,6 @@ $(document).ready(function () {
             /*$.ajaxSetup({
                 async: true
             });*/
-
         }
     });
 
@@ -76,7 +69,6 @@ $(document).ready(function () {
             object[$(this).attr('id')] = $(this).val();
         });
 
-
         if (object.id == -1) {
             train = object;
 
@@ -94,9 +86,6 @@ $(document).ready(function () {
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     let errorBlock = $('.train-edit-form #errors');
-                    console.log(textStatus);
-                    console.log(errorThrown);
-                    console.log(xhr.responseText);
                     $('.train-edit-form #errors').append(xhr.responseText);
                     let response = JSON.parse(xhr.responseText);
                     response.errors.forEach(function (error) {
@@ -129,7 +118,7 @@ $(document).ready(function () {
             '                                </td>\n' +
             '\n' +
             '                                <td class="distance">\n' +
-            '                                    <input type="number" required min="0" class="form-control mb-2 mr-sm-2" id="distance">\n' +
+            '                                    <input type="number" required min="0" class="form-control mb-2 mr-sm-2" id="distance" name="distance">\n' +
             '                                </td>\n' +
             '\n' +
             '                            </tr>')
@@ -149,7 +138,7 @@ $(document).ready(function () {
             '                                                        </select>\n' +
             '                                                    </td>\n' +
             '                                                    <td class="carriageAmount">\n' +
-            '                                                        <input type="number" required min="0" style="width: 70px" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                        <input type="number" required min="0" style="width: 70px" class="form-control mb-2 mr-sm-2" name="carriageAmount">\n' +
             '                                                    </td>\n' +
             '                                                    <td>\n' +
             '                                                        <ul class="placeType">\n' +
@@ -166,14 +155,14 @@ $(document).ready(function () {
             '                                                    <td>\n' +
             '                                                        <ul class="amountLeftBorder">\n' +
             '                                                            <li>\n' +
-            '                                                                <input type="number" required min="0" style="width: 70px" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                                <input type="number" required min="0" style="width: 70px" class="form-control mb-2 mr-sm-2" name="amountLeftBorder">\n' +
             '                                                            </li>\n' +
             '                                                        </ul>\n' +
             '                                                    </td>\n' +
             '                                                    <td>\n' +
             '                                                        <ul class="amountRightBorder">\n' +
             '                                                            <li>\n' +
-            '                                                                <input type="number" required min="0" style="width: 70px" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                                <input type="number" required min="0" style="width: 70px" class="form-control mb-2 mr-sm-2" name="amountRightBorder">\n' +
             '                                                            </li>\n' +
             '                                                        </ul>\n' +
             '                                                    </td>\n' +
@@ -214,13 +203,13 @@ $(document).ready(function () {
 
         parent.find('.amountLeftBorder').append(
             '                                                            <li>\n' +
-            '                                                                <input type="number" required min="0" style="width: 70px" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                                <input type="number" name="amountLeftBorder" required min="0" style="width: 70px" class="form-control mb-2 mr-sm-2">\n' +
             '                                                            </li>'
         );
 
         parent.find('.amountRightBorder').append(
             '                                                           <li>\n' +
-            '                                                                <input type="number" required min="0" style="width: 70px" class="form-control mb-2 mr-sm-2">\n' +
+            '                                                                <input type="number" name="amountRightBorder" required min="0" style="width: 70px" class="form-control mb-2 mr-sm-2">\n' +
             '                                                            </li>'
         );
 
@@ -237,52 +226,94 @@ $(document).ready(function () {
     });
 
 
+    let errorsDomElement = $('.train-create-form #errors');
+
     $(".train-create-form #train-create-submit").click(function (e) {
         e.preventDefault();
-        let routePieces = [];
-        let routePiece = {};
 
-        $('#stations-table tr').each(function () {
-            if ($(this).attr('class') !== 'table-head') {
-                routePiece = {
-                    serialNumber: $(this).children(".serialNumber").text(),
-                    startStation: {
-                        id: $(this).children('.startStation').children('#startStation').val()
-                    },
-                    endStation: {
-                        id: $(this).children('.endStation').children('#endStation').val()
-                    },
-                    distance: $(this).children('.distance').children('#distance').val()
-                };
-                console.log(routePiece);
-                routePieces.push(routePiece);
+        errorsDomElement.empty();
+
+        let validator = $('#train-create-form').validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                distance: {
+                    required: true,
+                    min: 0
+                },
+                carriageAmount: {
+                    required: true
+                },
+                amountLeftBorder: {
+                    required: true,
+                    min: 0
+                },
+                amountRightBorder: {
+                    required: true,
+                    min: 0
+                }
+            },
+            messages: {
+                name: "Название поезда обязательно!",
+                distance: "Дистанция между станциями обязательна!",
+                carriageAmount: "Количество поездов обязательно!",
+                amountLeftBorder: "Левая граница промежутка мест обязательна!",
+                amountRightBorder: "Правая граница промежутка мест обязательна!"
+            },
+            errorPlacement: function(error, element) {
+                $('.train-create-form #errors').append(error);
+                $('.train-create-form #errors').append("<br>");
             }
         });
-        train.trainRoutePieceList = routePieces;
-        train.name = $('#train-card #name').val();
-        train.carriages = createCarriagesWithPlaces();
 
-        console.log(train);
+        if (validator.form()) {
+            let routePieces = [];
+            let routePiece = {};
 
+            $('#stations-table tr').each(function () {
+                if ($(this).attr('class') !== 'table-head') {
+                    routePiece = {
+                        serialNumber: $(this).children(".serialNumber").text(),
+                        startStation: {
+                            id: $(this).children('.startStation').children('#startStation').val()
+                        },
+                        endStation: {
+                            id: $(this).children('.endStation').children('#endStation').val()
+                        },
+                        distance: $(this).children('.distance').children('#distance').val()
+                    };
+                    console.log(routePiece);
+                    routePieces.push(routePiece);
+                }
+            });
+            train.trainRoutePieceList = routePieces;
+            train.name = $('#train-card #name').val();
+            train.carriages = createCarriagesWithPlaces();
 
-        $.ajax({
-            url: '/trains/list/full',
-            type: "POST",
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(train),
-            success: function (data, textStatus, xhr) {
-                $(location).attr('href', "/trains");
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                let errorBlock = $('.myForm #errors');
-                let response = JSON.parse(xhr.responseText);
-                response.errors.forEach(function (error) {
-                    errorBlock.append("<p>" + error + "</p>");
-                });
-                errorBlock.css("display", "block");
-            }
-        })
+            console.log(train);
+
+            $.ajax({
+                url: '/trains/list/full',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(train),
+                success: function (data, textStatus, xhr) {
+                    $(location).attr('href', "/trains");
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    let errorBlock = $('.myForm #errors');
+                    let response = JSON.parse(xhr.responseText);
+                    response.errors.forEach(function (error) {
+                        errorBlock.append("<p>" + error + "</p>");
+                    });
+                    errorBlock.css("display", "block");
+                }
+            })
+        } else {
+            $('.train-create-form #errors').css('display', 'block');
+        }
 
     });
 
@@ -290,9 +321,18 @@ $(document).ready(function () {
 
     $('.rBtn').click(function (event) {
         event.preventDefault();
-        var href = $(this).attr('href');
+        let href = $(this).attr('href');
         deleteHref = href;
         $(".myRemove .dBtn").attr('href', href);
+
+        $.getJSON(href + "/tickets/amount", function (response) {
+            let delMes = $("#delete-message");
+            delMes.empty();
+            if (response > 0) {
+                delMes.append(`<p>На данный поезд куплено ${response} не завершенных билетов</p><p>Все билеты будут удалены!!!</p>`);
+            }
+        });
+
         $('.myRemove #exampleModal').modal();
     });
 
@@ -313,8 +353,6 @@ $(document).ready(function () {
     $('.getCarriagesBtn').click(function(e) {
         e.preventDefault();
         let href =  $(this).attr('href');
-        console.log("askldfjal;skdfj;alsjfl;kasjdflkasj");
-        console.log(href);
         getAllCarriages(href);
     })
 });
@@ -459,6 +497,7 @@ let getAllCarriages = function (href) {
         });
         htmlText += '</div>';
 
+        $('.train-carriages #carriage-card').empty();
         $('.train-carriages #carriage-card').append(htmlText);
 
         $('#train-carriages').modal();

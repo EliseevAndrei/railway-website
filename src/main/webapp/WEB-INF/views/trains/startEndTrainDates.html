@@ -18,6 +18,7 @@
             crossorigin="anonymous"></script>
     <script th:src="@{/resources/js/customDataTable.js}"></script>
     <script th:src="@{/resources/js/locale.js}"></script>
+    <script th:src="@{/resources/js/intermediate-trainDates.js}"></script>
 </head>
 <body class="bg-light">
 
@@ -26,21 +27,22 @@
 
 <div class="container bg-white mt-5 py-2">
     <form action='dates/form' method="get">
-        <button class="btn btn-outline-primary nBtn mt-2" th:text="#{button.new}">Создать дату</button>
+        <button class="btn btn-outline-primary nBtn mt-2" th:text="#{button.new.date}">Создать дату</button>
         <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>
-    </form><br>
+    </form>
+    <br>
 
-    <p>Станция отправления: <span th:text="${dates[0][0].trainRoutePiece.startStation.name}"></span></p>
-    <p>Станция прибытия: <span th:text="${dates[0][1].trainRoutePiece.endStation.name}"></span></p>
+    <p><span th:text="#{trainRoute.depStation}">Станция отправления</span>: <span th:text="${dates[0][0].trainRoutePiece.startStation.name}"></span></p>
+    <p><span th:text="#{trainRoute.arrStation}">Станция прибытия</span>: <span th:text="${dates[0][1].trainRoutePiece.endStation.name}"></span></p>
 
     <table class="table table-striped customDataTable">
         <thead>
         <tr>
             <th></th>
-     <!--       <th>Начальная станция</th>-->
-            <th>Время отправления</th>
-            <!--<th>Конечная стацния</th>-->
-            <th>Время прибытия</th>
+            <th th:text="#{stationStopTime.depTime}">Время отправления</th>
+            <th th:text="#{stationStopTime.arrTime}">Время прибытия</th>
+            <th th:text="#{stationStopTime.intermediate.stations}">Промежуточные остановки</th>
+            <th th:text="#{label.actions}">Действия</th>
             <th></th>
         </tr>
         </thead>
@@ -53,12 +55,88 @@
             <td th:text="${#dates.format(date[0].departureTime, 'dd-MM-yyyy HH:mm')}"></td>
             <!--<td th:text="${date.lastStation.trainRoutePiece.endStation.name}"></td>-->
             <td th:text="${#dates.format(date[1].arriveTime, 'dd-MM-yyyy HH:mm')}"></td>
+            <td>
+                <a class="btn btn-outline-info inter-show-btn" th:href="@{dates/list/} + ${date[0].trainDateId} + @{/intermediate-stops}" th:text="#{button.show}">Посмотреть</a>
+            </td>
+            <td>
+                <a class="btn btn-outline-info del-btn" th:href="@{dates/list/} + ${date[0].trainDateId}" th:text="#{button.delete}">Удалить</a>
+            </td>
             <td></td>
         </tr>
         </tbody>
     </table>
 </div>
 
+<div class="intermediate-dates">
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         data-backdrop="static" data-keyboard="false"
+         id="inter-dates">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{stationStopTime.intermediate.stations}">Промежуточные остановки</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped intermediate-table">
+                        <thead>
+                        <tr>
+                            <th th:text="#{label.departure}">Отправление</th>
+                            <th th:text="#{label.arrive}">Время</th>
+                            <th th:text="#{label.arrive}">Прибытие</th>
+                            <th th:text="#{label.time}">Время</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <!--<div class="alert-danger text-dark p-2">-->
+                    <!--<span th:text="#{text.sure}">Are you sure?</span>-->
+                    <!--<span id="delete-message"></span>-->
+                    <!--</div>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
+                            th:text="#{button.close}">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="myRemove">
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         data-backdrop="static" data-keyboard="false"
+         id="exampleModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{button.remove}">Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert-danger text-dark p-2">
+                        <span th:text="#{text.sure}">Are you sure?</span>
+                        <span id="delete-message"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" th:text="#{button.close}">
+                        Close
+                    </button>
+                    <a class="btn btn-outline-danger dBtn" href="" id="delete-submit" th:text="#{button.remove}">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

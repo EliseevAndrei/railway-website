@@ -27,12 +27,12 @@
     <table class="table table-hover">
         <thead class="bg-dark text-white">
         <tr>
-            <th>Станция</th>
-            <th>Время прибытия</th>
-            <th>Время отправления</th>
-            <th>Общие</th>
-            <th>Плацкарт</th>
-            <th>Купе</th>
+            <th th:text="#{label.station}">Станция</th>
+            <th th:text="#{stationStopTime.arrTime}">Время прибытия</th>
+            <th th:text="#{stationStopTime.depTime}">Время отправления</th>
+            <th  th:text="#{carriage.type.common}">Общие</th>
+            <th th:text="#{carriage.type.reclining}">Плацкарт</th>
+            <th th:text="#{carriage.type.coupe}">Купе</th>
             <th></th>
         </tr>
         </thead>

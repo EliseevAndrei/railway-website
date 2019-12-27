@@ -79,7 +79,9 @@ $(document).ready(function () {
     let deleteHref;
 
     $('.rBtn').click(function (event) {
+
         event.preventDefault();
+
         var href = $(this).attr('href');
         deleteHref = href;
         $(".myRemove .dBtn").attr('href', href);

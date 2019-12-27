@@ -3,6 +3,7 @@ package com.eliseev.app.controllers.rest;
 import com.eliseev.app.dto.CarriageDto;
 import com.eliseev.app.dto.SimpleTrainDto;
 import com.eliseev.app.dto.TrainDto;
+import com.eliseev.app.services.TicketService;
 import com.eliseev.app.services.TrainService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +26,14 @@ import java.util.List;
 public class TrainRestController extends AbstractRestController<SimpleTrainDto, TrainService> {
 
     private Logger logger = LoggerFactory.getLogger(TrainRestController.class);
+    private TicketService ticketService;
 
     @Autowired
-    public TrainRestController(TrainService service) {
+    public TrainRestController(
+            TrainService service,
+            TicketService ticketService) {
         super(service);
+        this.ticketService = ticketService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -37,8 +42,6 @@ public class TrainRestController extends AbstractRestController<SimpleTrainDto, 
         logger.info("User send POST /<entities>/list with body {}", dto);
         return service.create(dto);
     }
-
-
 
     @GetMapping("/{id}/carriages/onDate/{trainDateId}")
     public List<CarriageDto> getCarriages(@PathVariable("id") long trainId,
@@ -56,5 +59,10 @@ public class TrainRestController extends AbstractRestController<SimpleTrainDto, 
         return service.getCarriages(trainId);
     }
 
+    @GetMapping("/{trainId}/tickets/amount")
+    public Long getTicketAmountOnTrain(@PathVariable("trainId") Long trainId) {
+        logger.info("user send GET /trains/list/{trainId}/tickets/amount");
+        return ticketService.ticketAmountOnTrain(trainId);
+    }
 
 }

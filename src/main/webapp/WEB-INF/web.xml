@@ -12,8 +12,6 @@
         <param-value>
             classpath:dispatcher-servlet-context.xml,
             classpath:jpa-configuration.xml
-            <!--/WEB-INF/dispatcher-servlet-context.xml
-            /WEB-INF/jpa-configuration.xml-->
         </param-value>
     </context-param>
 

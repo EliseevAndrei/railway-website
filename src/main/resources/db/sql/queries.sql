@@ -122,4 +122,18 @@ where train_id = 1
          left join train_route_piece trp2 on trp2.id = ta.arr_train_route_piece_id
   where (trp1.serial_number between @max1 and @max2)
     and (trp2.serial_number between @max1 and @max2)
-  )
+  );
+
+----------------------------------------------------------
+
+select * from ticket t
+                join train_route_piece trpL on trpL.id = t.dep_train_route_piece_id
+                join train_route_piece trpR on trpR.id = t.arr_train_route_piece_id
+where train_date_id = 32
+  and (trpL.serial_number <= (select trp1.serial_number from train_route_piece trp1 where trp1.train_id = 25 and id = 42)
+    and trpR.serial_number >= (select trp2.serial_number from train_route_piece trp2 where trp2.train_id = 25 and id = 42))
+   or (
+            trpL.serial_number >= (select trp1.serial_number from train_route_piece trp1 where trp1.train_id = 25 and id = 37)
+          and trpR.serial_number <= (select trp2.serial_number from train_route_piece trp2 where trp2.train_id = 25 and id = 42)
+        )
+  and t.place_id = 2208

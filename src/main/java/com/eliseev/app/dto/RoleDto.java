@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Entity;
-import java.util.List;
 
 @Entity
 @Data
@@ -19,6 +18,6 @@ import java.util.List;
 public class RoleDto extends AbstractDto {
 
     private UserRoleEnum name;
-    private List<Long> usersId;
+    /*private List<Long> usersId;*/
 
 }

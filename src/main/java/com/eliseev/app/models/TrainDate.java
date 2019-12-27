@@ -39,6 +39,12 @@ public class TrainDate extends AbstractEntity {
     @ToString.Exclude
     private List<StationStopTime> stationStopTimes = new ArrayList<>();
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "trainDate", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<Ticket> tickets = new ArrayList<>();
+
     public TrainDate(Train train) {
         this.train = train;
     }

@@ -1,5 +1,6 @@
 package com.eliseev.app.controllers.controller;
 
+import com.eliseev.app.dto.RoleDto;
 import com.eliseev.app.dto.UserDto;
 import com.eliseev.app.models.UserRoleEnum;
 import com.eliseev.app.services.RoleService;
@@ -9,10 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/register")
 public class RegistrationController {
 
     private UserService userService;
@@ -27,11 +26,20 @@ public class RegistrationController {
     }
 
 
-    @PostMapping
+    @PostMapping("/register")
     public String processRegistration(@ModelAttribute UserDto user) {
         user.setPass(passwordEncoder.encode(user.getPass()));
-        user.getRoles().add(roleService.findByName(UserRoleEnum.USER));
-        userService.create(user);
+        RoleDto roleDto = roleService.findByName(UserRoleEnum.USER);
+        user.getRoles().add(roleDto);
+        UserDto createdUser = userService.create(user);
+        if (createdUser == null) {
+            return "error/NotUniqueUserError";
+        }
         return "redirect:/login";
+    }
+
+    @PostMapping("/login-error")
+    public String getLoginErrorPage() {
+        return "error/login-error";
     }
 }

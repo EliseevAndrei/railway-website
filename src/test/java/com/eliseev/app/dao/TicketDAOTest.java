@@ -11,6 +11,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -22,6 +29,9 @@ public class TicketDAOTest {
 
     @Autowired
     private TicketDAO ticketDAO;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Test
     @Transactional
@@ -65,6 +75,41 @@ public class TicketDAOTest {
         assertNotNull(ticket.getTrainDate());
         assertNotNull(ticket.getPlace());
         assertNotNull(ticket.getPlace().getCarriage());
+    }
+
+    @Test
+    @Transactional
+    public void findTicketByPlaceId() {
+
+        List<Ticket> ticketList =ticketDAO.findByPlaceId(2208L,
+                25L, 37L, 42L,
+                32L, "fullTicket");
+        assertEquals(2, ticketList.size());
+
+        entityManager.clear();
+
+        ticketList = ticketDAO.findByPlaceId(2210L,
+                25L, 37L, 39L,
+                32L, "fullTicket");
+        assertEquals(0, ticketList.size());
+    }
+
+    @Test
+    @Transactional
+    public void amountTicketByTrainIdAndDate() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = simpleDateFormat.parse("2019-11-10");
+        assertEquals(3, (long) ticketDAO.ticketCountWithTrainIdAndDate(25L, date));
+
+    }
+
+    @Test
+    @Transactional
+    public void amountTicketByStationIdAndDate() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = simpleDateFormat.parse("2019-11-10");
+        assertEquals(1, (long) ticketDAO.ticketAmountOnStationIdAndDate(16L, date));
+
     }
 
 }

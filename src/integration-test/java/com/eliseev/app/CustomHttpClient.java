@@ -16,6 +16,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +33,7 @@ public class CustomHttpClient {
 
     {
 
-        CredentialsProvider provider = new BasicCredentialsProvider();
+        /*CredentialsProvider provider = new BasicCredentialsProvider();
         UsernamePasswordCredentials  credentials
                 = new UsernamePasswordCredentials("dron", "dron");
 
@@ -40,27 +41,27 @@ public class CustomHttpClient {
 
         admin = HttpClientBuilder.create()
                 .setDefaultCredentialsProvider(provider)
-                .build();
+                .build();*/
 
-        /*CredentialsProvider provider = new BasicCredentialsProvider();
+        CredentialsProvider provider = new BasicCredentialsProvider();
         UsernamePasswordCredentials credentials
                 = new UsernamePasswordCredentials("dron", "dron");
 
         provider.setCredentials(AuthScope.ANY, credentials);
         admin = HttpClientBuilder.create()
                 .setDefaultCredentialsProvider(provider)
-                .build();*/
+                .build();
 
-        /*provider = new BasicCredentialsProvider();
+        provider = new BasicCredentialsProvider();
         credentials
                 = new UsernamePasswordCredentials("vera", "vera");
 
         provider.setCredentials(AuthScope.ANY, credentials);
         user = HttpClientBuilder.create()
                 .setDefaultCredentialsProvider(provider)
-                .build();*/
+                .build();
 
-        /*anonymous = HttpClients.custom().build();*/
+        anonymous = HttpClients.custom().build();
     }
 
     private Header JSON[] = {

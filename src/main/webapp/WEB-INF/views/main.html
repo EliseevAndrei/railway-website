@@ -28,25 +28,25 @@
                 <div class="card-body">
                     <form class="form-inline" method="get" action="/trains/onRoute">
                         <div class="form-group">
-                            <label for="dep_station_id" class="mr-sm-2">Станция отправления</label>
+                            <label for="dep_station_id" class="mr-sm-2" th:text="#{trainRoute.depStation}">Станция отправления</label>
                             <select class="form-control mb-2 mr-sm-2" id="dep_station_id" name="dep_station_id">
                                 <option th:each="depStation : ${allStations}" th:text="${depStation.name}"
                                         th:value="${depStation.id}"></option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="arr_station_id" class="mr-sm-2">Станция прибытия</label>
+                            <label for="arr_station_id" class="mr-sm-2" th:text="#{trainRoute.arrStation}">Станция прибытия</label>
                             <select class="form-control mb-2 mr-sm-2" id="arr_station_id" name="arr_station_id">
                                 <option th:each="arrStation : ${allStations}" th:text="${arrStation.name}"
                                         th:value="${arrStation.id}"></option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="dep_date" class="mr-sm-2">Дата</label>
+                            <label for="dep_date" class="mr-sm-2" th:text="#{trainRoute.date}">Дата</label>
                             <input type="date"  required class="form-control mb-2 mr-sm-2" id="dep_date" name="dep_date"
                                    th:value="${dep_date}"/>
                         </div>
-                        <button type="submit" class="btn btn-primary mb-2">Искать</button>
+                        <button type="submit" class="btn btn-primary mb-2" th:text="#{button.search}">Искать</button>
                     </form>
                 </div>
             </div>

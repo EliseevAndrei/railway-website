@@ -91,13 +91,24 @@ $(document).ready(function () {
 
     let deleteHref;
 
-    $('.rBtn').click(function (event) {
+    $('.customDataTable').on('click', '.rBtn' ,(function (event) {
         event.preventDefault();
-        var href = $(this).attr('href');
+        let href = $(this).attr('href');
         deleteHref = href;
         $(".myRemove .dBtn").attr('href', href);
+
+        $.getJSON(href + "/tickets/amount", function (response) {
+            let delMes = $(".myRemove #delete-message");
+            console.log("aslkdfjalksjdf;lasdjkf");
+            delMes.empty();
+            if (response > 0) {
+                delMes.append(`На данной станции ${response} не завершенных билетов\nВсе билеты будут удалены!!!`);
+            }
+        });
+
+
         $('.myRemove #exampleModal').modal();
-    });
+    }));
 
     $('.myRemove #delete-submit').click(function (event) {
         event.preventDefault();

@@ -23,7 +23,8 @@ import java.util.Properties;
 @Import(MapperConfiguration.class)
 @ComponentScans(value = {
         @ComponentScan("com.eliseev.app.repository"),
-        @ComponentScan("com.eliseev.app.dto")
+        @ComponentScan("com.eliseev.app.dto"),
+        @ComponentScan("com.eliseev.app.services")
 })
 @EnableTransactionManagement(proxyTargetClass = true)
 public class DaoTestConfig {

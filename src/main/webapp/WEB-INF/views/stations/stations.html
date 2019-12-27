@@ -17,6 +17,7 @@
             crossorigin="anonymous"></script>
     <script th:src="@{/resources/js/locale.js}"></script>
     <script th:src="@{/resources/js/customDataTable.js}"></script>
+    <script src="/resources/js/ajax-conversation.js"></script>
 </head>
 
 <body class="bg-light">
@@ -26,12 +27,12 @@
 
 <div class="container bg-white mt-5 py-2">
 
-    <button class="btn btn-outline-primary nBtn">Создать станцию</button>
+    <button class="btn btn-outline-primary nBtn my-3" th:text="#{button.new.station}">Создать станцию</button>
     <a class="ml-3" id="reloadBtn" href="stations"><i class="fas fa-redo-alt"></i></a>
     <table class="table table-striped customDataTable">
         <thead>
         <tr>
-            <th>Название</th>
+            <th th:text="#{label.train.name}">Название</th>
             <th></th>
         </tr>
         </thead>
@@ -40,8 +41,8 @@
             <td th:text="${station.name}"></td>
             <td>
                 <a class="btn btn-outline-primary eBtn"
-                   th:href="${'stations/list/' + station.id}" id="eBtn">Редактировать</a>
-                <a class="btn btn-outline-danger rBtn" id="rBtn" th:href="${'stations/list/'+station.id}">Удалить</a>
+                   th:href="${'stations/list/' + station.id}" id="eBtn" th:text="#{button.edit}">Редактировать</a>
+                <a class="btn btn-outline-danger rBtn" id="rBtn" th:href="${'stations/list/'+station.id}" th:text="#{button.delete}">Удалить</a>
             </td>
         </tr>
         </tbody>
@@ -57,7 +58,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Станция</h5>
+                        <h5 class="modal-title" id="exampleModalLabel" th:text="#{label.station}">Станция</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span id="x-btn" aria-hidden="true">&times;</span>
                         </button>
@@ -67,14 +68,14 @@
                         </div>
                         <input type="text" hidden id="id">
                         <div class="form-group col-md-8">
-                            <label for="name" class=" label">Название</label>
+                            <label for="name" class=" label" th:text="#{label.train.name}">Название</label>
                             <input type="text" class="form-control" id="name" name="name" value="">
                         </div>
                         <div class="form-group col-md-8"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                        <button type="submit" class="btn btn-primary" id="edit-submit">Сохранить</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{button.close}">Закрыть</button>
+                        <button type="submit" class="btn btn-primary" id="edit-submit" th:text="#{button.save}">Сохранить</button>
                     </div>
                 </div>
             </div>
@@ -89,24 +90,26 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Удаление станции</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{label.stationDel}">Удаление станции</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="alert-danger text-dark p-2">Вы уверены?</div>
+                    <div class="alert-danger text-dark p-2">
+                        <span th:text="#{text.sure}">Are you sure?</span><br>
+                        <span id="delete-message"></span>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <a class="btn btn-danger dBtn" href="" id="delete-submit">Удалить</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"  th:text="#{button.close}">Закрыть</button>
+                    <a class="btn btn-danger dBtn" href="" id="delete-submit"  th:text="#{button.delete}">Удалить</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script src="/resources/js/ajax-conversation.js"></script>
 
 </body>
 </html>

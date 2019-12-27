@@ -27,9 +27,9 @@
     <table class="table table-striped mt-2">
         <thead>
         <tr>
-            <th>Станция отправления</th>
-            <th>Станция прибытия</th>
-            <th>Дистанция</th>
+            <th th:text="#{trainRoute.depStation}">Станция отправления</th>
+            <th th:text="#{trainRoute.arrStation}">Станция прибытия</th>
+            <th th:text="#{trainRoute.distance}">Дистанция</th>
         </tr>
         </thead>
         <tbody>
@@ -55,7 +55,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Промежуток маршрута</h5>
+                        <h5 class="modal-title" id="exampleModalLabel" >Промежуток маршрута</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span id="x-btn" aria-hidden="true">&times;</span>
                         </button>

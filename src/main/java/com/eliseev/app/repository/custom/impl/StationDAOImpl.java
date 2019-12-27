@@ -16,7 +16,7 @@ public class StationDAOImpl extends AbstractDAO<Station>
     }
 
     @Override
-    public List<Station> findAll() {
+    public List<Station> findAll(String graphName) {
         return super.entityManager.createQuery("select s from Station s order by s.name", Station.class)
                 .getResultList();
     }

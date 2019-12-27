@@ -7,6 +7,7 @@ import com.eliseev.app.models.UserRoleEnum;
 import com.eliseev.app.repository.custom.RoleDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RoleService extends AbstractService<Role, RoleDto, RoleDAO> {
@@ -19,6 +20,7 @@ public class RoleService extends AbstractService<Role, RoleDto, RoleDAO> {
         this.roleMapper = roleMapper;
     }
 
+    @Transactional(readOnly = true)
     public RoleDto findByName(UserRoleEnum name) {
         return roleMapper.toDto(super.dao.findByName(name));
     }

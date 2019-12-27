@@ -12,6 +12,8 @@ let getLocale = function() {
     } else if (localeDOM === 'en_US') {
         locale = i18nEnglish;
     }
+    console.log(locale);
+    console.log(localeDOM);
 
     return locale;
 };

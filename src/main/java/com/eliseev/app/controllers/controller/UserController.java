@@ -1,6 +1,5 @@
 package com.eliseev.app.controllers.controller;
 
-
 import com.eliseev.app.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +27,5 @@ public class UserController {
         model.addAttribute("users", userService.list());
         return "users/users";
     }
-
-
 
 }

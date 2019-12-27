@@ -2,14 +2,9 @@ package com.eliseev.app.dto.mapper;
 
 import com.eliseev.app.dto.RoleDto;
 import com.eliseev.app.models.Role;
-import com.eliseev.app.models.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class RoleMapper extends AbstractMapper<Role, RoleDto> {
@@ -22,7 +17,7 @@ public class RoleMapper extends AbstractMapper<Role, RoleDto> {
         this.mapper = mapper;
     }
 
-    @PostConstruct
+    /*@PostConstruct
     public void setupMapper() {
         mapper.createTypeMap(Role.class, RoleDto.class)
                 .addMappings(m -> m.skip(RoleDto::setUsersId))
@@ -55,5 +50,5 @@ public class RoleMapper extends AbstractMapper<Role, RoleDto> {
             }
         });
         destination.setUsers(users);
-    }
+    }*/
 }

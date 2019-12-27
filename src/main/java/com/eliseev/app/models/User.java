@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -42,6 +43,7 @@ public class User extends AbstractEntity
     private String name;
     @Email(message = "Email must be formatted like sometext@mail.ru")
     private String email;
+    @Column(unique = true)
     private String login;
     private String pass;
 
@@ -51,8 +53,7 @@ public class User extends AbstractEntity
     @ToString.Exclude
     private List<Ticket> ticketList = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade =
-            {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name="user_role",
             joinColumns = @JoinColumn(

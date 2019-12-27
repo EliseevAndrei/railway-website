@@ -12,66 +12,6 @@
 </head>
 <body class="bg-light">
 
-
-<script>
-
-    /*$(document).ready(function () {
-        $('#Section1 #sign-in').click(function (event) {
-            event.preventDefault();
-            var user = {};
-
-            $("#sign-in-form :input[type*='text']").each(function () {
-                user[$(this).attr('id')] = $(this).val();
-            });
-
-            $.ajax({
-                url: "/users/list/registered",
-                type: "POST",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(user),
-                success: function (data, textStatus, xhr) {
-                    $(location).attr('href', data.id +"/orderTicket");
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                   /!* alert("Error with status" + textStatus + errorThrown);*!/
-
-                    console.log("error");
-                    let error = $("#Section1 #error");
-                    error.empty();
-                    error.html("<p>Не удалось войти!</p>");
-                    error.css("display", "block");
-                }
-            });
-        });
-
-        $('#Section2 #sign-up').click(function (event) {
-            event.preventDefault();
-            var user = {};
-
-            $("#sign-up-form :input[type='text']").each(function () {
-                user[$(this).attr('id')] = $(this).val();
-            });
-
-            $.ajax({
-                url: "/users/list",
-                type: "POST",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(user),
-                success: function (data, textStatus, xhr) {
-                    $(location).attr('href', data.id +"/orderTicket");
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    /!* alert("Error with status" + textStatus + errorThrown);*!/
-                    console.log("error");
-                    $("#Section2 #error").css("display", "block");
-                }
-            });
-        });
-    });*/
-</script>
-
 <div class="container bg-white mt-5 py-2">
     <div class="row">
 
@@ -80,33 +20,32 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab"
-                                                              data-toggle="tab">Войти</a></li>
-                    <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">Регистрация</a></li>
+                                                              data-toggle="tab" th:text="#{label.sign-in}">Войти</a></li>
+                    <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab" th:text="#{label.sign-up}">Регистрация</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content tabs">
                     <div role="tabpanel" class="tab-pane fade in active" id="Section1">
-                        <div id="error" style="display: none; color: red">
+                        <div id="error" style="display: none; color: red" th:text="#{warn.sign-in.error}">
                             <h5>Не удалось войти!</h5>
                         </div>
                         <form class="form-horizontal" id="sign-in-form" th:action="@{/login}" method="post">
                             <div class="form-group">
-                                <label for="login">Логин</label>
-                                <input type="text" class="form-control" id="login" name="login" >
+                                <label for="login" th:text="#{user.login}">Логин</label>
+                                <input type="text" required class="form-control" id="login" name="login" >
                             </div>
                             <div class="form-group">
-                                <label for="pass">Пароль</label>
-                                <input type="password" class="form-control" id="pass" name="pass">
+                                <label for="pass" th:text="#{user.pass}">Пароль</label>
+                                <input type="password" required class="form-control" id="pass" name="pass">
                             </div>
                             <div class="form-group">
                                 <div class="main-checkbox">
                                     <input id="checkbox1" name="remember-me" type="checkbox">
-                                    <label for="checkbox1">Запомнить меня</label>
+                                    <label for="checkbox1" th:text="#{label.remember-me}">Запомнить меня</label>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="submit" class="btn btn-default" value="Войти">
-                                <!--<button type="submit" class="btn btn-default" id="sign-in">Sign in</button>-->
+                                <button type="submit" class="btn btn-default" id="sign-in" th:text="#{button.send}">Отправить</button>
                             </div>
                             <!-- <div class="form-group forgot-pass">
                                  <button type="submit" class="btn btn-default">forgot password</button>
@@ -115,31 +54,31 @@
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="Section2">
                         <div id="error" style="display: none; color: red">
-                            <h5>Не удалось зарегистрироваться!</h5>
+                            <h5 th:text="#{warn.sign-up.error}">Не удалось зарегистрироваться!</h5>
                         </div>
                         <form class="form-horizontal" id="sign-up-form" th:action="@{/register}" method="post">
                             <div class="form-group">
-                                <label for="name">Имя</label>
-                                <input type="text" class="form-control" id="name" name="name">
+                                <label for="name" th:text="#{name}">Имя</label>
+                                <input type="text" required class="form-control" id="name" name="name">
                             </div>
                             <div class="form-group">
-                                <label for="surname">Фамилия</label>
-                                <input type="text" class="form-control" id="surname" name="surname">
+                                <label for="surname" th:text="#{user.surname}">Фамилия</label>
+                                <input type="text" required class="form-control" id="surname" name="surname">
                             </div>
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="text" class="form-control" id="email" name="email">
+                                <label for="email" th:text="#{user.email}">Email</label>
+                                <input type="email" required class="form-control" id="email" name="email">
                             </div>
                             <div class="form-group">
-                                <label for="login">Логин</label>
-                                <input type="text" class="form-control" id="login" name="login">
+                                <label for="login" th:text="#{user.login}">Логин</label>
+                                <input type="text" required class="form-control" id="login" name="login">
                             </div>
                             <div class="form-group">
-                                <label for="pass">Пароль</label>
-                                <input type="password" class="form-control" id="pass" name="pass">
+                                <label for="pass" th:text="#{user.pass}">Пароль</label>
+                                <input type="password" required class="form-control" id="pass" name="pass">
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-default" id="sign-up">Отправить</button>
+                                <button type="submit" class="btn btn-default" id="sign-up" th:text="#{button.send}">Отправить</button>
                             </div>
                         </form>
                     </div>

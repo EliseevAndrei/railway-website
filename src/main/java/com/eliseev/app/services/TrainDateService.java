@@ -51,17 +51,18 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDto, T
         this.stationStopTimeMapper = stationStopTimeMapper;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<StationStopTimeDto[]> getDates(long trainId) {
 
         List<StationStopTimeDto[]> trainDateDTOS = new ArrayList<>();
         List<TrainDate> trainDates = dao.findDatesByTrainId(trainId, "fullTrainDate");
-        StationStopTimeDto[] firstAndLastStations = new StationStopTimeDto[2];
+        StationStopTimeDto[] firstAndLastStations;
 
         for (TrainDate trainDate : trainDates) {
             List<StationStopTimeDto> stationStopTimes = stationStopTimeService.findStationsStopTimeByTrainDateId(trainDate.getId());
 
             if (stationStopTimes.size() >= 1) {
+                firstAndLastStations = new StationStopTimeDto[2];
                 firstAndLastStations[0] = stationStopTimes.get(0);
                 firstAndLastStations[1] = stationStopTimes.get(stationStopTimes.size() - 1);
 
@@ -90,7 +91,7 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDto, T
 
     public List<TrainDateDto> list(long trainId) {
         return trainDateMapper.toDto(
-                dao.findDatesByTrainId(trainId, "fullTraindate"),
+                dao.findDatesByTrainId(trainId, "fullTrainDate"),
                 new ArrayList<>()
         );
     }
@@ -109,7 +110,7 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDto, T
                 depDateLeftBorder, depDateRightBorder);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<TrainRouteDTO> setFreePlacesForTrainDates(List<TrainRouteDTO> routesWithTrainDate, StationDto depStationObj, StationDto arrStationObj) {
 
         TrainRoutePieceDto depTrainRoutePiece, arrTrainRoutePiece;
@@ -148,6 +149,7 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDto, T
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TrainDateDto> list() {
         return super.dao.findAll("fullTrainDate")
                 .stream()
@@ -156,6 +158,7 @@ public class TrainDateService extends AbstractService<TrainDate, TrainDateDto, T
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TrainDateDto get(long id) {
         return trainDateMapper.toDto(super.dao.findOne(id, "fullTrainDate"));
     }

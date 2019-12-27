@@ -61,26 +61,6 @@ public class TrainService extends AbstractService<Train, SimpleTrainDto, TrainDA
         return trainMapper.toDto(super.dao.save(trainEntity));
     }
 
-    /*@Transactional
-    public List<TrainDto> getTrainsOnStations(String depStation, String arrStation, Date date) {
-        logger.info("find trains with stations {}, - {} at date {}", depStation, arrStation, date);
-        return super.list();
-    }
-
-    @Transactional
-    public List<TrainRoutePiece> createRoute(List<TrainRoutePiece> trainRoutePieces, long trainId) {
-
-        Train train = super.dao.findOne(trainId);
-
-        trainRoutePieces.forEach(e -> {
-            e.setTrain(train);
-        });
-
-        train.getTrainRoutePieceList().addAll(trainRoutePieces);
-
-        return null;
-    }*/
-
     @Transactional(readOnly = true)
     public Map<String, Integer> getFreePlacesAmountForTrainRoute(long trainId,
                                                                  long trainDateId,

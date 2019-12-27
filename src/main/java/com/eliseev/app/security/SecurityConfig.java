@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .usernameParameter("login")
                 .passwordParameter("pass")
+                .failureForwardUrl("/login-error")
 
                 .and()
                 .logout()
@@ -72,7 +73,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sameOrigin()
         ;
     }
-
     @Bean
     public PasswordEncoder encoder() {
         return new StandardPasswordEncoder("53cr3t");

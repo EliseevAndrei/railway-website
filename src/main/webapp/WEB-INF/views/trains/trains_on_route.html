@@ -3,17 +3,8 @@
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/resources/css/styles.css"/>
     <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-            crossorigin="anonymous"></script>
-    <script th:src="@{/resources/js/locale.js}"></script>
-    <script src="/resources/js/filtered-routes.js"></script>
 </head>
 <body class="bg-light">
 <div th:replace="fragments/header :: header">
@@ -28,15 +19,15 @@
     <p>Дата: <span th:text="${#dates.format(dep_date, 'dd-MM-yyyy')}"></span></p>
 
     <!-- <a class="ml-3" id="reloadBtn" href="/trains"><i class="fas fa-redo-alt"></i></a>-->
-    <table id="route-table" class="table table-hover">
+    <table id="route-table" class="table table-hover customDataTable">
         <thead class="bg-dark text-white">
         <tr>
             <th></th>
             <th></th>
-            <th>Поезд</th>
-            <th>Время отправления</th>
-            <th>Время прибытия</th>
-            <th>Свободные места</th>
+            <th th:text="#{train}">Поезд</th>
+            <th th:text="#{stationStopTime.depTime}">Время отправления</th>
+            <th th:text="#{stationStopTime.arrTime}">Время прибытия</th>
+            <th th:text="#{place.free}">Свободные места</th>
             <th></th>
             <th hidden></th>
             <th hidden></th>
@@ -48,7 +39,7 @@
         <tbody>
 
         <tr th:each="route, iStat : ${routes}">
-            <td><a class="a-radio" th:href="@{/users/orderTicket}">
+            <td><a class="a-radio" th:href="@{/users/orderTicket}" th:text="#{button.select}">
                 Выбрать:
             </a></td>
             <td th:text="${iStat.index + 1 + '.'}"></td>
@@ -62,7 +53,6 @@
                     <li th:text="${place.key + ' - ' + place.value}"></li>
                 </ul>
             </td>
-
             <td hidden class="text" id="startRoutePieceId" th:text="${route.startRoutePieceId}"></td>
             <td hidden class="text" id="endRoutePieceId" th:text="${route.endRoutePieceId}"></td>
             <td hidden class="text" id="startRoutePieceSerialNumber"
@@ -87,10 +77,10 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active nav-item">
                                 <a href="#product" class="nav-link" aria-controls="product" role="tab"
-                                   data-toggle="tab">Выбор места</a>
+                                   data-toggle="tab" th:text="#{label.placeSelect}">Выбор места</a>
                             </li>
                             <li role="presentation" class="nav-item">
-                                <a href="#order" class="nav-link" aria-controls="order" role="tab" data-toggle="tab">Заказ</a>
+                                <a href="#order" class="nav-link" aria-controls="order" role="tab" data-toggle="tab" th:text="#{label.order}">Заказ</a>
                             </li>
                         </ul>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -98,7 +88,8 @@
                         </button>
                     </div>
                     <div class="modal-body" id="modal-body">
-
+                        <div id="errors" class="alert alert-danger" style="display: none; color: #a94442;">
+                        </div>
                         <div>
                             <!-- Nav tabs -->
                             <div class="tab-content">
@@ -110,35 +101,31 @@
                                 </div>
 
                                 <div role="tabpanel" class="tab-pane fade" id="order">
-                                    <form>
                                         <div class="card card-body">
-                                            <div id="errors" style="display: none; color: red;">
-                                            </div>
 
                                             <div class="form-group col-md-8">
-                                                <lable for="name" class="col-form-label">Фамилия:</lable>
-                                                <input type="text" class="form-control" id="surname" placeholder="Фамилия"/>
+                                                <lable for="name" class="col-form-label" th:text="#{user.surname}">Фамилия:</lable>
+                                                <input type="text" class="form-control" required id="surname" name="surname" placeholder="Фамилия"/>
                                             </div>
                                             <div class="form-group col-md-8">
                                                 <lable for="name" class="col-form-label">Имя</lable>
-                                                <input type="text" class="form-control" id="name" placeholder="Имя">
+                                                <input type="text" class="form-control" required id="name" name="name" placeholder="Имя">
                                             </div>
                                             <div class="form-group col-md-8">
-                                                <lable for="name" class="col-form-label">Номер паспорта</lable>
-                                                <input type="text" class="form-control" id="passportNumber" placeholder="Паспорт">
+                                                <lable for="name" class="col-form-label" th:text="#{user.passportNumber}">Номер паспорта</lable>
+                                                <input type="text" class="form-control" required pattern="[a-zA-Z]{2}[0-9]{7}" id="passportNumber" name="passportNumber" placeholder="Паспорт">
                                             </div>
 
                                             <div class="form-group col-md-8"></div>
                                         </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Закрыть</button>
-                        <button type="submit" class="btn btn-outline-primary" id="order-submit-btn">Сохранить</button>
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" th:text="#{button.close}">Закрыть</button>
+                        <button type="submit" class="btn btn-outline-primary" id="order-submit-btn" th:text="#{button.save}">Сохранить</button>
                     </div>
                 </div>
             </div>
@@ -147,5 +134,15 @@
 </div>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<script th:src="@{/resources/js/locale.js}"></script>
+<script src="/resources/js/filtered-routes.js"></script>
+<script th:src="@{/resources/js/customDataTable.js}"></script>
 </body>
 </html>

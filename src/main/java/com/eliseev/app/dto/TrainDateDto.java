@@ -6,8 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,6 +14,5 @@ import java.util.List;
 public class TrainDateDto extends AbstractDto {
 
     private Long trainId;
-    private List<StationStopTimeDto> stationStopTimes;
 
 }

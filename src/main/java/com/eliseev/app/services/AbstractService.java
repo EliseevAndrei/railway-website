@@ -24,7 +24,7 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
         this.mapper = mapper;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<D> list() {
         List<E> entities = dao.findAll( "");
@@ -38,7 +38,7 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Abstra
         return mapper.toDto(dao.save(mapper.toEntity(dto)));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public D get(long id) {
         D dto = mapper.toDto(dao.findOne(id, ""));
